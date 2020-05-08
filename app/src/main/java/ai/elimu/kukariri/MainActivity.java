@@ -1,18 +1,12 @@
 package ai.elimu.kukariri;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.database.Cursor;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.appcompat.app.AppCompatActivity;
 
-import ai.elimu.kukariri.util.CursorToWordGsonConverter;
-import ai.elimu.model.v2.gson.content.WordGson;
+import ai.elimu.kukariri.assessment.WordAssessmentActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,40 +23,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i(getClass().getName(), "onStart");
         super.onStart();
 
-        // Fetch list of Words from the ContentProvider
-        List<WordGson> wordGsons = null;
-        Uri wordsUri = Uri.parse("content://" + BuildConfig.CONTENT_PROVIDER_APPLICATION_ID + ".provider.word_provider/words");
-        Log.i(getClass().getName(), "wordsUri: " + wordsUri);
-        Cursor cursor = getContentResolver().query(wordsUri, null, null, null, null);
-        if (cursor == null) {
-            Log.e(getClass().getName(), "cursor == null");
-            Toast.makeText(getApplicationContext(), "cursor == null", Toast.LENGTH_LONG).show();
-        } else {
-            Log.i(getClass().getName(), "cursor.getCount(): " + cursor.getCount());
-            if (cursor.getCount() == 0) {
-                Log.e(getClass().getName(), "cursor.getCount() == 0");
-            } else {
-                Log.i(getClass().getName(), "cursor.getCount(): " + cursor.getCount());
-
-                wordGsons = new ArrayList<>();
-
-                boolean isLast = false;
-                while (!isLast) {
-                    cursor.moveToNext();
-
-                    // Convert from Room to Gson
-                    WordGson wordGson = CursorToWordGsonConverter.getWordGson(cursor);
-                    wordGsons.add(wordGson);
-
-                    isLast = cursor.isLast();
-                }
-
-                cursor.close();
-                Log.i(getClass().getName(), "cursor.isClosed(): " + cursor.isClosed());
-            }
-        }
-        Log.i(getClass().getName(), "wordGsons: " + wordGsons);
-
-
+        Intent wordAssessmentActivityIntent = new Intent(getApplicationContext(), WordAssessmentActivity.class);
+        startActivity(wordAssessmentActivityIntent);
+        finish();
     }
 }
