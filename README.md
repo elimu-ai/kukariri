@@ -1,3 +1,3 @@
 # Kukariri
 
-Spaced Repetition System (SRS)
+Android application which handles the Spaced Repetition System (SRS)
