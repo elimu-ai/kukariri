@@ -93,7 +93,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
         objectAnimator.setDuration(1000);
         objectAnimator.start();
 
-        // Animate in the card view containing the word
+        // Animate in the word
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_appear_from_right);
         textView.startAnimation(animation);
 

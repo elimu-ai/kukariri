@@ -6,18 +6,9 @@
     android:layout_height="match_parent"
     tools:context="ai.elimu.kukariri.assessment.WordAssessmentActivity">
 
-    <ProgressBar
-        android:id="@+id/wordAssessmentProgressBar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleY="4"
-        android:progress="1" />
-
     <TextView
         android:id="@+id/wordAssessmentTextView"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/wordAssessmentProgressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,4 +16,44 @@
         android:layout_height="wrap_content"
         android:text="word"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4" />
+
+    <ProgressBar
+        android:id="@+id/wordAssessmentProgressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        app:layout_constraintBottom_toTopOf="@id/wordAssessmentButtonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleY="4"
+        android:progress="1" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/wordAssessmentButtonContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/wordAssessmentHardButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.50"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:backgroundTint="#FF5722"
+            android:text="🤷\nhard"
+            android:textAllCaps="false"
+            android:textSize="32dp" />
+
+        <Button
+            android:id="@+id/wordAssessmentEasyButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.50"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:backgroundTint="#3949ab"
+            android:text="😀\neasy"
+            android:textAllCaps="false"
+            android:textSize="32dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
