@@ -41,7 +41,7 @@
             android:layout_height="match_parent"
             style="@style/Widget.AppCompat.Button.Colored"
             android:backgroundTint="#ffebee"
-            android:text="🤷\nhard"
+            android:text="@string/hard"
             android:textAllCaps="false"
             android:textSize="32dp" />
 
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             style="@style/Widget.AppCompat.Button.Colored"
             android:backgroundTint="#e8f5e9"
-            android:text="😀\neasy"
+            android:text="@string/easy"
             android:textAllCaps="false"
             android:textSize="32dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
