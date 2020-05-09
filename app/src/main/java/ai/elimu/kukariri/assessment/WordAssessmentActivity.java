@@ -141,7 +141,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
                 broadcastIntent.putExtra("packageName", BuildConfig.APPLICATION_ID);
                 broadcastIntent.putExtra("wordId", wordGson.getId());
                 broadcastIntent.putExtra("wordText", wordGson.getText());
-                broadcastIntent.putExtra("masteryScore", 0.00);
+                broadcastIntent.putExtra("masteryScore", 0.00f);
                 broadcastIntent.putExtra("timeSpentMs", System.currentTimeMillis() - timeStart);
                 sendBroadcast(broadcastIntent);
 
@@ -165,7 +165,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
                 broadcastIntent.putExtra("packageName", BuildConfig.APPLICATION_ID);
                 broadcastIntent.putExtra("wordId", wordGson.getId());
                 broadcastIntent.putExtra("wordText", wordGson.getText());
-                broadcastIntent.putExtra("masteryScore", 1.00);
+                broadcastIntent.putExtra("masteryScore", 1.00f);
                 broadcastIntent.putExtra("timeSpentMs", System.currentTimeMillis() - timeStart);
                 sendBroadcast(broadcastIntent);
 
