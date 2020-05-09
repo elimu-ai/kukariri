@@ -123,6 +123,8 @@ public class WordAssessmentActivity extends AppCompatActivity {
         Animation appearAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_appear_right);
         textView.startAnimation(appearAnimation);
 
+        final long timeStart = System.currentTimeMillis();
+
         difficultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +135,15 @@ public class WordAssessmentActivity extends AppCompatActivity {
                 wordGsons.add(wordGson);
 
                 // Report WordAssessmentEvent to the Analytics application
-                // TODO
+                Intent broadcastIntent = new Intent();
+                broadcastIntent.setPackage(BuildConfig.ANALYTICS_APPLICATION_ID);
+                broadcastIntent.setAction("ai.elimu.intent.action.WORD_ASSESSMENT_EVENT");
+                broadcastIntent.putExtra("packageName", BuildConfig.APPLICATION_ID);
+                broadcastIntent.putExtra("wordId", wordGson.getId());
+                broadcastIntent.putExtra("wordText", wordGson.getText());
+                broadcastIntent.putExtra("masteryScore", 0.00);
+                broadcastIntent.putExtra("timeSpentMs", System.currentTimeMillis() - timeStart);
+                sendBroadcast(broadcastIntent);
 
                 loadNextWord();
             }
@@ -149,7 +159,15 @@ public class WordAssessmentActivity extends AppCompatActivity {
                 wordGsonsMastered.add(wordGson);
 
                 // Report WordAssessmentEvent to the Analytics application
-                // TODO
+                Intent broadcastIntent = new Intent();
+                broadcastIntent.setPackage(BuildConfig.ANALYTICS_APPLICATION_ID);
+                broadcastIntent.setAction("ai.elimu.intent.action.WORD_ASSESSMENT_EVENT");
+                broadcastIntent.putExtra("packageName", BuildConfig.APPLICATION_ID);
+                broadcastIntent.putExtra("wordId", wordGson.getId());
+                broadcastIntent.putExtra("wordText", wordGson.getText());
+                broadcastIntent.putExtra("masteryScore", 1.00);
+                broadcastIntent.putExtra("timeSpentMs", System.currentTimeMillis() - timeStart);
+                sendBroadcast(broadcastIntent);
 
                 loadNextWord();
             }
