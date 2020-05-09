@@ -13,11 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".assessment.WordAssessmentActivity"
+        <activity
+            android:name=".assessment.AssessmentCompletedActivity"
+            android:theme="@style/AppTheme.NoTitle.Fullscreen" />
+        <activity
+            android:name=".assessment.WordAssessmentActivity"
             android:theme="@style/AppTheme.NoTitle.Fullscreen" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
