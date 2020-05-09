@@ -21,10 +21,11 @@
         android:id="@+id/wordAssessmentProgressBar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         app:layout_constraintBottom_toTopOf="@id/wordAssessmentButtonContainer"
+        android:layout_marginHorizontal="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleY="4"
-        android:progress="1" />
+        android:progressDrawable="@drawable/progress_bar"
+        tools:progress="25" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/wordAssessmentButtonContainer"
@@ -39,7 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:backgroundTint="#FF5722"
+            android:backgroundTint="#ffebee"
             android:text="🤷\nhard"
             android:textAllCaps="false"
             android:textSize="32dp" />
@@ -51,7 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:backgroundTint="#3949ab"
+            android:backgroundTint="#e8f5e9"
             android:text="😀\neasy"
             android:textAllCaps="false"
             android:textSize="32dp" />
