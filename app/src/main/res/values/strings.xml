@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kukariri</string>
+    <string name="app_name">Memorization</string>
     <string name="easy">😀\neasy</string>
-    <string name="hard">🤷\nhard</string>
+    <string name="difficult">🤷\ndifficult</string>
 </resources>

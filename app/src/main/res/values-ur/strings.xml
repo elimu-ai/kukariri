@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">حفظ</string>
     <string name="easy">😀\nآسان</string>
-    <string name="hard">🤷\nمشکل</string>
+    <string name="difficult">🤷\nمشکل</string>
 </resources>
