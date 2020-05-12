@@ -22,6 +22,7 @@ import java.util.List;
 import ai.elimu.kukariri.BuildConfig;
 import ai.elimu.kukariri.R;
 import ai.elimu.kukariri.util.CursorToWordGsonConverter;
+import ai.elimu.model.enums.content.WordType;
 import ai.elimu.model.v2.gson.content.WordGson;
 
 public class WordAssessmentActivity extends AppCompatActivity {
@@ -76,11 +77,11 @@ public class WordAssessmentActivity extends AppCompatActivity {
 
                     // Convert from Room to Gson
                     WordGson wordGson = CursorToWordGsonConverter.getWordGson(cursor);
-                    wordGsons.add(wordGson);
-
-                    // TODO: fetch Words by usageCount (and by wordType), and then remove this code block
-                    if (wordGsons.size() == 10) {
-                        break;
+                    if (    (wordGson.getWordType() == WordType.ADJECTIVE)
+                         || (wordGson.getWordType() == WordType.NOUN)
+                         || (wordGson.getWordType() == WordType.VERB)
+                    ) {
+                        wordGsons.add(wordGson);
                     }
 
                     isLast = cursor.isLast();

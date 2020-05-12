@@ -1,10 +1,12 @@
 package ai.elimu.kukariri.util;
 
 import android.database.Cursor;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.Arrays;
 
+import ai.elimu.model.enums.content.WordType;
 import ai.elimu.model.v2.gson.content.WordGson;
 
 public class CursorToWordGsonConverter {
@@ -30,11 +32,20 @@ public class CursorToWordGsonConverter {
         String text = cursor.getString(columnText);
         Log.i(CursorToWordGsonConverter.class.getName(), "text: \"" + text + "\"");
 
+        int columnWordType = cursor.getColumnIndex("wordType");
+        String wordTypeAsString = cursor.getString(columnWordType);
+        WordType wordType = null;
+        if (!TextUtils.isEmpty(wordTypeAsString)) {
+            wordType = WordType.valueOf(wordTypeAsString);
+        }
+        Log.i(CursorToWordGsonConverter.class.getName(), "wordType: " + wordType);
+
         WordGson word = new WordGson();
         word.setId(id);
         word.setRevisionNumber(revisionNumber);
         word.setUsageCount(usageCount);
         word.setText(text);
+        word.setWordType(wordType);
 
         return word;
     }
