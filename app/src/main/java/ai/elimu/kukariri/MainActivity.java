@@ -6,6 +6,8 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Locale;
+
 import ai.elimu.kukariri.assessment.WordAssessmentActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,6 +18,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        Locale deviceLocale = Locale.getDefault();
+        Log.i(getClass().getName(), "deviceLocale: " + deviceLocale);
+        String deviceLanguage = deviceLocale.getLanguage();
+        Log.i(getClass().getName(), "deviceLanguage: " + deviceLanguage);
     }
 
     @Override

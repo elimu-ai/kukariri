@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">याद</string>
-    <string name="easy">😀\neasy</string>
-    <string name="hard">🤷\nhard</string>
+    <string name="easy">😀\nआसान</string>
+    <string name="difficult">🤷\nकठिन</string>
 </resources>

@@ -41,7 +41,7 @@
             android:layout_height="match_parent"
             style="@style/Widget.AppCompat.Button.Colored"
             android:backgroundTint="#ffebee"
-            android:text="@string/hard"
+            android:text="@string/difficult"
             android:textAllCaps="false"
             android:textSize="32dp" />
 
