@@ -77,6 +77,8 @@ public class WordAssessmentActivity extends AppCompatActivity {
 
                     // Convert from Room to Gson
                     WordGson wordGson = CursorToWordGsonConverter.getWordGson(cursor);
+                    
+                    // Only list words that are adjectives/nouns/verbs
                     if (    (wordGson.getWordType() == WordType.ADJECTIVE)
                          || (wordGson.getWordType() == WordType.NOUN)
                          || (wordGson.getWordType() == WordType.VERB)
