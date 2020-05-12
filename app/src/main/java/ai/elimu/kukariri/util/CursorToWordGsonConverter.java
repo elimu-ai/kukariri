@@ -22,6 +22,10 @@ public class CursorToWordGsonConverter {
         Integer revisionNumber = cursor.getInt(columnRevisionNumber);
         Log.i(CursorToWordGsonConverter.class.getName(), "revisionNumber: " + revisionNumber);
 
+        int columnUsageCount = cursor.getColumnIndex("usageCount");
+        Integer usageCount = cursor.getInt(columnUsageCount);
+        Log.i(CursorToWordGsonConverter.class.getName(), "usageCount: " + usageCount);
+
         int columnText = cursor.getColumnIndex("text");
         String text = cursor.getString(columnText);
         Log.i(CursorToWordGsonConverter.class.getName(), "text: \"" + text + "\"");
@@ -29,6 +33,7 @@ public class CursorToWordGsonConverter {
         WordGson word = new WordGson();
         word.setId(id);
         word.setRevisionNumber(revisionNumber);
+        word.setUsageCount(usageCount);
         word.setText(text);
 
         return word;
