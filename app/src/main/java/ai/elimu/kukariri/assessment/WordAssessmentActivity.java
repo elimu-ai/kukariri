@@ -23,6 +23,7 @@ import java.util.Set;
 
 import ai.elimu.kukariri.BuildConfig;
 import ai.elimu.kukariri.R;
+import ai.elimu.kukariri.logic.SpacedRepetitionHelper;
 import ai.elimu.kukariri.util.CursorToWordAssessmentEventGsonConverter;
 import ai.elimu.kukariri.util.CursorToWordGsonConverter;
 import ai.elimu.kukariri.util.CursorToWordLearningEventGsonConverter;
@@ -66,21 +67,32 @@ public class WordAssessmentActivity extends AppCompatActivity {
         easyButton = findViewById(R.id.wordAssessmentEasyButton);
 
         // Get a set of the Words that have been previously learned
+        List<WordLearningEventGson> wordLearningEventGsons = getWordLearningEventGsons();
+
+        // Get a set of the Words that have been previously learned
         Set<Long> idsOfWordsInWordLearningEvents = getIdsOfWordsInWordLearningEvents();
 
         // Determine which of the previously learned Words are pending a review (based on WordAssessmentEvents)
         Set<Long> idsOfWordsPendingReview = new HashSet<>();
         List<WordAssessmentEventGson> wordAssessmentEventGsons = getWordAssessmentEventGsons(idsOfWordsInWordLearningEvents);
         for (Long idOfWordInWordLearningEvent : idsOfWordsInWordLearningEvents) {
-            boolean isReviewPending = true;
-
-            for (WordAssessmentEventGson wordAssessmentEventGson : wordAssessmentEventGsons) {
-                if (wordAssessmentEventGson.getWordId().equals(idOfWordInWordLearningEvent)) {
-                    // Check if the Word has already completed any pending assessment reviews
-                    // TODO
+            WordLearningEventGson originalWordLearningEventGson = null;
+            for (WordLearningEventGson wordLearningEventGson : wordLearningEventGsons) {
+                if (wordLearningEventGson.getWordId().equals(idOfWordInWordLearningEvent)) {
+                    originalWordLearningEventGson = wordLearningEventGson;
+                    break;
                 }
             }
 
+            List<WordAssessmentEventGson> wordAssessmentEventGsonsAssociatedWithLearningEvent = new ArrayList<>();
+            for (WordAssessmentEventGson wordAssessmentEventGson : wordAssessmentEventGsons) {
+                if (wordAssessmentEventGson.getWordId().equals(idOfWordInWordLearningEvent)) {
+                    wordAssessmentEventGsonsAssociatedWithLearningEvent.add(wordAssessmentEventGson);
+                }
+            }
+
+            // Check if the Word has any pending assessment reviews
+            boolean isReviewPending = SpacedRepetitionHelper.isReviewPending(originalWordLearningEventGson, wordAssessmentEventGsonsAssociatedWithLearningEvent);
             if (isReviewPending) {
                 idsOfWordsPendingReview.add(idOfWordInWordLearningEvent);
             }
@@ -126,6 +138,45 @@ public class WordAssessmentActivity extends AppCompatActivity {
         super.onStart();
 
         loadNextWord();
+    }
+
+    private List<WordLearningEventGson> getWordLearningEventGsons() {
+        Log.i(getClass().getName(), "getWordLearningEventGsons");
+
+        List<WordLearningEventGson> wordLearningEventGsons = new ArrayList<>();
+
+        // Fetch list of WordLearningEvents from the Analytics application
+        Uri wordLearningEventsUri = Uri.parse("content://" + BuildConfig.ANALYTICS_APPLICATION_ID + ".provider.word_learning_event_provider/events");
+        Log.i(getClass().getName(), "wordLearningEventsUri: " + wordLearningEventsUri);
+        Cursor wordLearningEventsCursor = getContentResolver().query(wordLearningEventsUri, null, null, null, null);
+        Log.i(getClass().getName(), "wordLearningEventsCursor: " + wordLearningEventsCursor);
+        if (wordLearningEventsCursor == null) {
+            Log.e(getClass().getName(), "wordLearningEventsCursor == null");
+            Toast.makeText(getApplicationContext(), "wordLearningEventsCursor == null", Toast.LENGTH_LONG).show();
+        } else {
+            Log.i(getClass().getName(), "wordLearningEventsCursor.getCount(): " + wordLearningEventsCursor.getCount());
+            if (wordLearningEventsCursor.getCount() == 0) {
+                Log.e(getClass().getName(), "wordLearningEventsCursor.getCount() == 0");
+            } else {
+                boolean isLast = false;
+                while (!isLast) {
+                    wordLearningEventsCursor.moveToNext();
+
+                    // Convert from Room to Gson
+                    WordLearningEventGson wordLearningEventGson = CursorToWordLearningEventGsonConverter.getWordLearningEventGson(wordLearningEventsCursor);
+
+                    wordLearningEventGsons.add(wordLearningEventGson);
+
+                    isLast = wordLearningEventsCursor.isLast();
+                }
+
+                wordLearningEventsCursor.close();
+                Log.i(getClass().getName(), "wordLearningEventsCursor.isClosed(): " + wordLearningEventsCursor.isClosed());
+            }
+        }
+        Log.i(getClass().getName(), "wordLearningEventGsons.size(): " + wordLearningEventGsons.size());
+
+        return wordLearningEventGsons;
     }
 
     private Set<Long> getIdsOfWordsInWordLearningEvents() {
