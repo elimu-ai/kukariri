@@ -15,13 +15,13 @@ android {
         debug {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
-            manifestPlaceholders = [contentProviderApplicationId: "ai.elimu.content_provider.debug"]
+            manifestPlaceholders = [contentProviderApplicationId: "ai.elimu.content_provider.debug", analyticsApplicationId: "ai.elimu.analytics.debug"]
             buildConfigField("String", "CONTENT_PROVIDER_APPLICATION_ID", '"ai.elimu.content_provider.debug"')
             buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics.debug"')
         }
         release {
             minifyEnabled false
-            manifestPlaceholders = [contentProviderApplicationId: "ai.elimu.content_provider"]
+            manifestPlaceholders = [contentProviderApplicationId: "ai.elimu.content_provider", analyticsApplicationId: "ai.elimu.analytics"]
             buildConfigField("String", "CONTENT_PROVIDER_APPLICATION_ID", '"ai.elimu.content_provider"')
             buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics"')
         }
@@ -30,7 +30,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'ai.elimu:model:2.0.10'
+    implementation 'ai.elimu:model:2.0.11'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.sackcentury:shinebutton:1.0.0'
