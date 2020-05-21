@@ -27,6 +27,7 @@ import ai.elimu.kukariri.logic.SpacedRepetitionHelper;
 import ai.elimu.kukariri.util.CursorToWordAssessmentEventGsonConverter;
 import ai.elimu.kukariri.util.CursorToWordGsonConverter;
 import ai.elimu.kukariri.util.CursorToWordLearningEventGsonConverter;
+import ai.elimu.model.enums.content.WordType;
 import ai.elimu.model.v2.gson.analytics.WordAssessmentEventGson;
 import ai.elimu.model.v2.gson.analytics.WordLearningEventGson;
 import ai.elimu.model.v2.gson.content.WordGson;
@@ -119,7 +120,13 @@ public class WordAssessmentActivity extends AppCompatActivity {
                     WordGson wordGson = CursorToWordGsonConverter.getWordGson(wordsCursor);
 
                     if (idsOfWordsPendingReview.contains(wordGson.getId())) {
-                        wordGsons.add(wordGson);
+                        // Only include adjectives/nouns/verbs
+                        if (       (wordGson.getWordType() == WordType.ADJECTIVE)
+                                || (wordGson.getWordType() == WordType.NOUN)
+                                || (wordGson.getWordType() == WordType.VERB)
+                        ) {
+                            wordGsons.add(wordGson);
+                        }
                     }
 
                     isLast = wordsCursor.isLast();
