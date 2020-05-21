@@ -17,12 +17,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import ai.elimu.kukariri.BuildConfig;
 import ai.elimu.kukariri.R;
+import ai.elimu.kukariri.util.CursorToWordAssessmentEventGsonConverter;
 import ai.elimu.kukariri.util.CursorToWordGsonConverter;
-import ai.elimu.model.enums.content.WordType;
+import ai.elimu.kukariri.util.CursorToWordLearningEventGsonConverter;
+import ai.elimu.model.v2.gson.analytics.WordAssessmentEventGson;
+import ai.elimu.model.v2.gson.analytics.WordLearningEventGson;
 import ai.elimu.model.v2.gson.content.WordGson;
 
 public class WordAssessmentActivity extends AppCompatActivity {
@@ -40,6 +45,9 @@ public class WordAssessmentActivity extends AppCompatActivity {
      */
     private List<WordGson> wordGsons = new ArrayList<>();
 
+    /**
+     * Once a Word has been mastered, it's moved from {@link #wordGsons} to {@link #wordGsonsMastered}.
+     */
     private List<WordGson> wordGsonsMastered = new ArrayList<>();
 
     @Override
@@ -57,38 +65,55 @@ public class WordAssessmentActivity extends AppCompatActivity {
 
         easyButton = findViewById(R.id.wordAssessmentEasyButton);
 
-        // Fetch list of Words from the ContentProvider
+        // Get a set of the Words that have been previously learned
+        Set<Long> idsOfWordsInWordLearningEvents = getIdsOfWordsInWordLearningEvents();
+
+        // Determine which of the previously learned Words are pending a review (based on WordAssessmentEvents)
+        Set<Long> idsOfWordsPendingReview = new HashSet<>();
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = getWordAssessmentEventGsons(idsOfWordsInWordLearningEvents);
+        for (Long idOfWordInWordLearningEvent : idsOfWordsInWordLearningEvents) {
+            boolean isReviewPending = true;
+
+            for (WordAssessmentEventGson wordAssessmentEventGson : wordAssessmentEventGsons) {
+                if (wordAssessmentEventGson.getWordId().equals(idOfWordInWordLearningEvent)) {
+                    // Check if the Word has already completed any pending assessment reviews
+                    // TODO
+                }
+            }
+
+            if (isReviewPending) {
+                idsOfWordsPendingReview.add(idOfWordInWordLearningEvent);
+            }
+        }
+        Log.i(getClass().getName(), "idsOfWordsPendingReview.size(): " + idsOfWordsPendingReview.size());
+
+        // Fetch list of Words from the ContentProvider, and exclude those not in the idsOfWordsPendingReview set
         Uri wordsUri = Uri.parse("content://" + BuildConfig.CONTENT_PROVIDER_APPLICATION_ID + ".provider.word_provider/words");
         Log.i(getClass().getName(), "wordsUri: " + wordsUri);
-        Cursor cursor = getContentResolver().query(wordsUri, null, null, null, null);
-        if (cursor == null) {
-            Log.e(getClass().getName(), "cursor == null");
-            Toast.makeText(getApplicationContext(), "cursor == null", Toast.LENGTH_LONG).show();
+        Cursor wordsCursor = getContentResolver().query(wordsUri, null, null, null, null);
+        if (wordsCursor == null) {
+            Log.e(getClass().getName(), "wordsCursor == null");
+            Toast.makeText(getApplicationContext(), "wordsCursor == null", Toast.LENGTH_LONG).show();
         } else {
-            Log.i(getClass().getName(), "cursor.getCount(): " + cursor.getCount());
-            if (cursor.getCount() == 0) {
-                Log.e(getClass().getName(), "cursor.getCount() == 0");
+            Log.i(getClass().getName(), "wordsCursor.getCount(): " + wordsCursor.getCount());
+            if (wordsCursor.getCount() == 0) {
+                Log.e(getClass().getName(), "wordsCursor.getCount() == 0");
             } else {
-                Log.i(getClass().getName(), "cursor.getCount(): " + cursor.getCount());
-
                 boolean isLast = false;
                 while (!isLast) {
-                    cursor.moveToNext();
+                    wordsCursor.moveToNext();
 
                     // Convert from Room to Gson
-                    WordGson wordGson = CursorToWordGsonConverter.getWordGson(cursor);
-                    if (    (wordGson.getWordType() == WordType.ADJECTIVE)
-                         || (wordGson.getWordType() == WordType.NOUN)
-                         || (wordGson.getWordType() == WordType.VERB)
-                    ) {
+                    WordGson wordGson = CursorToWordGsonConverter.getWordGson(wordsCursor);
+                    if (idsOfWordsPendingReview.contains(wordGson.getId())) {
                         wordGsons.add(wordGson);
                     }
 
-                    isLast = cursor.isLast();
+                    isLast = wordsCursor.isLast();
                 }
 
-                cursor.close();
-                Log.i(getClass().getName(), "cursor.isClosed(): " + cursor.isClosed());
+                wordsCursor.close();
+                Log.i(getClass().getName(), "wordsCursor.isClosed(): " + wordsCursor.isClosed());
             }
         }
         Log.i(getClass().getName(), "wordGsons: " + wordGsons);
@@ -100,6 +125,84 @@ public class WordAssessmentActivity extends AppCompatActivity {
         super.onStart();
 
         loadNextWord();
+    }
+
+    private Set<Long> getIdsOfWordsInWordLearningEvents() {
+        Log.i(getClass().getName(), "getIdsOfWordsInWordLearningEvents");
+
+        Set<Long> wordIdsSet = new HashSet<>();
+
+        // Fetch list of WordLearningEvents from the Analytics application
+        Uri wordLearningEventsUri = Uri.parse("content://" + BuildConfig.ANALYTICS_APPLICATION_ID + ".provider.word_learning_event_provider/events");
+        Log.i(getClass().getName(), "wordLearningEventsUri: " + wordLearningEventsUri);
+        Cursor wordLearningEventsCursor = getContentResolver().query(wordLearningEventsUri, null, null, null, null);
+        Log.i(getClass().getName(), "wordLearningEventsCursor: " + wordLearningEventsCursor);
+        if (wordLearningEventsCursor == null) {
+            Log.e(getClass().getName(), "wordLearningEventsCursor == null");
+            Toast.makeText(getApplicationContext(), "wordLearningEventsCursor == null", Toast.LENGTH_LONG).show();
+        } else {
+            Log.i(getClass().getName(), "wordLearningEventsCursor.getCount(): " + wordLearningEventsCursor.getCount());
+            if (wordLearningEventsCursor.getCount() == 0) {
+                Log.e(getClass().getName(), "wordLearningEventsCursor.getCount() == 0");
+            } else {
+                boolean isLast = false;
+                while (!isLast) {
+                    wordLearningEventsCursor.moveToNext();
+
+                    // Convert from Room to Gson
+                    WordLearningEventGson wordLearningEventGson = CursorToWordLearningEventGsonConverter.getWordLearningEventGson(wordLearningEventsCursor);
+
+                    wordIdsSet.add(wordLearningEventGson.getWordId());
+
+                    isLast = wordLearningEventsCursor.isLast();
+                }
+
+                wordLearningEventsCursor.close();
+                Log.i(getClass().getName(), "wordLearningEventsCursor.isClosed(): " + wordLearningEventsCursor.isClosed());
+            }
+        }
+        Log.i(getClass().getName(), "wordIdsSet.size(): " + wordIdsSet.size());
+
+        return wordIdsSet;
+    }
+    
+    private List<WordAssessmentEventGson> getWordAssessmentEventGsons(Set<Long> idsOfWordsInWordLearningEvents) {
+        Log.i(getClass().getName(), "getWordAssessmentEventGsons");
+
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
+
+        // Fetch list of WordAssessmentEvents from the Analytics application
+        Uri wordAssessmentEventsUri = Uri.parse("content://" + BuildConfig.ANALYTICS_APPLICATION_ID + ".provider.word_assessment_event_provider/events");
+        Log.i(getClass().getName(), "wordAssessmentEventsUri: " + wordAssessmentEventsUri);
+        Cursor wordAssessmentEventsCursor = getContentResolver().query(wordAssessmentEventsUri, null, null, null, null);
+        Log.i(getClass().getName(), "wordAssessmentEventsCursor: " + wordAssessmentEventsCursor);
+        if (wordAssessmentEventsCursor == null) {
+            Log.e(getClass().getName(), "wordAssessmentEventsCursor == null");
+            Toast.makeText(getApplicationContext(), "wordAssessmentEventsCursor == null", Toast.LENGTH_LONG).show();
+        } else {
+            Log.i(getClass().getName(), "wordAssessmentEventsCursor.getCount(): " + wordAssessmentEventsCursor.getCount());
+            if (wordAssessmentEventsCursor.getCount() == 0) {
+                Log.e(getClass().getName(), "wordAssessmentEventsCursor.getCount() == 0");
+            } else {
+                boolean isLast = false;
+                while (!isLast) {
+                    wordAssessmentEventsCursor.moveToNext();
+
+                    // Convert from Room to Gson
+                    WordAssessmentEventGson wordAssessmentEventGson = CursorToWordAssessmentEventGsonConverter.getWordAssessmentEventGson(wordAssessmentEventsCursor);
+
+                    wordAssessmentEventGsons.add(wordAssessmentEventGson);
+
+                    isLast = wordAssessmentEventsCursor.isLast();
+                }
+
+                wordAssessmentEventsCursor.close();
+                Log.i(getClass().getName(), "wordAssessmentEventsCursor.isClosed(): " + wordAssessmentEventsCursor.isClosed());
+            }
+        }
+        Log.i(getClass().getName(), "wordAssessmentEventGsons.size(): " + wordAssessmentEventGsons.size());
+        
+        return wordAssessmentEventGsons;
     }
 
     private void loadNextWord() {
