@@ -98,24 +98,4 @@ public class SpacedRepetitionHelperTest {
 
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(false));
     }
-
-//    @Test
-//    public void testIsReviewPending_4HoursAfterFirstReview() {
-//        Calendar calendar5HoursAgo = Calendar.getInstance();
-//        calendar5HoursAgo.add(Calendar.HOUR, -1-4);
-//        WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
-//        wordLearningEventGson.setWordId(1L);
-//        wordLearningEventGson.setTime(calendar5HoursAgo);
-//
-//        Calendar calendarNow = Calendar.getInstance();
-//        WordAssessmentEventGson wordAssessmentEventGson = new WordAssessmentEventGson();
-//        wordAssessmentEventGson.setWordId(1L);
-//        wordAssessmentEventGson.setTime(calendarNow);
-//        wordAssessmentEventGson.setMasteryScore(0.00f);
-//
-//        List<WordAssessmentEventGson> wordAssessmentEventGsonList = new ArrayList<>();
-//        wordAssessmentEventGsonList.add(wordAssessmentEventGson);
-//
-//        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(true));
-//    }
 }
