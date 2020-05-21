@@ -105,6 +105,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
 
                     // Convert from Room to Gson
                     WordGson wordGson = CursorToWordGsonConverter.getWordGson(wordsCursor);
+
                     if (idsOfWordsPendingReview.contains(wordGson.getId())) {
                         wordGsons.add(wordGson);
                     }
