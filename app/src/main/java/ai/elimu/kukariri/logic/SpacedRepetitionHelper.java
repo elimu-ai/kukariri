@@ -24,6 +24,7 @@ public class SpacedRepetitionHelper {
      * @param wordLearningEventGson The _first_ time a {@link ai.elimu.model.v2.gson.content.WordGson} was learned. If
      *                              there are several {@link WordLearningEventGson}s for the same
      *                              {@link ai.elimu.model.v2.gson.content.WordGson}, the oldest one is used.
+     * @param wordAssessmentEventGsons List of assessments in _ascending_ order, i.e. oldest events are first in the list.
      * @return {@code true} if the {@link ai.elimu.model.v2.gson.content.WordGson} has one or more pending reviews.
      */
     public static boolean isReviewPending(WordLearningEventGson wordLearningEventGson, List<WordAssessmentEventGson> wordAssessmentEventGsons) {
@@ -56,43 +57,32 @@ public class SpacedRepetitionHelper {
             } else {
                 // The most recent review was mastered
 
+                WordAssessmentEventGson previousWordAssessmentEventGson = wordAssessmentEventGsons.get(wordAssessmentEventGsons.size() - 1);
+                long milliSecondsPassedSincePreviousAssessmentEvent = Calendar.getInstance().getTimeInMillis() - previousWordAssessmentEventGson.getTime().getTimeInMillis();
+                Double hoursPassedSincePreviousAssessmentEvent = Double.valueOf(milliSecondsPassedSincePreviousAssessmentEvent / 1000 / 60 / 60);
+
                 if (numberOfCorrectReviewsInSequence == 1) {
                     // Check if it's time for the 2nd review
-                    WordAssessmentEventGson previousWordAssessmentEventGson = wordAssessmentEventGsons.get(wordAssessmentEventGsons.size() - 1);
-                    long milliSecondsPassedSincePreviousAssessmentEvent = Calendar.getInstance().getTimeInMillis() - previousWordAssessmentEventGson.getTime().getTimeInMillis();
-                    Double hoursPassedSincePreviousAssessmentEvent = Double.valueOf(milliSecondsPassedSincePreviousAssessmentEvent / 1000 / 60 / 60);
                     if (hoursPassedSincePreviousAssessmentEvent >= 4.00) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 2) {
                     // Check if it's time for the 3rd review
-                    WordAssessmentEventGson previousWordAssessmentEventGson = wordAssessmentEventGsons.get(wordAssessmentEventGsons.size() - 2);
-                    long milliSecondsPassedSincePreviousAssessmentEvent = Calendar.getInstance().getTimeInMillis() - previousWordAssessmentEventGson.getTime().getTimeInMillis();
-                    Double hoursPassedSincePreviousAssessmentEvent = Double.valueOf(milliSecondsPassedSincePreviousAssessmentEvent / 1000 / 60 / 60);
                     if (hoursPassedSincePreviousAssessmentEvent >= 16.00) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 3) {
                     // Check if it's time for the 4th review
-                    WordAssessmentEventGson previousWordAssessmentEventGson = wordAssessmentEventGsons.get(wordAssessmentEventGsons.size() - 3);
-                    long milliSecondsPassedSincePreviousAssessmentEvent = Calendar.getInstance().getTimeInMillis() - previousWordAssessmentEventGson.getTime().getTimeInMillis();
-                    Double hoursPassedSincePreviousAssessmentEvent = Double.valueOf(milliSecondsPassedSincePreviousAssessmentEvent / 1000 / 60 / 60);
                     if (hoursPassedSincePreviousAssessmentEvent >= 64.00) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 4) {
                     // Check if it's time for the 5th review
-                    WordAssessmentEventGson previousWordAssessmentEventGson = wordAssessmentEventGsons.get(wordAssessmentEventGsons.size() - 4);
-                    long milliSecondsPassedSincePreviousAssessmentEvent = Calendar.getInstance().getTimeInMillis() - previousWordAssessmentEventGson.getTime().getTimeInMillis();
-                    Double hoursPassedSincePreviousAssessmentEvent = Double.valueOf(milliSecondsPassedSincePreviousAssessmentEvent / 1000 / 60 / 60);
                     if (hoursPassedSincePreviousAssessmentEvent >= 256.00) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 5) {
                     // Check if it's time for the 6th review
-                    WordAssessmentEventGson previousWordAssessmentEventGson = wordAssessmentEventGsons.get(wordAssessmentEventGsons.size() - 5);
-                    long milliSecondsPassedSincePreviousAssessmentEvent = Calendar.getInstance().getTimeInMillis() - previousWordAssessmentEventGson.getTime().getTimeInMillis();
-                    Double hoursPassedSincePreviousAssessmentEvent = Double.valueOf(milliSecondsPassedSincePreviousAssessmentEvent / 1000 / 60 / 60);
                     if (hoursPassedSincePreviousAssessmentEvent >= 1024.00) {
                         isReviewPending = true;
                     }
