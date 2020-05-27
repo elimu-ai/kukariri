@@ -24,12 +24,14 @@ import java.util.Set;
 import ai.elimu.kukariri.BuildConfig;
 import ai.elimu.kukariri.R;
 import ai.elimu.kukariri.logic.SpacedRepetitionHelper;
+import ai.elimu.kukariri.util.CursorToEmojiGsonConverter;
 import ai.elimu.kukariri.util.CursorToWordAssessmentEventGsonConverter;
 import ai.elimu.kukariri.util.CursorToWordGsonConverter;
 import ai.elimu.kukariri.util.CursorToWordLearningEventGsonConverter;
 import ai.elimu.model.enums.content.WordType;
 import ai.elimu.model.v2.gson.analytics.WordAssessmentEventGson;
 import ai.elimu.model.v2.gson.analytics.WordLearningEventGson;
+import ai.elimu.model.v2.gson.content.EmojiGson;
 import ai.elimu.model.v2.gson.content.WordGson;
 
 public class WordAssessmentActivity extends AppCompatActivity {
@@ -264,6 +266,45 @@ public class WordAssessmentActivity extends AppCompatActivity {
         return wordAssessmentEventGsons;
     }
 
+    private List<EmojiGson> getEmojiGsons(Long wordId) {
+        Log.i(getClass().getName(), "getEmojiGsons");
+
+        List<EmojiGson> emojiGsons = new ArrayList<>();
+
+        // Fetch list of WordAssessmentEvents from the Analytics application
+        Uri emojisUri = Uri.parse("content://" + BuildConfig.CONTENT_PROVIDER_APPLICATION_ID + ".provider.emoji_provider/emojis/by-word-label-id/" + wordId);
+        Log.i(getClass().getName(), "emojisUri: " + emojisUri);
+        Cursor emojisCursor = getContentResolver().query(emojisUri, null, null, null, null);
+        Log.i(getClass().getName(), "emojisCursor: " + emojisCursor);
+        if (emojisCursor == null) {
+            Log.e(getClass().getName(), "emojisCursor == null");
+            Toast.makeText(getApplicationContext(), "emojisCursor == null", Toast.LENGTH_LONG).show();
+        } else {
+            Log.i(getClass().getName(), "emojisCursor.getCount(): " + emojisCursor.getCount());
+            if (emojisCursor.getCount() == 0) {
+                Log.e(getClass().getName(), "emojisCursor.getCount() == 0");
+            } else {
+                boolean isLast = false;
+                while (!isLast) {
+                    emojisCursor.moveToNext();
+
+                    // Convert from Room to Gson
+                    EmojiGson emojiGson = CursorToEmojiGsonConverter.getEmojiGson(emojisCursor);
+
+                    emojiGsons.add(emojiGson);
+
+                    isLast = emojisCursor.isLast();
+                }
+
+                emojisCursor.close();
+                Log.i(getClass().getName(), "emojisCursor.isClosed(): " + emojisCursor.isClosed());
+            }
+        }
+        Log.i(getClass().getName(), "emojiGsons.size(): " + emojiGsons.size());
+
+        return emojiGsons;
+    }
+
     private void loadNextWord() {
         Log.i(getClass().getName(), "loadNextWord");
 
@@ -285,6 +326,15 @@ public class WordAssessmentActivity extends AppCompatActivity {
         textView.setText(wordGson.getText());
         Animation appearAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_appear_right);
         textView.startAnimation(appearAnimation);
+
+        // Append Emojis (if any) below the Word
+        List<EmojiGson> emojiGsons = getEmojiGsons(wordGson.getId());
+        if (!emojiGsons.isEmpty()) {
+            textView.setText(textView.getText() + "\n");
+            for (EmojiGson emojiGson : emojiGsons) {
+                textView.setText(textView.getText() + emojiGson.getGlyph());
+            }
+        }
 
         final long timeStart = System.currentTimeMillis();
 
