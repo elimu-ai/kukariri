@@ -103,9 +103,120 @@ public class WordAssessmentActivity extends AppCompatActivity {
         Log.i(getClass().getName(), "idsOfWordsPendingReview.size(): " + idsOfWordsPendingReview.size());
 
         // Fetch list of Words from the ContentProvider, and exclude those not in the idsOfWordsPendingReview set
+        List<WordGson> allWordGsons = getWordGsons();
+        for (WordGson wordGson : allWordGsons) {
+            if (idsOfWordsPendingReview.contains(wordGson.getId())) {
+                // Only include adjectives/nouns/verbs
+                if (       (wordGson.getWordType() == WordType.ADJECTIVE)
+                        || (wordGson.getWordType() == WordType.NOUN)
+                        || (wordGson.getWordType() == WordType.VERB)
+                ) {
+                    wordGsons.add(wordGson);
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        Log.i(getClass().getName(), "onStart");
+        super.onStart();
+
+        loadNextWord();
+    }
+
+    private void loadNextWord() {
+        Log.i(getClass().getName(), "loadNextWord");
+
+        if (wordGsons.isEmpty()) {
+            Intent intent = new Intent(getApplicationContext(), AssessmentCompletedActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
+        // Update the progress bar
+        int progressPercentage = wordGsonsMastered.size() * 100 / (wordGsons.size() + wordGsonsMastered.size());
+        ObjectAnimator objectAnimator = ObjectAnimator.ofInt(progressBar, "progress", progressPercentage);
+        objectAnimator.setDuration(1000);
+        objectAnimator.start();
+
+        // Display the next Word in the list
+        final WordGson wordGson = wordGsons.get(0);
+        textView.setText(wordGson.getText());
+        Animation appearAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_appear_right);
+        textView.startAnimation(appearAnimation);
+
+        // Append Emojis (if any) below the Word
+        List<EmojiGson> emojiGsons = getEmojiGsons(wordGson.getId());
+        if (!emojiGsons.isEmpty()) {
+            textView.setText(textView.getText() + "\n");
+            for (EmojiGson emojiGson : emojiGsons) {
+                textView.setText(textView.getText() + emojiGson.getGlyph());
+            }
+        }
+
+        final long timeStart = System.currentTimeMillis();
+
+        difficultButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(getClass().getName(), "difficultButton onClick");
+
+                // Move the Word to the end of the list
+                wordGsons.remove(wordGson);
+                wordGsons.add(wordGson);
+
+                // Report WordAssessmentEvent to the Analytics application
+                Intent broadcastIntent = new Intent();
+                broadcastIntent.setPackage(BuildConfig.ANALYTICS_APPLICATION_ID);
+                broadcastIntent.setAction("ai.elimu.intent.action.WORD_ASSESSMENT_EVENT");
+                broadcastIntent.putExtra("packageName", BuildConfig.APPLICATION_ID);
+                broadcastIntent.putExtra("wordId", wordGson.getId());
+                broadcastIntent.putExtra("wordText", wordGson.getText());
+                broadcastIntent.putExtra("masteryScore", 0.00f);
+                broadcastIntent.putExtra("timeSpentMs", System.currentTimeMillis() - timeStart);
+                sendBroadcast(broadcastIntent);
+
+                loadNextWord();
+            }
+        });
+
+        easyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(getClass().getName(), "easyButton onClick");
+
+                // Remove the Word from the list of Words to be repeated, and add it to the list of mastered Words
+                wordGsons.remove(wordGson);
+                wordGsonsMastered.add(wordGson);
+
+                // Report WordAssessmentEvent to the Analytics application
+                Intent broadcastIntent = new Intent();
+                broadcastIntent.setPackage(BuildConfig.ANALYTICS_APPLICATION_ID);
+                broadcastIntent.setAction("ai.elimu.intent.action.WORD_ASSESSMENT_EVENT");
+                broadcastIntent.putExtra("packageName", BuildConfig.APPLICATION_ID);
+                broadcastIntent.putExtra("wordId", wordGson.getId());
+                broadcastIntent.putExtra("wordText", wordGson.getText());
+                broadcastIntent.putExtra("masteryScore", 1.00f);
+                broadcastIntent.putExtra("timeSpentMs", System.currentTimeMillis() - timeStart);
+                sendBroadcast(broadcastIntent);
+
+                loadNextWord();
+            }
+        });
+    }
+
+    private List<WordGson> getWordGsons() {
+        Log.i(getClass().getName(), "getWordGsons");
+
+        List<WordGson> wordGsons = new ArrayList<>();
+
+        // Fetch list of Words from the ContentProvider
         Uri wordsUri = Uri.parse("content://" + BuildConfig.CONTENT_PROVIDER_APPLICATION_ID + ".provider.word_provider/words");
         Log.i(getClass().getName(), "wordsUri: " + wordsUri);
         Cursor wordsCursor = getContentResolver().query(wordsUri, null, null, null, null);
+        Log.i(getClass().getName(), "wordsCursor: " + wordsCursor);
         if (wordsCursor == null) {
             Log.e(getClass().getName(), "wordsCursor == null");
             Toast.makeText(getApplicationContext(), "wordsCursor == null", Toast.LENGTH_LONG).show();
@@ -121,15 +232,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
                     // Convert from Room to Gson
                     WordGson wordGson = CursorToWordGsonConverter.getWordGson(wordsCursor);
 
-                    if (idsOfWordsPendingReview.contains(wordGson.getId())) {
-                        // Only include adjectives/nouns/verbs
-                        if (       (wordGson.getWordType() == WordType.ADJECTIVE)
-                                || (wordGson.getWordType() == WordType.NOUN)
-                                || (wordGson.getWordType() == WordType.VERB)
-                        ) {
-                            wordGsons.add(wordGson);
-                        }
-                    }
+                    wordGsons.add(wordGson);
 
                     isLast = wordsCursor.isLast();
                 }
@@ -138,15 +241,9 @@ public class WordAssessmentActivity extends AppCompatActivity {
                 Log.i(getClass().getName(), "wordsCursor.isClosed(): " + wordsCursor.isClosed());
             }
         }
-        Log.i(getClass().getName(), "wordGsons: " + wordGsons);
-    }
+        Log.i(getClass().getName(), "wordGsons.size(): " + wordGsons.size());
 
-    @Override
-    protected void onStart() {
-        Log.i(getClass().getName(), "onStart");
-        super.onStart();
-
-        loadNextWord();
+        return wordGsons;
     }
 
     private List<WordLearningEventGson> getWordLearningEventGsons() {
@@ -303,87 +400,5 @@ public class WordAssessmentActivity extends AppCompatActivity {
         Log.i(getClass().getName(), "emojiGsons.size(): " + emojiGsons.size());
 
         return emojiGsons;
-    }
-
-    private void loadNextWord() {
-        Log.i(getClass().getName(), "loadNextWord");
-
-        if (wordGsons.isEmpty()) {
-            Intent intent = new Intent(getApplicationContext(), AssessmentCompletedActivity.class);
-            startActivity(intent);
-            finish();
-            return;
-        }
-
-        // Update the progress bar
-        int progressPercentage = wordGsonsMastered.size() * 100 / (wordGsons.size() + wordGsonsMastered.size());
-        ObjectAnimator objectAnimator = ObjectAnimator.ofInt(progressBar, "progress", progressPercentage);
-        objectAnimator.setDuration(1000);
-        objectAnimator.start();
-
-        // Display the next Word in the list
-        final WordGson wordGson = wordGsons.get(0);
-        textView.setText(wordGson.getText());
-        Animation appearAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_appear_right);
-        textView.startAnimation(appearAnimation);
-
-        // Append Emojis (if any) below the Word
-        List<EmojiGson> emojiGsons = getEmojiGsons(wordGson.getId());
-        if (!emojiGsons.isEmpty()) {
-            textView.setText(textView.getText() + "\n");
-            for (EmojiGson emojiGson : emojiGsons) {
-                textView.setText(textView.getText() + emojiGson.getGlyph());
-            }
-        }
-
-        final long timeStart = System.currentTimeMillis();
-
-        difficultButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(getClass().getName(), "difficultButton onClick");
-
-                // Move the Word to the end of the list
-                wordGsons.remove(wordGson);
-                wordGsons.add(wordGson);
-
-                // Report WordAssessmentEvent to the Analytics application
-                Intent broadcastIntent = new Intent();
-                broadcastIntent.setPackage(BuildConfig.ANALYTICS_APPLICATION_ID);
-                broadcastIntent.setAction("ai.elimu.intent.action.WORD_ASSESSMENT_EVENT");
-                broadcastIntent.putExtra("packageName", BuildConfig.APPLICATION_ID);
-                broadcastIntent.putExtra("wordId", wordGson.getId());
-                broadcastIntent.putExtra("wordText", wordGson.getText());
-                broadcastIntent.putExtra("masteryScore", 0.00f);
-                broadcastIntent.putExtra("timeSpentMs", System.currentTimeMillis() - timeStart);
-                sendBroadcast(broadcastIntent);
-
-                loadNextWord();
-            }
-        });
-
-        easyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(getClass().getName(), "easyButton onClick");
-
-                // Remove the Word from the list of Words to be repeated, and add it to the list of mastered Words
-                wordGsons.remove(wordGson);
-                wordGsonsMastered.add(wordGson);
-
-                // Report WordAssessmentEvent to the Analytics application
-                Intent broadcastIntent = new Intent();
-                broadcastIntent.setPackage(BuildConfig.ANALYTICS_APPLICATION_ID);
-                broadcastIntent.setAction("ai.elimu.intent.action.WORD_ASSESSMENT_EVENT");
-                broadcastIntent.putExtra("packageName", BuildConfig.APPLICATION_ID);
-                broadcastIntent.putExtra("wordId", wordGson.getId());
-                broadcastIntent.putExtra("wordText", wordGson.getText());
-                broadcastIntent.putExtra("masteryScore", 1.00f);
-                broadcastIntent.putExtra("timeSpentMs", System.currentTimeMillis() - timeStart);
-                sendBroadcast(broadcastIntent);
-
-                loadNextWord();
-            }
-        });
     }
 }
