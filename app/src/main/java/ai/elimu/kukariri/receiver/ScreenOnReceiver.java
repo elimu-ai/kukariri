@@ -7,14 +7,17 @@ import android.hardware.display.DisplayManager;
 import android.util.Log;
 import android.view.Display;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import ai.elimu.kukariri.MainActivity;
 import ai.elimu.kukariri.assessment.WordAssessmentActivity;
 import ai.elimu.kukariri.util.ReviewHelper;
+import ai.elimu.model.enums.content.WordType;
 import ai.elimu.model.v2.gson.analytics.WordAssessmentEventGson;
 import ai.elimu.model.v2.gson.analytics.WordLearningEventGson;
+import ai.elimu.model.v2.gson.content.WordGson;
 
 public class ScreenOnReceiver extends BroadcastReceiver {
 
@@ -34,7 +37,6 @@ public class ScreenOnReceiver extends BroadcastReceiver {
             }
         }
 
-        // Check if there are pending reviews
         // Get a list of the Words that have been previously learned
         List<WordLearningEventGson> wordLearningEventGsons = new WordAssessmentActivity().getWordLearningEventGsons(context);
 
@@ -47,7 +49,23 @@ public class ScreenOnReceiver extends BroadcastReceiver {
         // Determine which of the previously learned Words are pending a review (based on WordAssessmentEvents)
         Set<Long> idsOfWordsPendingReview = ReviewHelper.getIdsOfWordsPendingReview(idsOfWordsInWordLearningEvents, wordLearningEventGsons, wordAssessmentEventGsons);
         Log.i(getClass().getName(), "idsOfWordsPendingReview.size(): " + idsOfWordsPendingReview.size());
-        if (!idsOfWordsPendingReview.isEmpty()) {
+
+        // Get list of adjectives/nouns/verbs pending review
+        List<WordGson> wordGsonsPendingReview = new ArrayList<>();
+        List<WordGson> allWordGsons = new WordAssessmentActivity().getWordGsons(context);
+        for (WordGson wordGson : allWordGsons) {
+            if (idsOfWordsPendingReview.contains(wordGson.getId())) {
+                // Only include adjectives/nouns/verbs
+                if (       (wordGson.getWordType() == WordType.ADJECTIVE)
+                        || (wordGson.getWordType() == WordType.NOUN)
+                        || (wordGson.getWordType() == WordType.VERB)
+                ) {
+                    wordGsonsPendingReview.add(wordGson);
+                }
+            }
+        }
+        Log.i(getClass().getName(), "wordGsonsPendingReview.size(): " + wordGsonsPendingReview.size());
+        if (!wordGsonsPendingReview.isEmpty()) {
             // Launch the application
             Intent launchIntent = new Intent(context, MainActivity.class);
             launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

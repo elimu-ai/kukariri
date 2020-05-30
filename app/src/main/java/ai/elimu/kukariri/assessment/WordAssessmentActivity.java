@@ -24,7 +24,6 @@ import java.util.Set;
 
 import ai.elimu.kukariri.BuildConfig;
 import ai.elimu.kukariri.R;
-import ai.elimu.kukariri.logic.SpacedRepetitionHelper;
 import ai.elimu.kukariri.util.CursorToEmojiGsonConverter;
 import ai.elimu.kukariri.util.CursorToWordAssessmentEventGsonConverter;
 import ai.elimu.kukariri.util.CursorToWordGsonConverter;
@@ -49,10 +48,10 @@ public class WordAssessmentActivity extends AppCompatActivity {
     /**
      * The student will iterate through this list of Words until they have all been mastered.
      */
-    private List<WordGson> wordGsons = new ArrayList<>();
+    private List<WordGson> wordGsonsPendingReview = new ArrayList<>();
 
     /**
-     * Once a Word has been mastered, it's moved from {@link #wordGsons} to {@link #wordGsonsMastered}.
+     * Once a Word has been mastered, it's moved from {@link #wordGsonsPendingReview} to {@link #wordGsonsMastered}.
      */
     private List<WordGson> wordGsonsMastered = new ArrayList<>();
 
@@ -85,7 +84,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
         Log.i(getClass().getName(), "idsOfWordsPendingReview.size(): " + idsOfWordsPendingReview.size());
 
         // Fetch list of Words from the ContentProvider, and exclude those not in the idsOfWordsPendingReview set
-        List<WordGson> allWordGsons = getWordGsons();
+        List<WordGson> allWordGsons = getWordGsons(getApplicationContext());
         for (WordGson wordGson : allWordGsons) {
             if (idsOfWordsPendingReview.contains(wordGson.getId())) {
                 // Only include adjectives/nouns/verbs
@@ -93,7 +92,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
                         || (wordGson.getWordType() == WordType.NOUN)
                         || (wordGson.getWordType() == WordType.VERB)
                 ) {
-                    wordGsons.add(wordGson);
+                    wordGsonsPendingReview.add(wordGson);
                 }
             }
         }
@@ -110,7 +109,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
     private void loadNextWord() {
         Log.i(getClass().getName(), "loadNextWord");
 
-        if (wordGsons.isEmpty()) {
+        if (wordGsonsPendingReview.isEmpty()) {
             Intent intent = new Intent(getApplicationContext(), AssessmentCompletedActivity.class);
             startActivity(intent);
             finish();
@@ -118,13 +117,13 @@ public class WordAssessmentActivity extends AppCompatActivity {
         }
 
         // Update the progress bar
-        int progressPercentage = wordGsonsMastered.size() * 100 / (wordGsons.size() + wordGsonsMastered.size());
+        int progressPercentage = wordGsonsMastered.size() * 100 / (wordGsonsPendingReview.size() + wordGsonsMastered.size());
         ObjectAnimator objectAnimator = ObjectAnimator.ofInt(progressBar, "progress", progressPercentage);
         objectAnimator.setDuration(1000);
         objectAnimator.start();
 
         // Display the next Word in the list
-        final WordGson wordGson = wordGsons.get(0);
+        final WordGson wordGson = wordGsonsPendingReview.get(0);
         textView.setText(wordGson.getText());
         Animation appearAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_appear_right);
         textView.startAnimation(appearAnimation);
@@ -146,8 +145,8 @@ public class WordAssessmentActivity extends AppCompatActivity {
                 Log.i(getClass().getName(), "difficultButton onClick");
 
                 // Move the Word to the end of the list
-                wordGsons.remove(wordGson);
-                wordGsons.add(wordGson);
+                wordGsonsPendingReview.remove(wordGson);
+                wordGsonsPendingReview.add(wordGson);
 
                 // Report WordAssessmentEvent to the Analytics application
                 Intent broadcastIntent = new Intent();
@@ -170,7 +169,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
                 Log.i(getClass().getName(), "easyButton onClick");
 
                 // Remove the Word from the list of Words to be repeated, and add it to the list of mastered Words
-                wordGsons.remove(wordGson);
+                wordGsonsPendingReview.remove(wordGson);
                 wordGsonsMastered.add(wordGson);
 
                 // Report WordAssessmentEvent to the Analytics application
@@ -189,7 +188,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
         });
     }
 
-    private List<WordGson> getWordGsons() {
+    public List<WordGson> getWordGsons(Context context) {
         Log.i(getClass().getName(), "getWordGsons");
 
         List<WordGson> wordGsons = new ArrayList<>();
@@ -197,7 +196,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
         // Fetch list of Words from the ContentProvider
         Uri wordsUri = Uri.parse("content://" + BuildConfig.CONTENT_PROVIDER_APPLICATION_ID + ".provider.word_provider/words");
         Log.i(getClass().getName(), "wordsUri: " + wordsUri);
-        Cursor wordsCursor = getContentResolver().query(wordsUri, null, null, null, null);
+        Cursor wordsCursor = context.getContentResolver().query(wordsUri, null, null, null, null);
         Log.i(getClass().getName(), "wordsCursor: " + wordsCursor);
         if (wordsCursor == null) {
             Log.e(getClass().getName(), "wordsCursor == null");
