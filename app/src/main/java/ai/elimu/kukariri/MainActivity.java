@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Locale;
 
 import ai.elimu.kukariri.assessment.WordAssessmentActivity;
-import ai.elimu.kukariri.service.ScreenOnService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,10 +23,6 @@ public class MainActivity extends AppCompatActivity {
         Log.i(getClass().getName(), "deviceLocale: " + deviceLocale);
         String deviceLanguage = deviceLocale.getLanguage();
         Log.i(getClass().getName(), "deviceLanguage: " + deviceLanguage);
-
-        // Start service for registering ScreenOnReceiver
-        Intent screenOnServiceIntent = new Intent(getApplicationContext(), ScreenOnService.class);
-        startService(screenOnServiceIntent);
     }
 
     @Override
