@@ -1,6 +1,7 @@
 package ai.elimu.kukariri.assessment;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -28,6 +29,7 @@ import ai.elimu.kukariri.util.CursorToEmojiGsonConverter;
 import ai.elimu.kukariri.util.CursorToWordAssessmentEventGsonConverter;
 import ai.elimu.kukariri.util.CursorToWordGsonConverter;
 import ai.elimu.kukariri.util.CursorToWordLearningEventGsonConverter;
+import ai.elimu.kukariri.util.ReviewHelper;
 import ai.elimu.model.enums.content.WordType;
 import ai.elimu.model.v2.gson.analytics.WordAssessmentEventGson;
 import ai.elimu.model.v2.gson.analytics.WordLearningEventGson;
@@ -69,37 +71,17 @@ public class WordAssessmentActivity extends AppCompatActivity {
 
         easyButton = findViewById(R.id.wordAssessmentEasyButton);
 
-        // Get a set of the Words that have been previously learned
-        List<WordLearningEventGson> wordLearningEventGsons = getWordLearningEventGsons();
+        // Get a list of the Words that have been previously learned
+        List<WordLearningEventGson> wordLearningEventGsons = getWordLearningEventGsons(getApplicationContext());
 
         // Get a set of the Words that have been previously learned
-        Set<Long> idsOfWordsInWordLearningEvents = getIdsOfWordsInWordLearningEvents();
+        Set<Long> idsOfWordsInWordLearningEvents = getIdsOfWordsInWordLearningEvents(getApplicationContext());
+
+        // Get a list of assessment events for the words that have been previously learned
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = getWordAssessmentEventGsons(idsOfWordsInWordLearningEvents, getApplicationContext());
 
         // Determine which of the previously learned Words are pending a review (based on WordAssessmentEvents)
-        Set<Long> idsOfWordsPendingReview = new HashSet<>();
-        List<WordAssessmentEventGson> wordAssessmentEventGsons = getWordAssessmentEventGsons(idsOfWordsInWordLearningEvents);
-        for (Long idOfWordInWordLearningEvent : idsOfWordsInWordLearningEvents) {
-            WordLearningEventGson originalWordLearningEventGson = null;
-            for (WordLearningEventGson wordLearningEventGson : wordLearningEventGsons) {
-                if (wordLearningEventGson.getWordId().equals(idOfWordInWordLearningEvent)) {
-                    originalWordLearningEventGson = wordLearningEventGson;
-                    break;
-                }
-            }
-
-            List<WordAssessmentEventGson> wordAssessmentEventGsonsAssociatedWithLearningEvent = new ArrayList<>();
-            for (WordAssessmentEventGson wordAssessmentEventGson : wordAssessmentEventGsons) {
-                if (wordAssessmentEventGson.getWordId().equals(idOfWordInWordLearningEvent)) {
-                    wordAssessmentEventGsonsAssociatedWithLearningEvent.add(wordAssessmentEventGson);
-                }
-            }
-
-            // Check if the Word has any pending assessment reviews
-            boolean isReviewPending = SpacedRepetitionHelper.isReviewPending(originalWordLearningEventGson, wordAssessmentEventGsonsAssociatedWithLearningEvent);
-            if (isReviewPending) {
-                idsOfWordsPendingReview.add(idOfWordInWordLearningEvent);
-            }
-        }
+        Set<Long> idsOfWordsPendingReview = ReviewHelper.getIdsOfWordsPendingReview(idsOfWordsInWordLearningEvents, wordLearningEventGsons, wordAssessmentEventGsons);
         Log.i(getClass().getName(), "idsOfWordsPendingReview.size(): " + idsOfWordsPendingReview.size());
 
         // Fetch list of Words from the ContentProvider, and exclude those not in the idsOfWordsPendingReview set
@@ -246,7 +228,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
         return wordGsons;
     }
 
-    private List<WordLearningEventGson> getWordLearningEventGsons() {
+    public List<WordLearningEventGson> getWordLearningEventGsons(Context context) {
         Log.i(getClass().getName(), "getWordLearningEventGsons");
 
         List<WordLearningEventGson> wordLearningEventGsons = new ArrayList<>();
@@ -254,7 +236,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
         // Fetch list of WordLearningEvents from the Analytics application
         Uri wordLearningEventsUri = Uri.parse("content://" + BuildConfig.ANALYTICS_APPLICATION_ID + ".provider.word_learning_event_provider/events");
         Log.i(getClass().getName(), "wordLearningEventsUri: " + wordLearningEventsUri);
-        Cursor wordLearningEventsCursor = getContentResolver().query(wordLearningEventsUri, null, null, null, null);
+        Cursor wordLearningEventsCursor = context.getContentResolver().query(wordLearningEventsUri, null, null, null, null);
         Log.i(getClass().getName(), "wordLearningEventsCursor: " + wordLearningEventsCursor);
         if (wordLearningEventsCursor == null) {
             Log.e(getClass().getName(), "wordLearningEventsCursor == null");
@@ -285,7 +267,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
         return wordLearningEventGsons;
     }
 
-    private Set<Long> getIdsOfWordsInWordLearningEvents() {
+    public Set<Long> getIdsOfWordsInWordLearningEvents(Context context) {
         Log.i(getClass().getName(), "getIdsOfWordsInWordLearningEvents");
 
         Set<Long> wordIdsSet = new HashSet<>();
@@ -293,7 +275,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
         // Fetch list of WordLearningEvents from the Analytics application
         Uri wordLearningEventsUri = Uri.parse("content://" + BuildConfig.ANALYTICS_APPLICATION_ID + ".provider.word_learning_event_provider/events");
         Log.i(getClass().getName(), "wordLearningEventsUri: " + wordLearningEventsUri);
-        Cursor wordLearningEventsCursor = getContentResolver().query(wordLearningEventsUri, null, null, null, null);
+        Cursor wordLearningEventsCursor = context.getContentResolver().query(wordLearningEventsUri, null, null, null, null);
         Log.i(getClass().getName(), "wordLearningEventsCursor: " + wordLearningEventsCursor);
         if (wordLearningEventsCursor == null) {
             Log.e(getClass().getName(), "wordLearningEventsCursor == null");
@@ -324,7 +306,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
         return wordIdsSet;
     }
     
-    private List<WordAssessmentEventGson> getWordAssessmentEventGsons(Set<Long> idsOfWordsInWordLearningEvents) {
+    public List<WordAssessmentEventGson> getWordAssessmentEventGsons(Set<Long> idsOfWordsInWordLearningEvents, Context context) {
         Log.i(getClass().getName(), "getWordAssessmentEventGsons");
 
         List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
@@ -332,7 +314,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
         // Fetch list of WordAssessmentEvents from the Analytics application
         Uri wordAssessmentEventsUri = Uri.parse("content://" + BuildConfig.ANALYTICS_APPLICATION_ID + ".provider.word_assessment_event_provider/events");
         Log.i(getClass().getName(), "wordAssessmentEventsUri: " + wordAssessmentEventsUri);
-        Cursor wordAssessmentEventsCursor = getContentResolver().query(wordAssessmentEventsUri, null, null, null, null);
+        Cursor wordAssessmentEventsCursor = context.getContentResolver().query(wordAssessmentEventsUri, null, null, null, null);
         Log.i(getClass().getName(), "wordAssessmentEventsCursor: " + wordAssessmentEventsCursor);
         if (wordAssessmentEventsCursor == null) {
             Log.e(getClass().getName(), "wordAssessmentEventsCursor == null");
