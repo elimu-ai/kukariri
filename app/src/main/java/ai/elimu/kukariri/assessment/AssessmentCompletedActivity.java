@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.sackcentury.shinebuttonlib.ShineButton;
 
 import ai.elimu.kukariri.R;
+import ai.elimu.kukariri.util.MediaPlayerHelper;
 
 public class AssessmentCompletedActivity extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class AssessmentCompletedActivity extends AppCompatActivity {
             public void run() {
                 Log.i(getClass().getName(), "run");
                 shineButton.callOnClick();
+                MediaPlayerHelper.play(getApplicationContext(), R.raw.success);
             }
         }, 500);
     }

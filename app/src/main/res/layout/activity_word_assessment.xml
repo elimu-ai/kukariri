@@ -36,6 +36,7 @@
 
         <Button
             android:id="@+id/wordAssessmentDifficultButton"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_percent="0.50"
             android:layout_width="0dp"
@@ -48,6 +49,7 @@
 
         <Button
             android:id="@+id/wordAssessmentEasyButton"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintWidth_percent="0.50"
             android:layout_width="0dp"
