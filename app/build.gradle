@@ -7,8 +7,9 @@ android {
         applicationId "ai.elimu.kukariri"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 1000002
-        versionName "1.0.2"
+        versionCode 1000003
+        versionName "1.0.3-SNAPSHOT"
+        setProperty("archivesBaseName", "${applicationId}-${versionCode}")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
