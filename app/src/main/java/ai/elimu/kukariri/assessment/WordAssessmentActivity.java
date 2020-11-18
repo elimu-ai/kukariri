@@ -1,10 +1,7 @@
 package ai.elimu.kukariri.assessment;
 
 import android.animation.ObjectAnimator;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,15 +10,15 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import ai.elimu.analytics.utils.AssessmentEventUtil;
+import ai.elimu.analytics.utils.ContentProviderUtil;
 import ai.elimu.content_provider.utils.ContentProviderHelper;
 import ai.elimu.kukariri.BuildConfig;
 import ai.elimu.kukariri.R;
@@ -68,13 +65,13 @@ public class WordAssessmentActivity extends AppCompatActivity {
         easyButton = findViewById(R.id.wordAssessmentEasyButton);
 
         // Get a list of the Words that have been previously learned
-        List<WordLearningEventGson> wordLearningEventGsons = ContentProviderHelper.getWordLearningEventGsons(getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        List<WordLearningEventGson> wordLearningEventGsons = ContentProviderUtil.getWordLearningEventGsons(getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
 
         // Get a set of the Words that have been previously learned
-        Set<Long> idsOfWordsInWordLearningEvents = ContentProviderHelper.getIdsOfWordsInWordLearningEvents(getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        Set<Long> idsOfWordsInWordLearningEvents = ContentProviderUtil.getIdsOfWordsInWordLearningEvents(getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
 
         // Get a list of assessment events for the words that have been previously learned
-        List<WordAssessmentEventGson> wordAssessmentEventGsons = ContentProviderHelper.getWordAssessmentEventGsons(idsOfWordsInWordLearningEvents, getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = ContentProviderUtil.getWordAssessmentEventGsons(idsOfWordsInWordLearningEvents, getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
 
         // Determine which of the previously learned Words are pending a review (based on WordAssessmentEvents)
         Set<Long> idsOfWordsPendingReview = ReviewHelper.getIdsOfWordsPendingReview(idsOfWordsInWordLearningEvents, wordLearningEventGsons, wordAssessmentEventGsons);
@@ -145,16 +142,8 @@ public class WordAssessmentActivity extends AppCompatActivity {
                 wordGsonsPendingReview.remove(wordGson);
                 wordGsonsPendingReview.add(wordGson);
 
-                // Report WordAssessmentEvent to the Analytics application
-                Intent broadcastIntent = new Intent();
-                broadcastIntent.setPackage(BuildConfig.ANALYTICS_APPLICATION_ID);
-                broadcastIntent.setAction("ai.elimu.intent.action.WORD_ASSESSMENT_EVENT");
-                broadcastIntent.putExtra("packageName", BuildConfig.APPLICATION_ID);
-                broadcastIntent.putExtra("wordId", wordGson.getId());
-                broadcastIntent.putExtra("wordText", wordGson.getText());
-                broadcastIntent.putExtra("masteryScore", 0.00f);
-                broadcastIntent.putExtra("timeSpentMs", System.currentTimeMillis() - timeStart);
-                sendBroadcast(broadcastIntent);
+                // Report assessment event to the Analytics application (https://github.com/elimu-ai/analytics)
+                AssessmentEventUtil.reportWordAssessmentEvent(BuildConfig.APPLICATION_ID, wordGson, 0.00f, System.currentTimeMillis() - timeStart, getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
 
                 loadNextWord();
             }
@@ -169,16 +158,8 @@ public class WordAssessmentActivity extends AppCompatActivity {
                 wordGsonsPendingReview.remove(wordGson);
                 wordGsonsMastered.add(wordGson);
 
-                // Report WordAssessmentEvent to the Analytics application
-                Intent broadcastIntent = new Intent();
-                broadcastIntent.setPackage(BuildConfig.ANALYTICS_APPLICATION_ID);
-                broadcastIntent.setAction("ai.elimu.intent.action.WORD_ASSESSMENT_EVENT");
-                broadcastIntent.putExtra("packageName", BuildConfig.APPLICATION_ID);
-                broadcastIntent.putExtra("wordId", wordGson.getId());
-                broadcastIntent.putExtra("wordText", wordGson.getText());
-                broadcastIntent.putExtra("masteryScore", 1.00f);
-                broadcastIntent.putExtra("timeSpentMs", System.currentTimeMillis() - timeStart);
-                sendBroadcast(broadcastIntent);
+                // Report assessment event to the Analytics application (https://github.com/elimu-ai/analytics)
+                AssessmentEventUtil.reportWordAssessmentEvent(BuildConfig.APPLICATION_ID, wordGson, 1.00f, System.currentTimeMillis() - timeStart, getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
 
                 loadNextWord();
             }

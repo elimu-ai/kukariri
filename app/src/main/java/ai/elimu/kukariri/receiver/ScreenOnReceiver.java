@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import ai.elimu.analytics.utils.ContentProviderUtil;
 import ai.elimu.content_provider.utils.ContentProviderHelper;
 import ai.elimu.kukariri.BuildConfig;
 import ai.elimu.kukariri.MainActivity;
-import ai.elimu.kukariri.assessment.WordAssessmentActivity;
 import ai.elimu.kukariri.util.ReviewHelper;
 import ai.elimu.model.enums.content.WordType;
 import ai.elimu.model.v2.gson.analytics.WordAssessmentEventGson;
@@ -40,13 +40,13 @@ public class ScreenOnReceiver extends BroadcastReceiver {
         }
 
         // Get a list of the Words that have been previously learned
-        List<WordLearningEventGson> wordLearningEventGsons = ContentProviderHelper.getWordLearningEventGsons(context, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        List<WordLearningEventGson> wordLearningEventGsons = ContentProviderUtil.getWordLearningEventGsons(context, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
 
         // Get a set of the Words that have been previously learned
-        Set<Long> idsOfWordsInWordLearningEvents = ContentProviderHelper.getIdsOfWordsInWordLearningEvents(context, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        Set<Long> idsOfWordsInWordLearningEvents = ContentProviderUtil.getIdsOfWordsInWordLearningEvents(context, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
 
         // Get a list of assessment events for the words that have been previously learned
-        List<WordAssessmentEventGson> wordAssessmentEventGsons = ContentProviderHelper.getWordAssessmentEventGsons(idsOfWordsInWordLearningEvents, context, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = ContentProviderUtil.getWordAssessmentEventGsons(idsOfWordsInWordLearningEvents, context, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
 
         // Determine which of the previously learned Words are pending a review (based on WordAssessmentEvents)
         Set<Long> idsOfWordsPendingReview = ReviewHelper.getIdsOfWordsPendingReview(idsOfWordsInWordLearningEvents, wordLearningEventGsons, wordAssessmentEventGsons);
