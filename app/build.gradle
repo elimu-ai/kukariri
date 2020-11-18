@@ -40,6 +40,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'ai.elimu:model:2.0.24'
+    implementation 'ai.elimu:content-provider-utils:1.0.3@aar'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'com.sackcentury:shinebutton:1.0.0'
