@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 import ai.elimu.analytics.utils.AssessmentEventUtil;
-import ai.elimu.analytics.utils.ContentProviderUtil;
+import ai.elimu.analytics.utils.LearningEventUtil;
 import ai.elimu.content_provider.utils.ContentProviderHelper;
 import ai.elimu.kukariri.BuildConfig;
 import ai.elimu.kukariri.R;
@@ -65,13 +65,13 @@ public class WordAssessmentActivity extends AppCompatActivity {
         easyButton = findViewById(R.id.wordAssessmentEasyButton);
 
         // Get a list of the Words that have been previously learned
-        List<WordLearningEventGson> wordLearningEventGsons = ContentProviderUtil.getWordLearningEventGsons(getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        List<WordLearningEventGson> wordLearningEventGsons = LearningEventUtil.getWordLearningEventGsons(getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
 
         // Get a set of the Words that have been previously learned
-        Set<Long> idsOfWordsInWordLearningEvents = ContentProviderUtil.getIdsOfWordsInWordLearningEvents(getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        Set<Long> idsOfWordsInWordLearningEvents = LearningEventUtil.getIdsOfWordsInWordLearningEvents(getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
 
         // Get a list of assessment events for the words that have been previously learned
-        List<WordAssessmentEventGson> wordAssessmentEventGsons = ContentProviderUtil.getWordAssessmentEventGsons(idsOfWordsInWordLearningEvents, getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = AssessmentEventUtil.getWordAssessmentEventGsons(idsOfWordsInWordLearningEvents, getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
 
         // Determine which of the previously learned Words are pending a review (based on WordAssessmentEvents)
         Set<Long> idsOfWordsPendingReview = ReviewHelper.getIdsOfWordsPendingReview(idsOfWordsInWordLearningEvents, wordLearningEventGsons, wordAssessmentEventGsons);
@@ -143,7 +143,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
                 wordGsonsPendingReview.add(wordGson);
 
                 // Report assessment event to the Analytics application (https://github.com/elimu-ai/analytics)
-                AssessmentEventUtil.reportWordAssessmentEvent(BuildConfig.APPLICATION_ID, wordGson, 0.00f, System.currentTimeMillis() - timeStart, getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
+                AssessmentEventUtil.reportWordAssessmentEvent(wordGson, 0.00f, System.currentTimeMillis() - timeStart, getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
 
                 loadNextWord();
             }
@@ -159,7 +159,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
                 wordGsonsMastered.add(wordGson);
 
                 // Report assessment event to the Analytics application (https://github.com/elimu-ai/analytics)
-                AssessmentEventUtil.reportWordAssessmentEvent(BuildConfig.APPLICATION_ID, wordGson, 1.00f, System.currentTimeMillis() - timeStart, getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
+                AssessmentEventUtil.reportWordAssessmentEvent(wordGson, 1.00f, System.currentTimeMillis() - timeStart, getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
 
                 loadNextWord();
             }
