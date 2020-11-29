@@ -8,7 +8,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 1000003
-        versionName "1.0.3-SNAPSHOT"
+        versionName "1.0.3"
         setProperty("archivesBaseName", "${applicationId}-${versionCode}")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -39,8 +39,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'ai.elimu:model:2.0.24'
-    implementation 'ai.elimu:content-provider-utils:1.1.0@aar'
+    implementation 'ai.elimu:model:2.0.27'
+    implementation 'ai.elimu:content-provider-utils:1.1.1@aar'
     implementation 'ai.elimu.analytics:utils:1.0.7@aar'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
