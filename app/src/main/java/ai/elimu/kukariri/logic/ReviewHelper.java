@@ -1,4 +1,4 @@
-package ai.elimu.kukariri.util;
+package ai.elimu.kukariri.logic;
 
 import android.util.Log;
 
@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import ai.elimu.kukariri.logic.SpacedRepetitionHelper;
 import ai.elimu.model.v2.gson.analytics.WordAssessmentEventGson;
 import ai.elimu.model.v2.gson.analytics.WordLearningEventGson;
 

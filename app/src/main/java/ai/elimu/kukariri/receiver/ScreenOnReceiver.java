@@ -15,7 +15,7 @@ import ai.elimu.analytics.utils.EventProviderUtil;
 import ai.elimu.content_provider.utils.ContentProviderHelper;
 import ai.elimu.kukariri.BuildConfig;
 import ai.elimu.kukariri.MainActivity;
-import ai.elimu.kukariri.util.ReviewHelper;
+import ai.elimu.kukariri.logic.ReviewHelper;
 import ai.elimu.model.enums.content.WordType;
 import ai.elimu.model.v2.gson.analytics.WordAssessmentEventGson;
 import ai.elimu.model.v2.gson.analytics.WordLearningEventGson;
