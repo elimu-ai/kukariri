@@ -23,7 +23,9 @@
         <activity
             android:name=".assessment.WordAssessmentActivity"
             android:theme="@style/AppTheme.NoTitle.Fullscreen" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +33,9 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".receiver.BootReceiver">
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

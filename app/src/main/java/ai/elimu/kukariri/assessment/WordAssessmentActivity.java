@@ -18,12 +18,13 @@ import java.util.List;
 import java.util.Set;
 
 import ai.elimu.analytics.utils.AssessmentEventUtil;
+import ai.elimu.analytics.utils.EventProviderUtil;
 import ai.elimu.analytics.utils.LearningEventUtil;
-import ai.elimu.content_provider.utils.ContentProviderHelper;
+import ai.elimu.content_provider.utils.ContentProviderUtil;
 import ai.elimu.kukariri.BuildConfig;
 import ai.elimu.kukariri.R;
 import ai.elimu.kukariri.logic.ReviewHelper;
-import ai.elimu.model.enums.content.WordType;
+import ai.elimu.model.v2.enums.content.WordType;
 import ai.elimu.model.v2.gson.analytics.WordAssessmentEventGson;
 import ai.elimu.model.v2.gson.analytics.WordLearningEventGson;
 import ai.elimu.model.v2.gson.content.EmojiGson;
@@ -65,20 +66,20 @@ public class WordAssessmentActivity extends AppCompatActivity {
         easyButton = findViewById(R.id.wordAssessmentEasyButton);
 
         // Get a list of the Words that have been previously learned
-        List<WordLearningEventGson> wordLearningEventGsons = LearningEventUtil.getWordLearningEventGsons(getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
+        List<WordLearningEventGson> wordLearningEventGsons = EventProviderUtil.getWordLearningEventGsons(getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
 
         // Get a set of the Words that have been previously learned
-        Set<Long> idsOfWordsInWordLearningEvents = LearningEventUtil.getIdsOfWordsInWordLearningEvents(getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
+        Set<Long> idsOfWordsInWordLearningEvents = EventProviderUtil.getIdsOfWordsInWordLearningEvents(getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
 
         // Get a list of assessment events for the words that have been previously learned
-        List<WordAssessmentEventGson> wordAssessmentEventGsons = AssessmentEventUtil.getWordAssessmentEventGsons(idsOfWordsInWordLearningEvents, getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = EventProviderUtil.getWordAssessmentEventGsons(getApplicationContext(), BuildConfig.ANALYTICS_APPLICATION_ID);
 
         // Determine which of the previously learned Words are pending a review (based on WordAssessmentEvents)
         Set<Long> idsOfWordsPendingReview = ReviewHelper.getIdsOfWordsPendingReview(idsOfWordsInWordLearningEvents, wordLearningEventGsons, wordAssessmentEventGsons);
         Log.i(getClass().getName(), "idsOfWordsPendingReview.size(): " + idsOfWordsPendingReview.size());
 
         // Fetch list of Words from the ContentProvider, and exclude those not in the idsOfWordsPendingReview set
-        List<WordGson> allWordGsons = ContentProviderHelper.getWordGsons(getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        List<WordGson> allWordGsons = ContentProviderUtil.getAllWordGsons(getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
         for (WordGson wordGson : allWordGsons) {
             if (idsOfWordsPendingReview.contains(wordGson.getId())) {
                 // Only include adjectives/nouns/verbs
@@ -123,7 +124,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
         textView.startAnimation(appearAnimation);
 
         // Append Emojis (if any) below the Word
-        List<EmojiGson> emojiGsons = ContentProviderHelper.getEmojiGsons(wordGson.getId(), getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        List<EmojiGson> emojiGsons = ContentProviderUtil.getAllEmojiGsons(wordGson.getId(), getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
         if (!emojiGsons.isEmpty()) {
             textView.setText(textView.getText() + "\n");
             for (EmojiGson emojiGson : emojiGsons) {

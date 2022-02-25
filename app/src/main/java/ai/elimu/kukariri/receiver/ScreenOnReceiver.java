@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Set;
 
 import ai.elimu.analytics.utils.EventProviderUtil;
-import ai.elimu.content_provider.utils.ContentProviderHelper;
+import ai.elimu.content_provider.utils.ContentProviderUtil;
 import ai.elimu.kukariri.BuildConfig;
 import ai.elimu.kukariri.MainActivity;
 import ai.elimu.kukariri.logic.ReviewHelper;
-import ai.elimu.model.enums.content.WordType;
+import ai.elimu.model.v2.enums.content.WordType;
 import ai.elimu.model.v2.gson.analytics.WordAssessmentEventGson;
 import ai.elimu.model.v2.gson.analytics.WordLearningEventGson;
 import ai.elimu.model.v2.gson.content.WordGson;
@@ -46,7 +46,7 @@ public class ScreenOnReceiver extends BroadcastReceiver {
         Set<Long> idsOfWordsInWordLearningEvents = EventProviderUtil.getIdsOfWordsInWordLearningEvents(context, BuildConfig.ANALYTICS_APPLICATION_ID);
 
         // Get a list of assessment events for the words that have been previously learned
-        List<WordAssessmentEventGson> wordAssessmentEventGsons = EventProviderUtil.getWordAssessmentEventGsons(idsOfWordsInWordLearningEvents, context, BuildConfig.ANALYTICS_APPLICATION_ID);
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = EventProviderUtil.getWordAssessmentEventGsons(context, BuildConfig.ANALYTICS_APPLICATION_ID);
 
         // Determine which of the previously learned Words are pending a review (based on WordAssessmentEvents)
         Set<Long> idsOfWordsPendingReview = ReviewHelper.getIdsOfWordsPendingReview(idsOfWordsInWordLearningEvents, wordLearningEventGsons, wordAssessmentEventGsons);
@@ -54,7 +54,7 @@ public class ScreenOnReceiver extends BroadcastReceiver {
 
         // Get list of adjectives/nouns/verbs pending review
         List<WordGson> wordGsonsPendingReview = new ArrayList<>();
-        List<WordGson> allWordGsons = ContentProviderHelper.getWordGsons(context, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        List<WordGson> allWordGsons = ContentProviderUtil.getAllWordGsons(context, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
         for (WordGson wordGson : allWordGsons) {
             if (idsOfWordsPendingReview.contains(wordGson.getId())) {
                 // Only include adjectives/nouns/verbs
