@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
 
     defaultConfig {
         applicationId "ai.elimu.kukariri"
         minSdkVersion 24
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 1000005
         versionName "1.0.5-SNAPSHOT"
         setProperty("archivesBaseName", "${applicationId}-${versionCode}")
