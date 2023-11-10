@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ai.elimu.kukariri">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- elimu.ai Content Provider (see https://github.com/elimu-ai/content-provider/blob/master/app/src/main/AndroidManifest.xml) -->
     <uses-permission android:name="${contentProviderApplicationId}.provider.READ" />

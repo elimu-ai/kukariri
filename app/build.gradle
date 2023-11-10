@@ -6,6 +6,7 @@ jacoco {
 }
 
 android {
+    namespace 'ai.elimu.kukariri'
     compileSdk 33
 
     defaultConfig {
