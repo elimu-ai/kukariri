@@ -6,12 +6,12 @@ jacoco {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "ai.elimu.kukariri"
         minSdkVersion 24
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode 1000005
         versionName "1.0.5-SNAPSHOT"
         setProperty("archivesBaseName", "${applicationId}-${versionCode}")
@@ -51,7 +51,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.github.elimu-ai:model:model-2.0.53' // See https://jitpack.io/#elimu-ai/model
+    implementation 'com.github.elimu-ai:model:model-2.0.66' // See https://jitpack.io/#elimu-ai/model
     implementation 'com.github.elimu-ai:content-provider:1.2.10@aar' // See https://jitpack.io/#elimu-ai/content-provider
     implementation 'com.github.elimu-ai:analytics:3.1.11@aar' // See https://jitpack.io/#elimu-ai/analytics
 
