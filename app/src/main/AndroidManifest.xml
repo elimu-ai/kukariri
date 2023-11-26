@@ -7,6 +7,10 @@
     <!-- elimu.ai Analytics (see https://github.com/elimu-ai/analytics/blob/main/app/src/main/AndroidManifest.xml) -->
     <uses-permission android:name="${analyticsApplicationId}.provider.READ" />
 
+    <queries>
+        <provider android:authorities="${analyticsApplicationId}.provider.word_assessment_event_provider" />
+    </queries>
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
