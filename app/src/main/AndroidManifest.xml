@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ai.elimu.kukariri">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- elimu.ai Content Provider (see https://github.com/elimu-ai/content-provider/blob/master/app/src/main/AndroidManifest.xml) -->
+    <!-- elimu.ai Content Provider (see https://github.com/elimu-ai/content-provider/blob/main/app/src/main/AndroidManifest.xml) -->
     <uses-permission android:name="${contentProviderApplicationId}.provider.READ" />
 
-    <!-- elimu.ai Analytics (see https://github.com/elimu-ai/analytics/blob/master/app/src/main/AndroidManifest.xml) -->
+    <!-- elimu.ai Analytics (see https://github.com/elimu-ai/analytics/blob/main/app/src/main/AndroidManifest.xml) -->
     <uses-permission android:name="${analyticsApplicationId}.provider.READ" />
+
+    <queries>
+        <provider android:authorities="${analyticsApplicationId}.provider.word_assessment_event_provider" />
+    </queries>
 
     <application
         android:name=".BaseApplication"
