@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">การจดจำ</string>
+    <string name="easy">😀\nง่าย</string>
+    <string name="difficult">🤷\nยาก</string>
+</resources>
