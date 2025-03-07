@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "ai.elimu.kukariri"
-        minSdkVersion 24
+        minSdkVersion 26
         targetSdkVersion 35
         versionCode 1000005
         versionName "1.0.5-SNAPSHOT"
@@ -32,14 +32,7 @@ android {
             buildConfigField("String", "CONTENT_PROVIDER_APPLICATION_ID", '"ai.elimu.content_provider.debug"')
             buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics.debug"')
         }
-        qa_test {
-            initWith debug
-            applicationIdSuffix ".test"
-            versionNameSuffix "-test"
-            manifestPlaceholders = [contentProviderApplicationId: "ai.elimu.content_provider.test", analyticsApplicationId: "ai.elimu.analytics.test"]
-            buildConfigField("String", "CONTENT_PROVIDER_APPLICATION_ID", '"ai.elimu.content_provider.test"')
-            buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics.test"')
-        }
+        
         release {
             minifyEnabled false
             manifestPlaceholders = [contentProviderApplicationId: "ai.elimu.content_provider", analyticsApplicationId: "ai.elimu.analytics"]
