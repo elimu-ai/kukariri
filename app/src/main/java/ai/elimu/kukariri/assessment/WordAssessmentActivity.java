@@ -79,7 +79,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
         Log.i(getClass().getName(), "idsOfWordsPendingReview.size(): " + idsOfWordsPendingReview.size());
 
         // Fetch list of Words from the ContentProvider, and exclude those not in the idsOfWordsPendingReview set
-        List<WordGson> allWordGsons = ContentProviderUtil.getAllWordGsons(getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        List<WordGson> allWordGsons = ContentProviderUtil.INSTANCE.getAllWordGsons(getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
         for (WordGson wordGson : allWordGsons) {
             if (idsOfWordsPendingReview.contains(wordGson.getId())) {
                 // Only include adjectives/nouns/verbs
@@ -124,7 +124,7 @@ public class WordAssessmentActivity extends AppCompatActivity {
         textView.startAnimation(appearAnimation);
 
         // Append Emojis (if any) below the Word
-        List<EmojiGson> emojiGsons = ContentProviderUtil.getAllEmojiGsons(wordGson.getId(), getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        List<EmojiGson> emojiGsons = ContentProviderUtil.INSTANCE.getAllEmojiGsons(wordGson.getId(), getApplicationContext(), BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
         if (!emojiGsons.isEmpty()) {
             textView.setText(textView.getText() + "\n");
             for (EmojiGson emojiGson : emojiGsons) {
