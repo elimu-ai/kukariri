@@ -54,7 +54,7 @@ public class ScreenOnReceiver extends BroadcastReceiver {
 
         // Get list of adjectives/nouns/verbs pending review
         List<WordGson> wordGsonsPendingReview = new ArrayList<>();
-        List<WordGson> allWordGsons = ContentProviderUtil.getAllWordGsons(context, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
+        List<WordGson> allWordGsons = ContentProviderUtil.INSTANCE.getAllWordGsons(context, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID);
         for (WordGson wordGson : allWordGsons) {
             if (idsOfWordsPendingReview.contains(wordGson.getId())) {
                 // Only include adjectives/nouns/verbs
