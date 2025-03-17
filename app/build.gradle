@@ -60,6 +60,7 @@ dependencies {
         exclude group: 'com.daasuu', module: 'EasingInterpolator'
     }
     implementation libs.easing.interpolator
+    implementation libs.kotlin.stdlib
 
     testImplementation libs.junit
 
