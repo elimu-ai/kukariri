@@ -10,6 +10,7 @@ constraintLayout = "2.1.3"
 appCompat = "1.4.1"
 androidXJunit = "1.1.3"
 androidXEspresso = "3.4.0"
+kotlin = "2.0.0"
 
 [libraries]
 elimu-model = { group = "com.github.elimu-ai", name = "model", version.ref = "elimuModel" }
@@ -19,6 +20,7 @@ easing-interpolator = { group = "com.github.MasayukiSuda", name = "EasingInterpo
 shine-button = { group = "com.sackcentury", name = "shinebutton", version.ref = "shineButton" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
 androidx-constraint-layout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidXJunit" }
 androidx-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidXEspresso" }
 
