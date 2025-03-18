@@ -48,6 +48,12 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
+
+    unitTestVariants.every {
+        jacoco {
+            includeNoLocationClasses = true
+        }
+    }
 }
 
 dependencies {
