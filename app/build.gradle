@@ -1,8 +1,6 @@
-plugins {
-    alias(libs.plugins.kotlin.android)
-}
 apply plugin: 'com.android.application'
 apply plugin: 'com.mxalbert.gradle.jacoco-android'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 jacoco {
     toolVersion = "0.8.10"
