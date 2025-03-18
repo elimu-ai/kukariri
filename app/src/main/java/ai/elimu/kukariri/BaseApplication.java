@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.util.Log;
 
 import ai.elimu.kukariri.service.ScreenOnService;
+import dagger.hilt.android.HiltAndroidApp;
 
+@HiltAndroidApp
 public class BaseApplication extends Application {
 
     @Override

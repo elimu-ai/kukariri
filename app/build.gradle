@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.mxalbert.gradle.jacoco-android'
+apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-kapt'
 
 jacoco {
     toolVersion = "0.8.10"
@@ -56,6 +58,7 @@ dependencies {
     implementation libs.elimu.model // See https://jitpack.io/#elimu-ai/model
     implementation libs.elimu.content.provider // See https://jitpack.io/#elimu-ai/content-provider
     implementation libs.elimu.analytics // See https://jitpack.io/#elimu-ai/analytics
+    implementation libs.elimu.common.utils
 
     implementation libs.androidx.appcompat
     implementation libs.androidx.constraint.layout
@@ -66,6 +69,8 @@ dependencies {
     implementation libs.easing.interpolator
     implementation libs.kotlin.stdlib
     implementation libs.androidx.core.ktx
+    implementation libs.hilt.android
+    kapt libs.hilt.compiler
 
     testImplementation libs.junit
 
