@@ -2,6 +2,9 @@ package ai.elimu.kukariri.assessment
 
 import ai.elimu.analytics.utils.AssessmentEventUtil
 import ai.elimu.analytics.utils.EventProviderUtil
+import ai.elimu.common.utils.data.model.tts.QueueMode
+import ai.elimu.common.utils.viewmodel.TextToSpeechViewModel
+import ai.elimu.common.utils.viewmodel.TextToSpeechViewModelImpl
 import ai.elimu.content_provider.utils.ContentProviderUtil.getAllEmojiGsons
 import ai.elimu.content_provider.utils.ContentProviderUtil.getAllWordGsons
 import ai.elimu.kukariri.BuildConfig
@@ -19,7 +22,11 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
+import java.util.UUID
 
+@AndroidEntryPoint
 class WordAssessmentActivity : AppCompatActivity() {
     private var progressBar: ProgressBar? = null
 
@@ -39,10 +46,13 @@ class WordAssessmentActivity : AppCompatActivity() {
      */
     private val wordGsonsMastered: MutableList<WordGson> = ArrayList()
 
+    private lateinit var ttsViewModel: TextToSpeechViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i(javaClass.name, "onCreate")
         super.onCreate(savedInstanceState)
 
+        ttsViewModel = ViewModelProvider(this)[TextToSpeechViewModelImpl::class.java]
         setContentView(R.layout.activity_word_assessment)
 
         progressBar = findViewById(R.id.wordAssessmentProgressBar)
@@ -137,6 +147,14 @@ class WordAssessmentActivity : AppCompatActivity() {
         }
 
         val timeStart = System.currentTimeMillis()
+
+        textView?.setOnClickListener {
+            ttsViewModel.speak(
+                textView?.text.toString(),
+                QueueMode.FLUSH,
+                UUID.randomUUID().toString()
+            )
+        }
 
         difficultButton!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
