@@ -11,6 +11,8 @@ public class SpacedRepetitionHelper {
     /**
      * Verifies that a {@link ai.elimu.model.v2.gson.content.WordGson} has been reviewed (with mastery) 6 times after
      * the original {@link WordLearningEventGson}:
+     *   • After 0.0625 hour (~4 minutes)
+     *   • After 0.25 hour (15 minutes)
      *   • After 1 hour
      *   • After 4 hours
      *   • After 16 hours
@@ -35,7 +37,7 @@ public class SpacedRepetitionHelper {
 
             long milliSecondsPassedSinceWordLearningEvent = Calendar.getInstance().getTimeInMillis() - wordLearningEventGson.getTime().getTimeInMillis();
             Double hoursPassedSinceWordLearningEvent = Double.valueOf(milliSecondsPassedSinceWordLearningEvent / 1000 / 60 / 60);
-            if (hoursPassedSinceWordLearningEvent >= 1.00) {
+            if (hoursPassedSinceWordLearningEvent >= 0.0625) {
                 isReviewPending = true;
             }
         } else {
@@ -63,26 +65,36 @@ public class SpacedRepetitionHelper {
 
                 if (numberOfCorrectReviewsInSequence == 1) {
                     // Check if it's time for the 2nd review
-                    if (hoursPassedSincePreviousAssessmentEvent >= 4.00) {
+                    if (hoursPassedSincePreviousAssessmentEvent >= 0.25) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 2) {
                     // Check if it's time for the 3rd review
-                    if (hoursPassedSincePreviousAssessmentEvent >= 16.00) {
+                    if (hoursPassedSincePreviousAssessmentEvent >= 1.00) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 3) {
                     // Check if it's time for the 4th review
-                    if (hoursPassedSincePreviousAssessmentEvent >= 64.00) {
+                    if (hoursPassedSincePreviousAssessmentEvent >= 4.00) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 4) {
                     // Check if it's time for the 5th review
-                    if (hoursPassedSincePreviousAssessmentEvent >= 256.00) {
+                    if (hoursPassedSincePreviousAssessmentEvent >= 16.00) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 5) {
                     // Check if it's time for the 6th review
+                    if (hoursPassedSincePreviousAssessmentEvent >= 64.00) {
+                        isReviewPending = true;
+                    }
+                } else if (numberOfCorrectReviewsInSequence == 6) {
+                    // Check if it's time for the 7th review
+                    if (hoursPassedSincePreviousAssessmentEvent >= 256.00) {
+                        isReviewPending = true;
+                    }
+                } else if (numberOfCorrectReviewsInSequence == 7) {
+                    // Check if it's time for the 8th review
                     if (hoursPassedSincePreviousAssessmentEvent >= 1024.00) {
                         isReviewPending = true;
                     }
