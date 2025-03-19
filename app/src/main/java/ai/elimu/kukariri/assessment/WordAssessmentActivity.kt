@@ -123,9 +123,11 @@ class WordAssessmentActivity : AppCompatActivity() {
         // Update the progress bar
         val progressPercentage =
             wordGsonsMastered.size * 100 / (wordGsonsPendingReview.size + wordGsonsMastered.size)
-        val objectAnimator = ObjectAnimator.ofInt(progressBar, ProgressBar::getProgress.name, progressPercentage)
-        objectAnimator.setDuration(1000)
-        objectAnimator.start()
+        progressBar?.let { pb ->
+            val objectAnimator = ObjectAnimator.ofInt(pb, "progress", progressPercentage)
+            objectAnimator.setDuration(1000)
+            objectAnimator.start()
+        }
 
         // Display the next Word in the list
         val wordGson = wordGsonsPendingReview[0]
