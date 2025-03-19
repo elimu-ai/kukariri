@@ -30,7 +30,7 @@ class ScreenOnService : Service() {
         try {
             unregisterReceiver(screenOnReceiver)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("ScreenOnService", "Error unregistering receiver", e)
         }
     }
 }
