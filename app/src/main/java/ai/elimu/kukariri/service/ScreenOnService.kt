@@ -1,28 +1,24 @@
-package ai.elimu.kukariri.service;
+package ai.elimu.kukariri.service
 
-import android.app.Service;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.IBinder;
-import android.util.Log;
+import ai.elimu.kukariri.receiver.ScreenOnReceiver
+import android.app.Service
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.IBinder
+import android.util.Log
 
-import ai.elimu.kukariri.receiver.ScreenOnReceiver;
-
-public class ScreenOnService extends Service {
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+class ScreenOnService : Service() {
+    override fun onBind(intent: Intent): IBinder? {
+        return null
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(getClass().getName(), "onStartCommand");
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        Log.i(javaClass.name, "onStartCommand")
 
         // Register receiver for detecting when the screen is turned on
-        ScreenOnReceiver screenOnReceiver = new ScreenOnReceiver();
-        registerReceiver(screenOnReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
+        val screenOnReceiver = ScreenOnReceiver()
+        registerReceiver(screenOnReceiver, IntentFilter(Intent.ACTION_SCREEN_ON))
 
-        return super.onStartCommand(intent, flags, startId);
+        return super.onStartCommand(intent, flags, startId)
     }
 }
