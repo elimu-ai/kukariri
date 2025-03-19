@@ -1,5 +1,7 @@
 package ai.elimu.kukariri.logic;
 
+import android.util.Log;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -11,14 +13,14 @@ public class SpacedRepetitionHelper {
     /**
      * Verifies that a {@link ai.elimu.model.v2.gson.content.WordGson} has been reviewed (with mastery) 6 times after
      * the original {@link WordLearningEventGson}:
-     *   • After 0.0625 hour (~4 minutes)
-     *   • After 0.25 hour (15 minutes)
-     *   • After 1 hour
-     *   • After 4 hours
-     *   • After 16 hours
-     *   • After 64 hours (~3 days)
-     *   • After 256 hours (~11 days)
-     *   • After 1,024 hours (~43 days)
+     *   • After 4 minutes
+     *   • After 16 minutes
+     *   • After 64 minutes (~1 hour)
+     *   • After 256 minutes (~4 hours)
+     *   • After 1,024 minutes (~17 hours)
+     *   • After 4,096 minutes (~3 days)
+     *   • After 16,384 minutes (~11 days)
+     *   • After 65,536 minutes (~46 days)
      *
      * If the student fails to demonstrate mastery during an assessment event, the sequence is restarted from the
      * beginning.
@@ -36,8 +38,8 @@ public class SpacedRepetitionHelper {
             // No reviews have been performed
 
             long milliSecondsPassedSinceWordLearningEvent = Calendar.getInstance().getTimeInMillis() - wordLearningEventGson.getTime().getTimeInMillis();
-            Double hoursPassedSinceWordLearningEvent = Double.valueOf(milliSecondsPassedSinceWordLearningEvent / 1000 / 60 / 60);
-            if (hoursPassedSinceWordLearningEvent >= 0.0625) {
+            Double minutesPassedSinceWordLearningEvent = Double.valueOf(milliSecondsPassedSinceWordLearningEvent / 1000 / 60);
+            if (minutesPassedSinceWordLearningEvent >= 4) {
                 isReviewPending = true;
             }
         } else {
@@ -61,41 +63,41 @@ public class SpacedRepetitionHelper {
 
                 WordAssessmentEventGson previousWordAssessmentEventGson = wordAssessmentEventGsons.get(wordAssessmentEventGsons.size() - 1);
                 long milliSecondsPassedSincePreviousAssessmentEvent = Calendar.getInstance().getTimeInMillis() - previousWordAssessmentEventGson.getTime().getTimeInMillis();
-                Double hoursPassedSincePreviousAssessmentEvent = Double.valueOf(milliSecondsPassedSincePreviousAssessmentEvent / 1000 / 60 / 60);
+                Double minutesPassedSincePreviousAssessmentEvent = Double.valueOf(milliSecondsPassedSincePreviousAssessmentEvent / 1000 / 60);
 
                 if (numberOfCorrectReviewsInSequence == 1) {
                     // Check if it's time for the 2nd review
-                    if (hoursPassedSincePreviousAssessmentEvent >= 0.25) {
+                    if (minutesPassedSincePreviousAssessmentEvent >= 16) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 2) {
                     // Check if it's time for the 3rd review
-                    if (hoursPassedSincePreviousAssessmentEvent >= 1.00) {
+                    if (minutesPassedSincePreviousAssessmentEvent >= 64) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 3) {
                     // Check if it's time for the 4th review
-                    if (hoursPassedSincePreviousAssessmentEvent >= 4.00) {
+                    if (minutesPassedSincePreviousAssessmentEvent >= 256) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 4) {
                     // Check if it's time for the 5th review
-                    if (hoursPassedSincePreviousAssessmentEvent >= 16.00) {
+                    if (minutesPassedSincePreviousAssessmentEvent >= 1_024) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 5) {
                     // Check if it's time for the 6th review
-                    if (hoursPassedSincePreviousAssessmentEvent >= 64.00) {
+                    if (minutesPassedSincePreviousAssessmentEvent >= 4_096) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 6) {
                     // Check if it's time for the 7th review
-                    if (hoursPassedSincePreviousAssessmentEvent >= 256.00) {
+                    if (minutesPassedSincePreviousAssessmentEvent >= 16_384) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 7) {
                     // Check if it's time for the 8th review
-                    if (hoursPassedSincePreviousAssessmentEvent >= 1024.00) {
+                    if (minutesPassedSincePreviousAssessmentEvent >= 65_536) {
                         isReviewPending = true;
                     }
                 }
