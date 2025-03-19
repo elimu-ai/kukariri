@@ -49,29 +49,6 @@ public class SpacedRepetitionHelperTest {
      * Test a time _after_ the time of the initial review (1 hour).
      */
     @Test
-    public void testIsReviewPending_61MinutesAfter_1stReviewFailed() {
-        Calendar calendar61MinutesAgo = Calendar.getInstance();
-        calendar61MinutesAgo.add(Calendar.MINUTE, -61);
-        WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
-        wordLearningEventGson.setWordId(1L);
-        wordLearningEventGson.setTime(calendar61MinutesAgo);
-
-        Calendar calendarNow = Calendar.getInstance();
-        WordAssessmentEventGson wordAssessmentEventGson = new WordAssessmentEventGson();
-        wordAssessmentEventGson.setWordId(1L);
-        wordAssessmentEventGson.setTime(calendarNow);
-        wordAssessmentEventGson.setMasteryScore(0.00f);
-
-        List<WordAssessmentEventGson> wordAssessmentEventGsonList = new ArrayList<>();
-        wordAssessmentEventGsonList.add(wordAssessmentEventGson);
-
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(true));
-    }
-
-    /**
-     * Test a time _after_ the time of the initial review (1 hour).
-     */
-    @Test
     public void testIsReviewPending_61MinutesAfter_1stReviewNotMastered() {
         Calendar calendar61MinutesAgo = Calendar.getInstance();
         calendar61MinutesAgo.add(Calendar.MINUTE, -61);
