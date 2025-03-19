@@ -13,6 +13,9 @@ import ai.elimu.model.v2.gson.analytics.WordLearningEventGson;
 
 public class SpacedRepetitionHelperTest {
 
+    /**
+     * Test a time _before_ the time of the initial review (1 hour).
+     */
     @Test
     public void testIsReviewPending_59MinutesAfter() {
         Calendar calendar59MinutesAgo = Calendar.getInstance();
@@ -26,6 +29,9 @@ public class SpacedRepetitionHelperTest {
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(false));
     }
 
+    /**
+     * Test a time _after_ the time of the initial review (1 hour).
+     */
     @Test
     public void testIsReviewPending_61MinutesAfter() {
         Calendar calendar61MinutesAgo = Calendar.getInstance();
@@ -39,6 +45,9 @@ public class SpacedRepetitionHelperTest {
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(true));
     }
 
+    /**
+     * Test a time _after_ the time of the initial review (1 hour).
+     */
     @Test
     public void testIsReviewPending_61MinutesAfter_1stReviewFailed() {
         Calendar calendar61MinutesAgo = Calendar.getInstance();
@@ -59,6 +68,9 @@ public class SpacedRepetitionHelperTest {
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(true));
     }
 
+    /**
+     * Test a time _after_ the time of the initial review (1 hour).
+     */
     @Test
     public void testIsReviewPending_61MinutesAfter_1stReviewNotMastered() {
         Calendar calendar61MinutesAgo = Calendar.getInstance();
@@ -79,6 +91,9 @@ public class SpacedRepetitionHelperTest {
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(true));
     }
 
+    /**
+     * Test a time _after_ the time of the initial review (1 hour).
+     */
     @Test
     public void testIsReviewPending_61MinutesAfter_1stReviewMastered() {
         Calendar calendar61MinutesAgo = Calendar.getInstance();
@@ -99,6 +114,9 @@ public class SpacedRepetitionHelperTest {
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(false));
     }
 
+    /**
+     * Test a time _after_ the time of the 2nd review (4 hours).
+     */
     @Test
     public void testIsReviewPending_5HoursAfter_MasteryOnFirstTry() {
         Calendar calendar5HoursAgo = Calendar.getInstance();
@@ -119,6 +137,9 @@ public class SpacedRepetitionHelperTest {
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
     }
 
+    /**
+     * Test a time _after_ the time of the 2nd review (4 hours).
+     */
     @Test
     public void testIsReviewPending_5HoursAfter_MasteryOnSecondTry() {
         Calendar calendar5HoursAgo = Calendar.getInstance();
@@ -149,6 +170,9 @@ public class SpacedRepetitionHelperTest {
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
     }
 
+    /**
+     * Test a time _after_ the time of the 2nd review (4 hours).
+     */
     @Test
     public void testIsReviewPending_5HoursAfter_MasteryOnThirdTry() {
         Calendar calendar5HoursAgo = Calendar.getInstance();
@@ -189,6 +213,9 @@ public class SpacedRepetitionHelperTest {
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
     }
 
+    /**
+     * Test a time _before_ the time of the 2nd review (4 hours).
+     */
     @Test
     public void testIsReviewPending_false_3Hours59MinutesAfterFirstMastery() {
         Calendar calendar1DayAgo = Calendar.getInstance();
@@ -210,6 +237,9 @@ public class SpacedRepetitionHelperTest {
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
     }
 
+    /**
+     * Test a time _after_ the time of the 2nd review (4 hours).
+     */
     @Test
     public void testIsReviewPending_true_4Hours1MinuteAfterFirstMastery() {
         Calendar calendar1DayAgo = Calendar.getInstance();
@@ -231,6 +261,9 @@ public class SpacedRepetitionHelperTest {
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(true));
     }
 
+    /**
+     * Test a time _before_ the time of the 3rd review (16 hours).
+     */
     @Test
     public void testIsReviewPending_false_15Hours59MinutesAfterSecondMastery() {
         Calendar calendar24HoursAgo = Calendar.getInstance();
@@ -260,6 +293,9 @@ public class SpacedRepetitionHelperTest {
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
     }
 
+    /**
+     * Test a time _after_ the time of the 3rd review (16 hours).
+     */
     @Test
     public void testIsReviewPending_true_16Hours1MinuteAfterSecondMastery() {
         Calendar calendar24HoursAgo = Calendar.getInstance();
