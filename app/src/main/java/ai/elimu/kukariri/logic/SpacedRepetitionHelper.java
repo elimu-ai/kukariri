@@ -1,7 +1,5 @@
 package ai.elimu.kukariri.logic;
 
-import android.util.Log;
-
 import java.util.Calendar;
 import java.util.List;
 
