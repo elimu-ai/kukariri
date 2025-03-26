@@ -6,6 +6,14 @@ Android application which handles the Spaced Repetition System (SRS)
 
 ![](https://user-images.githubusercontent.com/15718174/81469350-08eeeb00-9217-11ea-87c6-0d2ea093513e.png)
 
+## Functionality
+
+To test the functionality of this app, first go to one of the other apps/games where the student 
+is learning new words (e.g. the Vitabu app), and press a word. Then, 4 minutes after that initial 
+`LearningEvent, the word will appear here in the Kukariri app for review.
+
+![WordAssessmentActivity](https://github.com/user-attachments/assets/e6c5cf75-13f6-4b8b-9978-3756e52dd0a7)
+
 ## Development 👩🏽‍💻
 
 Compile APK:
