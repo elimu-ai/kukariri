@@ -59,43 +59,43 @@ public class SpacedRepetitionHelper {
             } else {
                 // The most recent review was mastered
 
-                WordAssessmentEventGson previousWordAssessmentEventGson = wordAssessmentEventGsons.get(0);
-                long milliSecondsPassedSincePreviousAssessmentEvent = Calendar.getInstance().getTimeInMillis() - previousWordAssessmentEventGson.getTime().getTimeInMillis();
-                Double minutesPassedSincePreviousAssessmentEvent = Double.valueOf(milliSecondsPassedSincePreviousAssessmentEvent / 1000 / 60);
+                WordAssessmentEventGson mostRecentWordAssessmentEventGson = wordAssessmentEventGsons.get(0);
+                long milliSecondsPassedSinceMostRecentAssessmentEvent = Calendar.getInstance().getTimeInMillis() - mostRecentWordAssessmentEventGson.getTime().getTimeInMillis();
+                Double minutesPassedSinceMostRecentAssessmentEvent = Double.valueOf(milliSecondsPassedSinceMostRecentAssessmentEvent / 1000 / 60);
 
                 if (numberOfCorrectReviewsInSequence == 1) {
                     // Check if it's time for the 2nd review
-                    if (minutesPassedSincePreviousAssessmentEvent >= 16) {
+                    if (minutesPassedSinceMostRecentAssessmentEvent >= 16) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 2) {
                     // Check if it's time for the 3rd review
-                    if (minutesPassedSincePreviousAssessmentEvent >= 64) {
+                    if (minutesPassedSinceMostRecentAssessmentEvent >= 64) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 3) {
                     // Check if it's time for the 4th review
-                    if (minutesPassedSincePreviousAssessmentEvent >= 256) {
+                    if (minutesPassedSinceMostRecentAssessmentEvent >= 256) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 4) {
                     // Check if it's time for the 5th review
-                    if (minutesPassedSincePreviousAssessmentEvent >= 1_024) {
+                    if (minutesPassedSinceMostRecentAssessmentEvent >= 1_024) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 5) {
                     // Check if it's time for the 6th review
-                    if (minutesPassedSincePreviousAssessmentEvent >= 4_096) {
+                    if (minutesPassedSinceMostRecentAssessmentEvent >= 4_096) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 6) {
                     // Check if it's time for the 7th review
-                    if (minutesPassedSincePreviousAssessmentEvent >= 16_384) {
+                    if (minutesPassedSinceMostRecentAssessmentEvent >= 16_384) {
                         isReviewPending = true;
                     }
                 } else if (numberOfCorrectReviewsInSequence == 7) {
                     // Check if it's time for the 8th review
-                    if (minutesPassedSincePreviousAssessmentEvent >= 65_536) {
+                    if (minutesPassedSinceMostRecentAssessmentEvent >= 65_536) {
                         isReviewPending = true;
                     }
                 }
