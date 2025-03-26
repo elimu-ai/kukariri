@@ -9,7 +9,7 @@ import ai.elimu.model.v2.gson.analytics.WordLearningEventGson;
 public class SpacedRepetitionHelper {
 
     /**
-     * Verifies that a {@link ai.elimu.model.v2.gson.content.WordGson} has been reviewed (with mastery) 6 times after
+     * Verifies that a {@link ai.elimu.model.v2.gson.content.WordGson} has been reviewed (with mastery) 8 times after
      * the original {@link WordLearningEventGson}:
      *   • After 4 minutes
      *   • After 16 minutes
