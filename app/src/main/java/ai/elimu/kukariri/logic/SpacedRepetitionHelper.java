@@ -26,7 +26,7 @@ public class SpacedRepetitionHelper {
      * @param wordLearningEventGson The _first_ time a {@link ai.elimu.model.v2.gson.content.WordGson} was learned. If
      *                              there are several {@link WordLearningEventGson}s for the same
      *                              {@link ai.elimu.model.v2.gson.content.WordGson}, the oldest one is used.
-     * @param wordAssessmentEventGsons List of assessments in _ascending_ order, i.e. oldest events are first in the list.
+     * @param wordAssessmentEventGsons List of assessments in _descending_ order, i.e. most recent events are first in the list.
      * @return {@code true} if the {@link ai.elimu.model.v2.gson.content.WordGson} has one or more pending reviews.
      */
     public static boolean isReviewPending(WordLearningEventGson wordLearningEventGson, List<WordAssessmentEventGson> wordAssessmentEventGsons) {
@@ -44,7 +44,7 @@ public class SpacedRepetitionHelper {
             // At least one review has already been performed
 
             int numberOfCorrectReviewsInSequence = 0;
-            for (int i = wordAssessmentEventGsons.size() - 1; i >= 0; i--) {
+            for (int i = 0; i < wordAssessmentEventGsons.size(); i++) {
                 WordAssessmentEventGson wordAssessmentEventGson = wordAssessmentEventGsons.get(i);
                 if (wordAssessmentEventGson.getMasteryScore() == 1.00f) {
                     numberOfCorrectReviewsInSequence++;
@@ -59,7 +59,7 @@ public class SpacedRepetitionHelper {
             } else {
                 // The most recent review was mastered
 
-                WordAssessmentEventGson previousWordAssessmentEventGson = wordAssessmentEventGsons.get(wordAssessmentEventGsons.size() - 1);
+                WordAssessmentEventGson previousWordAssessmentEventGson = wordAssessmentEventGsons.get(0);
                 long milliSecondsPassedSincePreviousAssessmentEvent = Calendar.getInstance().getTimeInMillis() - previousWordAssessmentEventGson.getTime().getTimeInMillis();
                 Double minutesPassedSincePreviousAssessmentEvent = Double.valueOf(milliSecondsPassedSincePreviousAssessmentEvent / 1000 / 60);
 
