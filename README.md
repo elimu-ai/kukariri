@@ -10,7 +10,7 @@ Android application which handles the Spaced Repetition System (SRS)
 
 To test the functionality of this app, first go to one of the other apps/games where the student 
 is learning new words (e.g. the [Vitabu](https://github.com/elimu-ai/vitabu) app), and press a word. 
-Then, 4 minutes after that initial `LearningEvent`, the word will appear here in the Kukariri app for review.
+Then, [4 minutes](https://github.com/elimu-ai/kukariri/blob/main/app/src/main/java/ai/elimu/kukariri/logic/SpacedRepetitionHelper.java) after that initial `LearningEvent`, the word will appear here in the Kukariri app for review.
 
 ![WordAssessmentActivity](https://github.com/user-attachments/assets/e6c5cf75-13f6-4b8b-9978-3756e52dd0a7)
 
