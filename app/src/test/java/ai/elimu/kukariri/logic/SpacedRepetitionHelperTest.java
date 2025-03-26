@@ -56,13 +56,13 @@ public class SpacedRepetitionHelperTest {
         wordLearningEventGson.setWordId(1L);
         wordLearningEventGson.setTime(calendar5MinutesAgo);
 
-        List<WordAssessmentEventGson> wordAssessmentEventGsonList = new ArrayList<>();
-
         Calendar calendarNow = Calendar.getInstance();
         WordAssessmentEventGson wordAssessmentEventGson = new WordAssessmentEventGson();
         wordAssessmentEventGson.setWordId(1L);
         wordAssessmentEventGson.setTime(calendarNow);
         wordAssessmentEventGson.setMasteryScore(0.00f);
+
+        List<WordAssessmentEventGson> wordAssessmentEventGsonList = new ArrayList<>();
         wordAssessmentEventGsonList.add(wordAssessmentEventGson);
 
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(true));
@@ -79,13 +79,13 @@ public class SpacedRepetitionHelperTest {
         wordLearningEventGson.setWordId(1L);
         wordLearningEventGson.setTime(calendar5MinutesAgo);
 
-        List<WordAssessmentEventGson> wordAssessmentEventGsonList = new ArrayList<>();
-
         Calendar calendarNow = Calendar.getInstance();
         WordAssessmentEventGson wordAssessmentEventGson = new WordAssessmentEventGson();
         wordAssessmentEventGson.setWordId(1L);
         wordAssessmentEventGson.setTime(calendarNow);
         wordAssessmentEventGson.setMasteryScore(1.00f);
+
+        List<WordAssessmentEventGson> wordAssessmentEventGsonList = new ArrayList<>();
         wordAssessmentEventGsonList.add(wordAssessmentEventGson);
 
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(false));
@@ -102,13 +102,13 @@ public class SpacedRepetitionHelperTest {
         wordLearningEventGson.setWordId(1L);
         wordLearningEventGson.setTime(calendar17MinutesAgo);
 
-        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
-
         Calendar calendarNow = Calendar.getInstance();
         WordAssessmentEventGson wordAssessmentEventGson = new WordAssessmentEventGson();
         wordAssessmentEventGson.setWordId(1L);
         wordAssessmentEventGson.setTime(calendarNow);
         wordAssessmentEventGson.setMasteryScore(1.00f);
+
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
         wordAssessmentEventGsons.add(wordAssessmentEventGson);
 
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
@@ -119,32 +119,32 @@ public class SpacedRepetitionHelperTest {
      */
     @Test
     public void testIsReviewPending_17MinutesAfter_MasteryOnSecondTry() {
-        Calendar calendar17MinutesAgo = Calendar.getInstance();
-        calendar17MinutesAgo.add(Calendar.MINUTE, -17);
+        Calendar calendar22MinutesAgo = Calendar.getInstance();
+        calendar22MinutesAgo.add(Calendar.MINUTE, -22);
         WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
         wordLearningEventGson.setWordId(1L);
-        wordLearningEventGson.setTime(calendar17MinutesAgo);
+        wordLearningEventGson.setTime(calendar22MinutesAgo);
 
-        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
-
-        Calendar calendar1MinuteAgo = Calendar.getInstance();
-        calendar1MinuteAgo.add(Calendar.MINUTE, -1);
+        Calendar calendar18MinutesAgo = Calendar.getInstance();
+        calendar18MinutesAgo.add(Calendar.MINUTE, -18);
         WordAssessmentEventGson wordAssessmentEventGsonFirst = new WordAssessmentEventGson();
         wordAssessmentEventGsonFirst.setWordId(1L);
-        wordAssessmentEventGsonFirst.setTime(calendar1MinuteAgo);
+        wordAssessmentEventGsonFirst.setTime(calendar18MinutesAgo);
         wordAssessmentEventGsonFirst.setMasteryScore(0.00f);
+
+        Calendar calendar17MinutesAgo = Calendar.getInstance();
+        calendar17MinutesAgo.add(Calendar.MINUTE, -17);
+        WordAssessmentEventGson wordAssessmentEventGsonSecond = new WordAssessmentEventGson();
+        wordAssessmentEventGsonSecond.setWordId(1L);
+        wordAssessmentEventGsonSecond.setTime(calendar17MinutesAgo);
+        wordAssessmentEventGsonSecond.setMasteryScore(1.00f);
+
+        // Store assessment events in _descending_ order
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
+        wordAssessmentEventGsons.add(wordAssessmentEventGsonSecond);
         wordAssessmentEventGsons.add(wordAssessmentEventGsonFirst);
 
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(true));
-
-        Calendar calendarNow = Calendar.getInstance();
-        WordAssessmentEventGson wordAssessmentEventGsonSecond = new WordAssessmentEventGson();
-        wordAssessmentEventGsonSecond.setWordId(1L);
-        wordAssessmentEventGsonSecond.setTime(calendarNow);
-        wordAssessmentEventGsonSecond.setMasteryScore(1.00f);
-        wordAssessmentEventGsons.add(wordAssessmentEventGsonSecond);
-
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
     }
 
     /**
@@ -152,42 +152,40 @@ public class SpacedRepetitionHelperTest {
      */
     @Test
     public void testIsReviewPending_17MinutesAfter_MasteryOnThirdTry() {
-        Calendar calendar17MinutesAgo = Calendar.getInstance();
-        calendar17MinutesAgo.add(Calendar.MINUTE, -17);
+        Calendar calendar23MinutesAgo = Calendar.getInstance();
+        calendar23MinutesAgo.add(Calendar.MINUTE, -23);
         WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
         wordLearningEventGson.setWordId(1L);
-        wordLearningEventGson.setTime(calendar17MinutesAgo);
+        wordLearningEventGson.setTime(calendar23MinutesAgo);
 
-        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
-
-        Calendar calendar2MinutesAgo = Calendar.getInstance();
-        calendar2MinutesAgo.add(Calendar.MINUTE, -2);
+        Calendar calendar19MinutesAgo = Calendar.getInstance();
+        calendar19MinutesAgo.add(Calendar.MINUTE, -19);
         WordAssessmentEventGson wordAssessmentEventGsonFirst = new WordAssessmentEventGson();
         wordAssessmentEventGsonFirst.setWordId(1L);
-        wordAssessmentEventGsonFirst.setTime(calendar2MinutesAgo);
+        wordAssessmentEventGsonFirst.setTime(calendar19MinutesAgo);
         wordAssessmentEventGsonFirst.setMasteryScore(0.00f);
+
+        Calendar calendar18MinutesAgo = Calendar.getInstance();
+        calendar18MinutesAgo.add(Calendar.MINUTE, -18);
+        WordAssessmentEventGson wordAssessmentEventGsonSecond = new WordAssessmentEventGson();
+        wordAssessmentEventGsonSecond.setWordId(1L);
+        wordAssessmentEventGsonSecond.setTime(calendar18MinutesAgo);
+        wordAssessmentEventGsonSecond.setMasteryScore(0.00f);
+
+        Calendar calendar17MinutesAgo = Calendar.getInstance();
+        calendar17MinutesAgo.add(Calendar.MINUTE, -17);
+        WordAssessmentEventGson wordAssessmentEventGsonThird = new WordAssessmentEventGson();
+        wordAssessmentEventGsonThird.setWordId(1L);
+        wordAssessmentEventGsonThird.setTime(calendar17MinutesAgo);
+        wordAssessmentEventGsonThird.setMasteryScore(1.00f);
+
+        // Store assessment events in _descending_ order
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
+        wordAssessmentEventGsons.add(wordAssessmentEventGsonThird);
+        wordAssessmentEventGsons.add(wordAssessmentEventGsonSecond);
         wordAssessmentEventGsons.add(wordAssessmentEventGsonFirst);
 
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(true));
-
-        Calendar calendar1MinuteAgo = Calendar.getInstance();
-        calendar1MinuteAgo.add(Calendar.MINUTE, -1);
-        WordAssessmentEventGson wordAssessmentEventGsonSecond = new WordAssessmentEventGson();
-        wordAssessmentEventGsonSecond.setWordId(1L);
-        wordAssessmentEventGsonSecond.setTime(calendar1MinuteAgo);
-        wordAssessmentEventGsonSecond.setMasteryScore(0.00f);
-        wordAssessmentEventGsons.add(wordAssessmentEventGsonSecond);
-
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(true));
-
-        Calendar calendarNow = Calendar.getInstance();
-        WordAssessmentEventGson wordAssessmentEventGsonThird = new WordAssessmentEventGson();
-        wordAssessmentEventGsonThird.setWordId(1L);
-        wordAssessmentEventGsonThird.setTime(calendarNow);
-        wordAssessmentEventGsonThird.setMasteryScore(1.00f);
-        wordAssessmentEventGsons.add(wordAssessmentEventGsonThird);
-
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
     }
 
     /**
@@ -201,14 +199,14 @@ public class SpacedRepetitionHelperTest {
         wordLearningEventGson.setWordId(1L);
         wordLearningEventGson.setTime(calendar60MinutesAgo);
 
-        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
-
         Calendar calendar15MinutesAgo = Calendar.getInstance();
         calendar15MinutesAgo.add(Calendar.MINUTE, -15);
         WordAssessmentEventGson wordAssessmentEventGsonFirst = new WordAssessmentEventGson();
         wordAssessmentEventGsonFirst.setWordId(1L);
         wordAssessmentEventGsonFirst.setTime(calendar15MinutesAgo);
         wordAssessmentEventGsonFirst.setMasteryScore(1.00f);
+
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
         wordAssessmentEventGsons.add(wordAssessmentEventGsonFirst);
 
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
@@ -225,14 +223,14 @@ public class SpacedRepetitionHelperTest {
         wordLearningEventGson.setWordId(1L);
         wordLearningEventGson.setTime(calendar60MinutesAgo);
 
-        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
-
         Calendar calendar17MinutesAgo = Calendar.getInstance();
         calendar17MinutesAgo.add(Calendar.MINUTE, -17);
         WordAssessmentEventGson wordAssessmentEventGsonFirst = new WordAssessmentEventGson();
         wordAssessmentEventGsonFirst.setWordId(1L);
         wordAssessmentEventGsonFirst.setTime(calendar17MinutesAgo);
         wordAssessmentEventGsonFirst.setMasteryScore(1.00f);
+
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
         wordAssessmentEventGsons.add(wordAssessmentEventGsonFirst);
 
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(true));
@@ -249,24 +247,30 @@ public class SpacedRepetitionHelperTest {
         wordLearningEventGson.setWordId(1L);
         wordLearningEventGson.setTime(calendar180MinutesAgo);
 
-        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
-
+        // 1st review (>=4 minutes after learning event)
+        // 180 minutes ago - 120 minutes ago = 60 minutes passed
         Calendar calendar120MinutesAgo = Calendar.getInstance();
         calendar120MinutesAgo.add(Calendar.MINUTE, -120);
         WordAssessmentEventGson wordAssessmentEventGsonFirst = new WordAssessmentEventGson();
         wordAssessmentEventGsonFirst.setWordId(1L);
         wordAssessmentEventGsonFirst.setTime(calendar120MinutesAgo);
         wordAssessmentEventGsonFirst.setMasteryScore(1.00f);
-        wordAssessmentEventGsons.add(wordAssessmentEventGsonFirst);
 
+        // 2nd review (>=16 minutes after the 1st mastery)
+        // 120 minutes ago - 63 minutes ago = 57
         Calendar calendar63MinutesAgo = Calendar.getInstance();
         calendar63MinutesAgo.add(Calendar.MINUTE, -63);
         WordAssessmentEventGson wordAssessmentEventGsonSecond = new WordAssessmentEventGson();
         wordAssessmentEventGsonSecond.setWordId(1L);
         wordAssessmentEventGsonSecond.setTime(calendar63MinutesAgo);
         wordAssessmentEventGsonSecond.setMasteryScore(1.00f);
-        wordAssessmentEventGsons.add(wordAssessmentEventGsonSecond);
 
+        // Store assessment events in _descending_ order
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
+        wordAssessmentEventGsons.add(wordAssessmentEventGsonSecond);
+        wordAssessmentEventGsons.add(wordAssessmentEventGsonFirst);
+
+        // 3rd review (>=64 minutes after the 2nd mastery)
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
     }
 
@@ -281,15 +285,12 @@ public class SpacedRepetitionHelperTest {
         wordLearningEventGson.setWordId(1L);
         wordLearningEventGson.setTime(calendar180MinutesAgo);
 
-        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
-
         Calendar calendar120MinutesAgo = Calendar.getInstance();
         calendar120MinutesAgo.add(Calendar.MINUTE, -120);
         WordAssessmentEventGson wordAssessmentEventGsonFirst = new WordAssessmentEventGson();
         wordAssessmentEventGsonFirst.setWordId(1L);
         wordAssessmentEventGsonFirst.setTime(calendar120MinutesAgo);
         wordAssessmentEventGsonFirst.setMasteryScore(1.00f);
-        wordAssessmentEventGsons.add(wordAssessmentEventGsonFirst);
 
         Calendar calendar65MinutesAgo = Calendar.getInstance();
         calendar65MinutesAgo.add(Calendar.MINUTE, -65);
@@ -297,7 +298,11 @@ public class SpacedRepetitionHelperTest {
         wordAssessmentEventGsonSecond.setWordId(1L);
         wordAssessmentEventGsonSecond.setTime(calendar65MinutesAgo);
         wordAssessmentEventGsonSecond.setMasteryScore(1.00f);
+
+        // Store assessment events in _descending_ order
+        List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
         wordAssessmentEventGsons.add(wordAssessmentEventGsonSecond);
+        wordAssessmentEventGsons.add(wordAssessmentEventGsonFirst);
 
         assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(true));
     }
