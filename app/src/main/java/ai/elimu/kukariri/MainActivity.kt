@@ -1,37 +1,39 @@
-package ai.elimu.kukariri;
+package ai.elimu.kukariri
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
+import ai.elimu.kukariri.assessment.WordAssessmentActivity
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import java.util.Locale
 
-import androidx.appcompat.app.AppCompatActivity;
+class MainActivity : AppCompatActivity() {
 
-import java.util.Locale;
-
-import ai.elimu.kukariri.assessment.WordAssessmentActivity;
-
-public class MainActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Log.i(getClass().getName(), "onCreate");
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_main);
-
-        Locale deviceLocale = Locale.getDefault();
-        Log.i(getClass().getName(), "deviceLocale: " + deviceLocale);
-        String deviceLanguage = deviceLocale.getLanguage();
-        Log.i(getClass().getName(), "deviceLanguage: " + deviceLanguage);
+    companion object {
+        private const val TAG = "MainActivity"
     }
 
-    @Override
-    protected void onStart() {
-        Log.i(getClass().getName(), "onStart");
-        super.onStart();
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Log.i(TAG, "onCreate")
+        super.onCreate(savedInstanceState)
 
-        Intent wordAssessmentActivityIntent = new Intent(getApplicationContext(), WordAssessmentActivity.class);
-        startActivity(wordAssessmentActivityIntent);
-        finish();
+        setContentView(R.layout.activity_main)
+
+        val deviceLocale = Locale.getDefault()
+        Log.i(TAG, "deviceLocale: $deviceLocale")
+        val deviceLanguage = deviceLocale.language
+        Log.i(TAG, "deviceLanguage: $deviceLanguage")
+    }
+
+    override fun onStart() {
+        Log.i(TAG, "onStart")
+        super.onStart()
+
+        val wordAssessmentActivityIntent = Intent(
+            applicationContext,
+            WordAssessmentActivity::class.java
+        )
+        startActivity(wordAssessmentActivityIntent)
+        finish()
     }
 }
