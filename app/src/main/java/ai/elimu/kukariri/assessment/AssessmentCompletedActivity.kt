@@ -1,34 +1,33 @@
 package ai.elimu.kukariri.assessment
 
 import ai.elimu.kukariri.R
+import ai.elimu.kukariri.databinding.ActivityAssessmentCompletedBinding
 import ai.elimu.kukariri.util.MediaPlayerHelper
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.sackcentury.shinebuttonlib.ShineButton
 
 class AssessmentCompletedActivity : AppCompatActivity() {
-    private var shineButton: ShineButton? = null
+
+    private val TAG = javaClass.name
+    private lateinit var binding: ActivityAssessmentCompletedBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i(javaClass.name, "onCreate")
+        Log.i(TAG, "onCreate")
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_assessment_completed)
-
-        shineButton = findViewById(R.id.assessmentCompletedShineButton)
+        binding = ActivityAssessmentCompletedBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     override fun onStart() {
-        Log.i(javaClass.name, "onStart")
+        Log.i(TAG, "onStart")
         super.onStart()
 
-        shineButton!!.postDelayed(object : Runnable {
-            override fun run() {
-                Log.i(javaClass.name, "run")
-                shineButton!!.callOnClick()
-                MediaPlayerHelper.play(applicationContext, R.raw.success)
-            }
+        binding.assessmentCompletedShineButton.postDelayed({
+            Log.i(TAG, "run")
+            binding.assessmentCompletedShineButton.callOnClick()
+            MediaPlayerHelper.play(applicationContext, R.raw.success)
         }, 500)
     }
 }
