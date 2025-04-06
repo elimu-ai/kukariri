@@ -1,41 +1,34 @@
-package ai.elimu.kukariri.assessment;
+package ai.elimu.kukariri.assessment
 
-import android.os.Bundle;
-import android.util.Log;
+import ai.elimu.kukariri.R
+import ai.elimu.kukariri.util.MediaPlayerHelper
+import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import com.sackcentury.shinebuttonlib.ShineButton
 
-import androidx.appcompat.app.AppCompatActivity;
+class AssessmentCompletedActivity : AppCompatActivity() {
+    private var shineButton: ShineButton? = null
 
-import com.sackcentury.shinebuttonlib.ShineButton;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Log.i(javaClass.name, "onCreate")
+        super.onCreate(savedInstanceState)
 
-import ai.elimu.kukariri.R;
-import ai.elimu.kukariri.util.MediaPlayerHelper;
+        setContentView(R.layout.activity_assessment_completed)
 
-public class AssessmentCompletedActivity extends AppCompatActivity {
-
-    private ShineButton shineButton;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Log.i(getClass().getName(), "onCreate");
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_assessment_completed);
-
-        shineButton = findViewById(R.id.assessmentCompletedShineButton);
+        shineButton = findViewById(R.id.assessmentCompletedShineButton)
     }
 
-    @Override
-    protected void onStart() {
-        Log.i(getClass().getName(), "onStart");
-        super.onStart();
+    override fun onStart() {
+        Log.i(javaClass.name, "onStart")
+        super.onStart()
 
-        shineButton.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(getClass().getName(), "run");
-                shineButton.callOnClick();
-                MediaPlayerHelper.play(getApplicationContext(), R.raw.success);
+        shineButton!!.postDelayed(object : Runnable {
+            override fun run() {
+                Log.i(javaClass.name, "run")
+                shineButton!!.callOnClick()
+                MediaPlayerHelper.play(applicationContext, R.raw.success)
             }
-        }, 500);
+        }, 500)
     }
 }
