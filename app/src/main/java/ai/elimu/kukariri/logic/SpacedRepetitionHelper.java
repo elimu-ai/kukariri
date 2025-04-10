@@ -35,7 +35,7 @@ public class SpacedRepetitionHelper {
         if (wordAssessmentEventGsons.isEmpty()) {
             // No reviews have been performed
 
-            long milliSecondsPassedSinceWordLearningEvent = Calendar.getInstance().getTimeInMillis() - wordLearningEventGson.getTime().getTimeInMillis();
+            long milliSecondsPassedSinceWordLearningEvent = Calendar.getInstance().getTimeInMillis() - wordLearningEventGson.getTimestamp().getTimeInMillis();
             Double minutesPassedSinceWordLearningEvent = Double.valueOf(milliSecondsPassedSinceWordLearningEvent / 1000 / 60);
             if (minutesPassedSinceWordLearningEvent >= 4) {
                 isReviewPending = true;
@@ -60,7 +60,7 @@ public class SpacedRepetitionHelper {
                 // The most recent review was mastered
 
                 WordAssessmentEventGson mostRecentWordAssessmentEventGson = wordAssessmentEventGsons.get(0);
-                long milliSecondsPassedSinceMostRecentAssessmentEvent = Calendar.getInstance().getTimeInMillis() - mostRecentWordAssessmentEventGson.getTime().getTimeInMillis();
+                long milliSecondsPassedSinceMostRecentAssessmentEvent = Calendar.getInstance().getTimeInMillis() - mostRecentWordAssessmentEventGson.getTimestamp().getTimeInMillis();
                 Double minutesPassedSinceMostRecentAssessmentEvent = Double.valueOf(milliSecondsPassedSinceMostRecentAssessmentEvent / 1000 / 60);
 
                 if (numberOfCorrectReviewsInSequence == 1) {
