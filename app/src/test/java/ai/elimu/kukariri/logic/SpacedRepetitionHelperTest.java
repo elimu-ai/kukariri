@@ -22,7 +22,7 @@ public class SpacedRepetitionHelperTest {
         calendar3MinutesAgo.add(Calendar.MINUTE, -3);
         WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
         wordLearningEventGson.setWordId(1L);
-        wordLearningEventGson.setTime(calendar3MinutesAgo);
+        wordLearningEventGson.setTimestamp(calendar3MinutesAgo);
 
         List<WordAssessmentEventGson> wordAssessmentEventGsonList = new ArrayList<>();
 
@@ -38,7 +38,7 @@ public class SpacedRepetitionHelperTest {
         calendar5MinutesAgo.add(Calendar.MINUTE, -5);
         WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
         wordLearningEventGson.setWordId(1L);
-        wordLearningEventGson.setTime(calendar5MinutesAgo);
+        wordLearningEventGson.setTimestamp(calendar5MinutesAgo);
 
         List<WordAssessmentEventGson> wordAssessmentEventGsonList = new ArrayList<>();
 
@@ -54,12 +54,12 @@ public class SpacedRepetitionHelperTest {
         calendar5MinutesAgo.add(Calendar.MINUTE, -5);
         WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
         wordLearningEventGson.setWordId(1L);
-        wordLearningEventGson.setTime(calendar5MinutesAgo);
+        wordLearningEventGson.setTimestamp(calendar5MinutesAgo);
 
         Calendar calendarNow = Calendar.getInstance();
         WordAssessmentEventGson wordAssessmentEventGson = new WordAssessmentEventGson();
         wordAssessmentEventGson.setWordId(1L);
-        wordAssessmentEventGson.setTime(calendarNow);
+        wordAssessmentEventGson.setTimestamp(calendarNow);
         wordAssessmentEventGson.setMasteryScore(0.00f);
 
         List<WordAssessmentEventGson> wordAssessmentEventGsonList = new ArrayList<>();
@@ -77,12 +77,12 @@ public class SpacedRepetitionHelperTest {
         calendar5MinutesAgo.add(Calendar.MINUTE, -5);
         WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
         wordLearningEventGson.setWordId(1L);
-        wordLearningEventGson.setTime(calendar5MinutesAgo);
+        wordLearningEventGson.setTimestamp(calendar5MinutesAgo);
 
         Calendar calendarNow = Calendar.getInstance();
         WordAssessmentEventGson wordAssessmentEventGson = new WordAssessmentEventGson();
         wordAssessmentEventGson.setWordId(1L);
-        wordAssessmentEventGson.setTime(calendarNow);
+        wordAssessmentEventGson.setTimestamp(calendarNow);
         wordAssessmentEventGson.setMasteryScore(1.00f);
 
         List<WordAssessmentEventGson> wordAssessmentEventGsonList = new ArrayList<>();
@@ -100,12 +100,12 @@ public class SpacedRepetitionHelperTest {
         calendar17MinutesAgo.add(Calendar.MINUTE, -17);
         WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
         wordLearningEventGson.setWordId(1L);
-        wordLearningEventGson.setTime(calendar17MinutesAgo);
+        wordLearningEventGson.setTimestamp(calendar17MinutesAgo);
 
         Calendar calendarNow = Calendar.getInstance();
         WordAssessmentEventGson wordAssessmentEventGson = new WordAssessmentEventGson();
         wordAssessmentEventGson.setWordId(1L);
-        wordAssessmentEventGson.setTime(calendarNow);
+        wordAssessmentEventGson.setTimestamp(calendarNow);
         wordAssessmentEventGson.setMasteryScore(1.00f);
 
         List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
@@ -123,20 +123,20 @@ public class SpacedRepetitionHelperTest {
         calendar22MinutesAgo.add(Calendar.MINUTE, -22);
         WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
         wordLearningEventGson.setWordId(1L);
-        wordLearningEventGson.setTime(calendar22MinutesAgo);
+        wordLearningEventGson.setTimestamp(calendar22MinutesAgo);
 
         Calendar calendar18MinutesAgo = Calendar.getInstance();
         calendar18MinutesAgo.add(Calendar.MINUTE, -18);
         WordAssessmentEventGson wordAssessmentEventGsonFirst = new WordAssessmentEventGson();
         wordAssessmentEventGsonFirst.setWordId(1L);
-        wordAssessmentEventGsonFirst.setTime(calendar18MinutesAgo);
+        wordAssessmentEventGsonFirst.setTimestamp(calendar18MinutesAgo);
         wordAssessmentEventGsonFirst.setMasteryScore(0.00f);
 
         Calendar calendar17MinutesAgo = Calendar.getInstance();
         calendar17MinutesAgo.add(Calendar.MINUTE, -17);
         WordAssessmentEventGson wordAssessmentEventGsonSecond = new WordAssessmentEventGson();
         wordAssessmentEventGsonSecond.setWordId(1L);
-        wordAssessmentEventGsonSecond.setTime(calendar17MinutesAgo);
+        wordAssessmentEventGsonSecond.setTimestamp(calendar17MinutesAgo);
         wordAssessmentEventGsonSecond.setMasteryScore(1.00f);
 
         // Store assessment events in _descending_ order
@@ -156,27 +156,27 @@ public class SpacedRepetitionHelperTest {
         calendar23MinutesAgo.add(Calendar.MINUTE, -23);
         WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
         wordLearningEventGson.setWordId(1L);
-        wordLearningEventGson.setTime(calendar23MinutesAgo);
+        wordLearningEventGson.setTimestamp(calendar23MinutesAgo);
 
         Calendar calendar19MinutesAgo = Calendar.getInstance();
         calendar19MinutesAgo.add(Calendar.MINUTE, -19);
         WordAssessmentEventGson wordAssessmentEventGsonFirst = new WordAssessmentEventGson();
         wordAssessmentEventGsonFirst.setWordId(1L);
-        wordAssessmentEventGsonFirst.setTime(calendar19MinutesAgo);
+        wordAssessmentEventGsonFirst.setTimestamp(calendar19MinutesAgo);
         wordAssessmentEventGsonFirst.setMasteryScore(0.00f);
 
         Calendar calendar18MinutesAgo = Calendar.getInstance();
         calendar18MinutesAgo.add(Calendar.MINUTE, -18);
         WordAssessmentEventGson wordAssessmentEventGsonSecond = new WordAssessmentEventGson();
         wordAssessmentEventGsonSecond.setWordId(1L);
-        wordAssessmentEventGsonSecond.setTime(calendar18MinutesAgo);
+        wordAssessmentEventGsonSecond.setTimestamp(calendar18MinutesAgo);
         wordAssessmentEventGsonSecond.setMasteryScore(0.00f);
 
         Calendar calendar17MinutesAgo = Calendar.getInstance();
         calendar17MinutesAgo.add(Calendar.MINUTE, -17);
         WordAssessmentEventGson wordAssessmentEventGsonThird = new WordAssessmentEventGson();
         wordAssessmentEventGsonThird.setWordId(1L);
-        wordAssessmentEventGsonThird.setTime(calendar17MinutesAgo);
+        wordAssessmentEventGsonThird.setTimestamp(calendar17MinutesAgo);
         wordAssessmentEventGsonThird.setMasteryScore(1.00f);
 
         // Store assessment events in _descending_ order
@@ -197,13 +197,13 @@ public class SpacedRepetitionHelperTest {
         calendar60MinutesAgo.add(Calendar.MINUTE, -60);
         WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
         wordLearningEventGson.setWordId(1L);
-        wordLearningEventGson.setTime(calendar60MinutesAgo);
+        wordLearningEventGson.setTimestamp(calendar60MinutesAgo);
 
         Calendar calendar15MinutesAgo = Calendar.getInstance();
         calendar15MinutesAgo.add(Calendar.MINUTE, -15);
         WordAssessmentEventGson wordAssessmentEventGsonFirst = new WordAssessmentEventGson();
         wordAssessmentEventGsonFirst.setWordId(1L);
-        wordAssessmentEventGsonFirst.setTime(calendar15MinutesAgo);
+        wordAssessmentEventGsonFirst.setTimestamp(calendar15MinutesAgo);
         wordAssessmentEventGsonFirst.setMasteryScore(1.00f);
 
         List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
@@ -221,13 +221,13 @@ public class SpacedRepetitionHelperTest {
         calendar60MinutesAgo.add(Calendar.MINUTE, -60);
         WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
         wordLearningEventGson.setWordId(1L);
-        wordLearningEventGson.setTime(calendar60MinutesAgo);
+        wordLearningEventGson.setTimestamp(calendar60MinutesAgo);
 
         Calendar calendar17MinutesAgo = Calendar.getInstance();
         calendar17MinutesAgo.add(Calendar.MINUTE, -17);
         WordAssessmentEventGson wordAssessmentEventGsonFirst = new WordAssessmentEventGson();
         wordAssessmentEventGsonFirst.setWordId(1L);
-        wordAssessmentEventGsonFirst.setTime(calendar17MinutesAgo);
+        wordAssessmentEventGsonFirst.setTimestamp(calendar17MinutesAgo);
         wordAssessmentEventGsonFirst.setMasteryScore(1.00f);
 
         List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
@@ -245,7 +245,7 @@ public class SpacedRepetitionHelperTest {
         calendar180MinutesAgo.add(Calendar.MINUTE, -180);
         WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
         wordLearningEventGson.setWordId(1L);
-        wordLearningEventGson.setTime(calendar180MinutesAgo);
+        wordLearningEventGson.setTimestamp(calendar180MinutesAgo);
 
         // 1st review (>=4 minutes after learning event)
         // 180 minutes ago - 120 minutes ago = 60 minutes passed
@@ -253,7 +253,7 @@ public class SpacedRepetitionHelperTest {
         calendar120MinutesAgo.add(Calendar.MINUTE, -120);
         WordAssessmentEventGson wordAssessmentEventGsonFirst = new WordAssessmentEventGson();
         wordAssessmentEventGsonFirst.setWordId(1L);
-        wordAssessmentEventGsonFirst.setTime(calendar120MinutesAgo);
+        wordAssessmentEventGsonFirst.setTimestamp(calendar120MinutesAgo);
         wordAssessmentEventGsonFirst.setMasteryScore(1.00f);
 
         // 2nd review (>=16 minutes after the 1st mastery)
@@ -262,7 +262,7 @@ public class SpacedRepetitionHelperTest {
         calendar63MinutesAgo.add(Calendar.MINUTE, -63);
         WordAssessmentEventGson wordAssessmentEventGsonSecond = new WordAssessmentEventGson();
         wordAssessmentEventGsonSecond.setWordId(1L);
-        wordAssessmentEventGsonSecond.setTime(calendar63MinutesAgo);
+        wordAssessmentEventGsonSecond.setTimestamp(calendar63MinutesAgo);
         wordAssessmentEventGsonSecond.setMasteryScore(1.00f);
 
         // Store assessment events in _descending_ order
@@ -283,20 +283,20 @@ public class SpacedRepetitionHelperTest {
         calendar180MinutesAgo.add(Calendar.MINUTE, -180);
         WordLearningEventGson wordLearningEventGson = new WordLearningEventGson();
         wordLearningEventGson.setWordId(1L);
-        wordLearningEventGson.setTime(calendar180MinutesAgo);
+        wordLearningEventGson.setTimestamp(calendar180MinutesAgo);
 
         Calendar calendar120MinutesAgo = Calendar.getInstance();
         calendar120MinutesAgo.add(Calendar.MINUTE, -120);
         WordAssessmentEventGson wordAssessmentEventGsonFirst = new WordAssessmentEventGson();
         wordAssessmentEventGsonFirst.setWordId(1L);
-        wordAssessmentEventGsonFirst.setTime(calendar120MinutesAgo);
+        wordAssessmentEventGsonFirst.setTimestamp(calendar120MinutesAgo);
         wordAssessmentEventGsonFirst.setMasteryScore(1.00f);
 
         Calendar calendar65MinutesAgo = Calendar.getInstance();
         calendar65MinutesAgo.add(Calendar.MINUTE, -65);
         WordAssessmentEventGson wordAssessmentEventGsonSecond = new WordAssessmentEventGson();
         wordAssessmentEventGsonSecond.setWordId(1L);
-        wordAssessmentEventGsonSecond.setTime(calendar65MinutesAgo);
+        wordAssessmentEventGsonSecond.setTimestamp(calendar65MinutesAgo);
         wordAssessmentEventGsonSecond.setMasteryScore(1.00f);
 
         // Store assessment events in _descending_ order
