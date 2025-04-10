@@ -6,7 +6,7 @@ elimuCommonUtils = "1.0.2"
 junit = "4.13.2"
 shineButton = "1.0.0"
 easingInterpolator = "v1.3.2"
-hilt = "2.55"
+hilt = "2.56.1"
 
 constraintLayout = "2.1.3"
 appCompat = "1.4.1"
