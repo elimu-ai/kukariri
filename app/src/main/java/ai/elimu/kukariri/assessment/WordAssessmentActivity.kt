@@ -142,7 +142,7 @@ class WordAssessmentActivity : AppCompatActivity() {
             applicationContext, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID
         )
         if (emojiGsons.isNotEmpty()) {
-            textView!!.text = textView!!.text.toString() + "\n"
+            textView!!.text = textView!!.text.toString() + "\n\n"
             for (emojiGson in emojiGsons) {
                 textView!!.text = textView!!.text.toString() + emojiGson.glyph
             }
