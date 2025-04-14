@@ -3,6 +3,8 @@ elimuModel = "model-2.0.89"
 elimuAnalytics = "3.1.30"
 elimuContentProvider = "1.2.38"
 elimuCommonUtils = "1.0.8"
+gradle = "8.9.1"
+jacocoAndroid = "0.2.1"
 junit = "4.13.2"
 shineButton = "1.0.0"
 easingInterpolator = "v1.3.2"
@@ -13,7 +15,7 @@ appCompat = "1.4.1"
 androidXJunit = "1.1.3"
 androidXEspresso = "3.6.1"
 kotlin = "2.1.20"
-coreKtx = "1.15.0"
+coreKtx = "1.16.0"
 
 [libraries]
 elimu-model = { group = "com.github.elimu-ai", name = "model", version.ref = "elimuModel" }
@@ -21,6 +23,8 @@ elimu-analytics = { group = "com.github.elimu-ai", name = "analytics", version.r
 elimu-content-provider = { group = "com.github.elimu-ai", name = "content-provider", version.ref = "elimuContentProvider" }
 elimu-common-utils = { group = "com.github.elimu-ai", name = "common-utils", version.ref = "elimuCommonUtils" }
 easing-interpolator = { group = "com.github.MasayukiSuda", name = "EasingInterpolator", version.ref = "easingInterpolator" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+jacoco-android = { module = "com.mxalbert.gradle:jacoco-android", version.ref = "jacocoAndroid" }
 shine-button = { group = "com.sackcentury", name = "shinebutton", version.ref = "shineButton" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
 androidx-constraint-layout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }

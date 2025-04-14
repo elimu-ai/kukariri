@@ -8,8 +8,8 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.9.1'
-        classpath 'com.mxalbert.gradle:jacoco-android:0.2.1'
+        classpath libs.gradle
+        classpath libs.jacoco.android
         classpath libs.kotlin.gradle.plugin
         classpath libs.hilt.gradle.plugin
 
