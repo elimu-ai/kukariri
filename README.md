@@ -39,6 +39,12 @@ adb install app/build/outputs/apk/debug/ai.elimu.analytics-<versionCode>-debug.a
 open app/build/jacoco/jacocoHtml/index.html
 ```
 
+### Gradle Upgrade
+
+```
+./gradlew wrapper --gradle-version x.x.x
+```
+
 ---
 
 <p align="center">
