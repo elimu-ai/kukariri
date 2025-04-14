@@ -39,6 +39,10 @@ adb install app/build/outputs/apk/debug/ai.elimu.analytics-<versionCode>-debug.a
 open app/build/jacoco/jacocoHtml/index.html
 ```
 
+### Content Provider Utils 📦
+
+If you want to make changes to the elimu.ai Content Provider's utility library and test them here in this app, see instructions at https://github.com/elimu-ai/content-provider/blob/main/README.md#utils-snapshot
+
 ### Gradle Upgrade
 
 ```
