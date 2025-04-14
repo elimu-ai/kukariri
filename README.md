@@ -41,7 +41,7 @@ open app/build/jacoco/jacocoHtml/index.html
 
 ### Content Provider Utils 📦
 
-If you want to make changes to the elimu.ai Content Provider's utility library and test them here in this app, see instructions at https://github.com/elimu-ai/content-provider/blob/main/README.md#utils-snapshot
+If you want to make changes to the elimu.ai Content Provider's utility library, see testing instructions at https://github.com/elimu-ai/content-provider/blob/main/README.md#utils-snapshot
 
 ### Gradle Upgrade
 
