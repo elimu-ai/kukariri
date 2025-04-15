@@ -3,6 +3,7 @@ apply plugin: 'com.mxalbert.gradle.jacoco-android'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'maven-publish'
 
 jacoco {
     toolVersion = "0.8.10"
@@ -16,9 +17,8 @@ android {
         applicationId "ai.elimu.kukariri"
         minSdkVersion 26
         targetSdkVersion 35
-        versionCode 1000007
-        versionName "1.0.7-SNAPSHOT"
-        setProperty("archivesBaseName", "${applicationId}-${versionCode}")
+        versionCode 1000008
+        versionName "1.0.8-SNAPSHOT"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -56,10 +56,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation libs.elimu.model // See https://jitpack.io/#elimu-ai/model
-    implementation libs.elimu.content.provider // See https://jitpack.io/#elimu-ai/content-provider
-    implementation libs.elimu.analytics // See https://jitpack.io/#elimu-ai/analytics
-    implementation libs.elimu.common.utils
+    implementation libs.elimu.model // https://jitpack.io/#elimu-ai/model
+    implementation libs.elimu.content.provider // https://jitpack.io/#elimu-ai/content-provider
+    implementation libs.elimu.analytics // https://jitpack.io/#elimu-ai/analytics
+    implementation libs.elimu.common.utils // https://jitpack.io/#elimu-ai/common-utils
 
     implementation libs.androidx.appcompat
     implementation libs.androidx.constraint.layout
@@ -77,4 +77,15 @@ dependencies {
 
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso
+}
+
+publishing {
+    publications {
+        apk(MavenPublication) {
+            artifact("${buildDir}/outputs/apk/release/app-release-unsigned.apk")
+        }
+    }
+}
+tasks.named("publishApkPublicationToMavenLocal") {
+    mustRunAfter(":app:assembleRelease")
 }
