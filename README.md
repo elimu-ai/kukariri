@@ -1,6 +1,7 @@
 # Kukariri 🧠
 
 [![codecov](https://codecov.io/gh/elimu-ai/kukariri/branch/main/graph/badge.svg?token=LFJL11C0TC)](https://codecov.io/gh/elimu-ai/kukariri)
+[![Release](https://jitpack.io/v/elimu-ai/kukariri.svg)](https://jitpack.io/#elimu-ai/kukariri)
 
 Android application which handles the Spaced Repetition System (SRS)
 
@@ -14,6 +15,11 @@ Then, [4 minutes](https://github.com/elimu-ai/kukariri/blob/main/app/src/main/ja
 
 ![WordAssessmentActivity](https://github.com/user-attachments/assets/e6c5cf75-13f6-4b8b-9978-3756e52dd0a7)
 
+## Installation
+
+> [!IMPORTANT]
+> Note: This app depends on the [elimu.ai Content Provider](https://github.com/elimu-ai/content-provider) to be installed.
+
 ## Development 👩🏽‍💻
 
 Compile APK:
@@ -25,7 +31,7 @@ Compile APK:
 Install APK:
 
 ```
-adb install app/build/outputs/apk/debug/ai.elimu.analytics-<versionCode>-debug.apk
+adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 
 ### Code Coverage
@@ -55,7 +61,7 @@ If you want to make changes to the elimu.ai Content Provider's utility library, 
   <img src="https://github.com/elimu-ai/webapp/blob/main/src/main/webapp/static/img/logo-text-256x78.png" />
 </p>
 <p align="center">
-  elimu.ai - Free open-source learning software for out-of-school children ✨🚀
+  elimu.ai - Free open-source learning software for out-of-school children 🚀✨
 </p>
 <p align="center">
   <a href="https://elimu.ai">Website 🌐</a>
