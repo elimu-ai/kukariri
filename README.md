@@ -31,7 +31,7 @@ Compile APK:
 Install APK:
 
 ```
-adb install app/build/outputs/apk/debug/app-debug-unsigned.apk
+adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 
 ### Code Coverage
