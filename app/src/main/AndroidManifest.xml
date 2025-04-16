@@ -9,6 +9,7 @@
 
     <queries>
         <provider android:authorities="${analyticsApplicationId}.provider.word_assessment_event_provider" />
+        <provider android:authorities="${contentProviderApplicationId}.provider.word_provider" />
     </queries>
 
     <application
