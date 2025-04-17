@@ -11,7 +11,7 @@ easingInterpolator = "v1.3.2"
 hilt = "2.56.1"
 
 constraintLayout = "2.2.1"
-appCompat = "1.4.1"
+appCompat = "1.7.0"
 androidXJunit = "1.2.1"
 androidXEspresso = "3.6.1"
 kotlin = "2.1.20"
