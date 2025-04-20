@@ -6,7 +6,7 @@ import android.content.Intent
 import android.util.Log
 
 /**
- * This receiver is only used to trigger [BaseApplication.onCreate].
+ * This receiver is only used to trigger [ai.elimu.kukariri.BaseApplication.onCreate].
  */
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
