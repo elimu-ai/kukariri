@@ -1,19 +1,15 @@
-package ai.elimu.kukariri.receiver;
+package ai.elimu.kukariri.receiver
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-
-import ai.elimu.kukariri.BaseApplication;
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 
 /**
- * This receiver is only used to trigger {@link BaseApplication#onCreate()}.
+ * This receiver is only used to trigger [BaseApplication.onCreate].
  */
-public class BootReceiver extends BroadcastReceiver {
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        Log.i(getClass().getName(), "onReceive");
+class BootReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        Log.i(javaClass.name, "onReceive")
     }
 }
