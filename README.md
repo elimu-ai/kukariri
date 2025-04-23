@@ -1,7 +1,7 @@
 # Kukariri 🧠
 
 [![codecov](https://codecov.io/gh/elimu-ai/kukariri/branch/main/graph/badge.svg?token=LFJL11C0TC)](https://codecov.io/gh/elimu-ai/kukariri)
-[![Release](https://jitpack.io/v/elimu-ai/kukariri.svg)](https://jitpack.io/#elimu-ai/kukariri)
+[![Release](https://jitpack.io/v/ai.elimu/kukariri.svg)](https://jitpack.io/#ai.elimu/kukariri)
 
 Android application which handles the Spaced Repetition System (SRS)
 
