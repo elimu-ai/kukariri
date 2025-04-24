@@ -23,14 +23,14 @@ class ScreenOnReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         Log.i(TAG, "onReceive")
 
-        Log.i(TAG, "intent: " + intent)
+        Log.i(TAG, "intent: $intent")
         Log.i(TAG, "intent.getAction(): " + intent.getAction())
 
         // Do not proceed if the screen is not active
         val displayManager = context.getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
-        for (display in displayManager.getDisplays()) {
-            Log.i(TAG, "display: " + display)
-            if (display.getState() != Display.STATE_ON) {
+        for (display in displayManager.displays) {
+            Log.i(TAG, "display: $display")
+            if (display.state != Display.STATE_ON) {
                 return
             }
         }
