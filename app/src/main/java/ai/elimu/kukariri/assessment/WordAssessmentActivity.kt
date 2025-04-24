@@ -163,40 +163,36 @@ class WordAssessmentActivity : AppCompatActivity() {
             )
         }
 
-        difficultButton!!.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
-                Log.i(TAG, "difficultButton onClick")
+        difficultButton!!.setOnClickListener {
+            Log.i(TAG, "difficultButton onClick")
 
-                // Move the Word to the end of the list
-                wordGsonsPendingReview.remove(wordGson)
-                wordGsonsPendingReview.add(wordGson)
+            // Move the Word to the end of the list
+            wordGsonsPendingReview.remove(wordGson)
+            wordGsonsPendingReview.add(wordGson)
 
-                // Report assessment event to the Analytics application (https://github.com/elimu-ai/analytics)
-                AssessmentEventUtil.reportWordAssessmentEvent(
-                    wordGson, 0.00f, System.currentTimeMillis() - timeStart,
-                    applicationContext, BuildConfig.ANALYTICS_APPLICATION_ID
-                )
+            // Report assessment event to the Analytics application (https://github.com/elimu-ai/analytics)
+            AssessmentEventUtil.reportWordAssessmentEvent(
+                wordGson, 0.00f, System.currentTimeMillis() - timeStart,
+                applicationContext, BuildConfig.ANALYTICS_APPLICATION_ID
+            )
 
-                loadNextWord()
-            }
-        })
+            loadNextWord()
+        }
 
-        easyButton!!.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
-                Log.i(TAG, "easyButton onClick")
+        easyButton!!.setOnClickListener {
+            Log.i(TAG, "easyButton onClick")
 
-                // Remove the Word from the list of Words to be repeated, and add it to the list of mastered Words
-                wordGsonsPendingReview.remove(wordGson)
-                wordGsonsMastered.add(wordGson)
+            // Remove the Word from the list of Words to be repeated, and add it to the list of mastered Words
+            wordGsonsPendingReview.remove(wordGson)
+            wordGsonsMastered.add(wordGson)
 
-                // Report assessment event to the Analytics application (https://github.com/elimu-ai/analytics)
-                AssessmentEventUtil.reportWordAssessmentEvent(
-                    wordGson, 1.00f, System.currentTimeMillis() - timeStart,
-                    applicationContext, BuildConfig.ANALYTICS_APPLICATION_ID
-                )
+            // Report assessment event to the Analytics application (https://github.com/elimu-ai/analytics)
+            AssessmentEventUtil.reportWordAssessmentEvent(
+                wordGson, 1.00f, System.currentTimeMillis() - timeStart,
+                applicationContext, BuildConfig.ANALYTICS_APPLICATION_ID
+            )
 
-                loadNextWord()
-            }
-        })
+            loadNextWord()
+        }
     }
 }
