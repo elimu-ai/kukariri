@@ -28,6 +28,11 @@ import java.util.UUID
 
 @AndroidEntryPoint
 class WordAssessmentActivity : AppCompatActivity() {
+    
+    companion object {
+        private const val TAG = "WordAssessmentActivity"
+    }
+    
     private var progressBar: ProgressBar? = null
 
     private var textView: TextView? = null
@@ -49,7 +54,7 @@ class WordAssessmentActivity : AppCompatActivity() {
     private lateinit var ttsViewModel: TextToSpeechViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i(javaClass.name, "onCreate")
+        Log.i(TAG, "onCreate")
         super.onCreate(savedInstanceState)
 
         ttsViewModel = ViewModelProvider(this)[TextToSpeechViewModelImpl::class.java]
@@ -84,7 +89,7 @@ class WordAssessmentActivity : AppCompatActivity() {
             wordLearningEventGsons,
             wordAssessmentEventGsons
         )
-        Log.i(javaClass.name, "idsOfWordsPendingReview.size(): " + idsOfWordsPendingReview.size)
+        Log.i(TAG, "idsOfWordsPendingReview.size(): " + idsOfWordsPendingReview.size)
 
         // Fetch list of Words from the ContentProvider, and exclude those not in the idsOfWordsPendingReview set
         val allWordGsons = getAllWordGsons(
@@ -104,14 +109,14 @@ class WordAssessmentActivity : AppCompatActivity() {
     }
 
     override fun onStart() {
-        Log.i(javaClass.name, "onStart")
+        Log.i(TAG, "onStart")
         super.onStart()
 
         loadNextWord()
     }
 
     private fun loadNextWord() {
-        Log.i(javaClass.name, "loadNextWord")
+        Log.i(TAG, "loadNextWord")
 
         if (wordGsonsPendingReview.isEmpty()) {
             val intent = Intent(applicationContext, AssessmentCompletedActivity::class.java)
@@ -160,7 +165,7 @@ class WordAssessmentActivity : AppCompatActivity() {
 
         difficultButton!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                Log.i(javaClass.name, "difficultButton onClick")
+                Log.i(TAG, "difficultButton onClick")
 
                 // Move the Word to the end of the list
                 wordGsonsPendingReview.remove(wordGson)
@@ -178,7 +183,7 @@ class WordAssessmentActivity : AppCompatActivity() {
 
         easyButton!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                Log.i(javaClass.name, "easyButton onClick")
+                Log.i(TAG, "easyButton onClick")
 
                 // Remove the Word from the list of Words to be repeated, and add it to the list of mastered Words
                 wordGsonsPendingReview.remove(wordGson)
