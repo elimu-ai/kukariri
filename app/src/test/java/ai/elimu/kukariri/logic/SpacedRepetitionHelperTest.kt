@@ -16,8 +16,8 @@ class SpacedRepetitionHelperTest {
         val calendar3MinutesAgo = Calendar.getInstance()
         calendar3MinutesAgo.add(Calendar.MINUTE, -3)
         val wordLearningEventGson = WordLearningEventGson()
-        wordLearningEventGson.setWordId(1L)
-        wordLearningEventGson.setTimestamp(calendar3MinutesAgo)
+        wordLearningEventGson.wordId = 1L
+        wordLearningEventGson.timestamp = calendar3MinutesAgo
 
         val wordAssessmentEventGsonList: MutableList<WordAssessmentEventGson> =
             ArrayList<WordAssessmentEventGson>()
@@ -38,8 +38,8 @@ class SpacedRepetitionHelperTest {
         val calendar5MinutesAgo = Calendar.getInstance()
         calendar5MinutesAgo.add(Calendar.MINUTE, -5)
         val wordLearningEventGson = WordLearningEventGson()
-        wordLearningEventGson.setWordId(1L)
-        wordLearningEventGson.setTimestamp(calendar5MinutesAgo)
+        wordLearningEventGson.wordId = 1L
+        wordLearningEventGson.timestamp = calendar5MinutesAgo
 
         val wordAssessmentEventGsonList: MutableList<WordAssessmentEventGson> =
             ArrayList<WordAssessmentEventGson>()
@@ -60,14 +60,14 @@ class SpacedRepetitionHelperTest {
         val calendar5MinutesAgo = Calendar.getInstance()
         calendar5MinutesAgo.add(Calendar.MINUTE, -5)
         val wordLearningEventGson = WordLearningEventGson()
-        wordLearningEventGson.setWordId(1L)
-        wordLearningEventGson.setTimestamp(calendar5MinutesAgo)
+        wordLearningEventGson.wordId = 1L
+        wordLearningEventGson.timestamp = calendar5MinutesAgo
 
         val calendarNow = Calendar.getInstance()
         val wordAssessmentEventGson = WordAssessmentEventGson()
-        wordAssessmentEventGson.setWordId(1L)
-        wordAssessmentEventGson.setTimestamp(calendarNow)
-        wordAssessmentEventGson.setMasteryScore(0.00f)
+        wordAssessmentEventGson.wordId = 1L
+        wordAssessmentEventGson.timestamp = calendarNow
+        wordAssessmentEventGson.masteryScore = 0.00f
 
         val wordAssessmentEventGsonList: MutableList<WordAssessmentEventGson> =
             ArrayList<WordAssessmentEventGson>()
@@ -89,14 +89,14 @@ class SpacedRepetitionHelperTest {
         val calendar5MinutesAgo = Calendar.getInstance()
         calendar5MinutesAgo.add(Calendar.MINUTE, -5)
         val wordLearningEventGson = WordLearningEventGson()
-        wordLearningEventGson.setWordId(1L)
-        wordLearningEventGson.setTimestamp(calendar5MinutesAgo)
+        wordLearningEventGson.wordId = 1L
+        wordLearningEventGson.timestamp = calendar5MinutesAgo
 
         val calendarNow = Calendar.getInstance()
         val wordAssessmentEventGson = WordAssessmentEventGson()
-        wordAssessmentEventGson.setWordId(1L)
-        wordAssessmentEventGson.setTimestamp(calendarNow)
-        wordAssessmentEventGson.setMasteryScore(1.00f)
+        wordAssessmentEventGson.wordId = 1L
+        wordAssessmentEventGson.timestamp = calendarNow
+        wordAssessmentEventGson.masteryScore = 1.00f
 
         val wordAssessmentEventGsonList: MutableList<WordAssessmentEventGson> =
             ArrayList<WordAssessmentEventGson>()
@@ -118,14 +118,14 @@ class SpacedRepetitionHelperTest {
         val calendar17MinutesAgo = Calendar.getInstance()
         calendar17MinutesAgo.add(Calendar.MINUTE, -17)
         val wordLearningEventGson = WordLearningEventGson()
-        wordLearningEventGson.setWordId(1L)
-        wordLearningEventGson.setTimestamp(calendar17MinutesAgo)
+        wordLearningEventGson.wordId = 1L
+        wordLearningEventGson.timestamp = calendar17MinutesAgo
 
         val calendarNow = Calendar.getInstance()
         val wordAssessmentEventGson = WordAssessmentEventGson()
-        wordAssessmentEventGson.setWordId(1L)
-        wordAssessmentEventGson.setTimestamp(calendarNow)
-        wordAssessmentEventGson.setMasteryScore(1.00f)
+        wordAssessmentEventGson.wordId = 1L
+        wordAssessmentEventGson.timestamp = calendarNow
+        wordAssessmentEventGson.masteryScore = 1.00f
 
         val wordAssessmentEventGsons: MutableList<WordAssessmentEventGson> =
             ArrayList<WordAssessmentEventGson>()
@@ -147,22 +147,22 @@ class SpacedRepetitionHelperTest {
         val calendar22MinutesAgo = Calendar.getInstance()
         calendar22MinutesAgo.add(Calendar.MINUTE, -22)
         val wordLearningEventGson = WordLearningEventGson()
-        wordLearningEventGson.setWordId(1L)
-        wordLearningEventGson.setTimestamp(calendar22MinutesAgo)
+        wordLearningEventGson.wordId = 1L
+        wordLearningEventGson.timestamp = calendar22MinutesAgo
 
         val calendar18MinutesAgo = Calendar.getInstance()
         calendar18MinutesAgo.add(Calendar.MINUTE, -18)
         val wordAssessmentEventGsonFirst = WordAssessmentEventGson()
-        wordAssessmentEventGsonFirst.setWordId(1L)
-        wordAssessmentEventGsonFirst.setTimestamp(calendar18MinutesAgo)
-        wordAssessmentEventGsonFirst.setMasteryScore(0.00f)
+        wordAssessmentEventGsonFirst.wordId = 1L
+        wordAssessmentEventGsonFirst.timestamp = calendar18MinutesAgo
+        wordAssessmentEventGsonFirst.masteryScore = 0.00f
 
         val calendar17MinutesAgo = Calendar.getInstance()
         calendar17MinutesAgo.add(Calendar.MINUTE, -17)
         val wordAssessmentEventGsonSecond = WordAssessmentEventGson()
-        wordAssessmentEventGsonSecond.setWordId(1L)
-        wordAssessmentEventGsonSecond.setTimestamp(calendar17MinutesAgo)
-        wordAssessmentEventGsonSecond.setMasteryScore(1.00f)
+        wordAssessmentEventGsonSecond.wordId = 1L
+        wordAssessmentEventGsonSecond.timestamp = calendar17MinutesAgo
+        wordAssessmentEventGsonSecond.masteryScore = 1.00f
 
         // Store assessment events in _descending_ order
         val wordAssessmentEventGsons: MutableList<WordAssessmentEventGson> =
@@ -186,29 +186,29 @@ class SpacedRepetitionHelperTest {
         val calendar23MinutesAgo = Calendar.getInstance()
         calendar23MinutesAgo.add(Calendar.MINUTE, -23)
         val wordLearningEventGson = WordLearningEventGson()
-        wordLearningEventGson.setWordId(1L)
-        wordLearningEventGson.setTimestamp(calendar23MinutesAgo)
+        wordLearningEventGson.wordId = 1L
+        wordLearningEventGson.timestamp = calendar23MinutesAgo
 
         val calendar19MinutesAgo = Calendar.getInstance()
         calendar19MinutesAgo.add(Calendar.MINUTE, -19)
         val wordAssessmentEventGsonFirst = WordAssessmentEventGson()
-        wordAssessmentEventGsonFirst.setWordId(1L)
-        wordAssessmentEventGsonFirst.setTimestamp(calendar19MinutesAgo)
-        wordAssessmentEventGsonFirst.setMasteryScore(0.00f)
+        wordAssessmentEventGsonFirst.wordId = 1L
+        wordAssessmentEventGsonFirst.timestamp = calendar19MinutesAgo
+        wordAssessmentEventGsonFirst.masteryScore = 0.00f
 
         val calendar18MinutesAgo = Calendar.getInstance()
         calendar18MinutesAgo.add(Calendar.MINUTE, -18)
         val wordAssessmentEventGsonSecond = WordAssessmentEventGson()
-        wordAssessmentEventGsonSecond.setWordId(1L)
-        wordAssessmentEventGsonSecond.setTimestamp(calendar18MinutesAgo)
-        wordAssessmentEventGsonSecond.setMasteryScore(0.00f)
+        wordAssessmentEventGsonSecond.wordId = 1L
+        wordAssessmentEventGsonSecond.timestamp = calendar18MinutesAgo
+        wordAssessmentEventGsonSecond.masteryScore = 0.00f
 
         val calendar17MinutesAgo = Calendar.getInstance()
         calendar17MinutesAgo.add(Calendar.MINUTE, -17)
         val wordAssessmentEventGsonThird = WordAssessmentEventGson()
-        wordAssessmentEventGsonThird.setWordId(1L)
-        wordAssessmentEventGsonThird.setTimestamp(calendar17MinutesAgo)
-        wordAssessmentEventGsonThird.setMasteryScore(1.00f)
+        wordAssessmentEventGsonThird.wordId = 1L
+        wordAssessmentEventGsonThird.timestamp = calendar17MinutesAgo
+        wordAssessmentEventGsonThird.masteryScore = 1.00f
 
         // Store assessment events in _descending_ order
         val wordAssessmentEventGsons: MutableList<WordAssessmentEventGson> =
@@ -233,15 +233,15 @@ class SpacedRepetitionHelperTest {
         val calendar60MinutesAgo = Calendar.getInstance()
         calendar60MinutesAgo.add(Calendar.MINUTE, -60)
         val wordLearningEventGson = WordLearningEventGson()
-        wordLearningEventGson.setWordId(1L)
-        wordLearningEventGson.setTimestamp(calendar60MinutesAgo)
+        wordLearningEventGson.wordId = 1L
+        wordLearningEventGson.timestamp = calendar60MinutesAgo
 
         val calendar15MinutesAgo = Calendar.getInstance()
         calendar15MinutesAgo.add(Calendar.MINUTE, -15)
         val wordAssessmentEventGsonFirst = WordAssessmentEventGson()
-        wordAssessmentEventGsonFirst.setWordId(1L)
-        wordAssessmentEventGsonFirst.setTimestamp(calendar15MinutesAgo)
-        wordAssessmentEventGsonFirst.setMasteryScore(1.00f)
+        wordAssessmentEventGsonFirst.wordId = 1L
+        wordAssessmentEventGsonFirst.timestamp = calendar15MinutesAgo
+        wordAssessmentEventGsonFirst.masteryScore = 1.00f
 
         val wordAssessmentEventGsons: MutableList<WordAssessmentEventGson> =
             ArrayList<WordAssessmentEventGson>()
@@ -263,15 +263,15 @@ class SpacedRepetitionHelperTest {
         val calendar60MinutesAgo = Calendar.getInstance()
         calendar60MinutesAgo.add(Calendar.MINUTE, -60)
         val wordLearningEventGson = WordLearningEventGson()
-        wordLearningEventGson.setWordId(1L)
-        wordLearningEventGson.setTimestamp(calendar60MinutesAgo)
+        wordLearningEventGson.wordId = 1L
+        wordLearningEventGson.timestamp = calendar60MinutesAgo
 
         val calendar17MinutesAgo = Calendar.getInstance()
         calendar17MinutesAgo.add(Calendar.MINUTE, -17)
         val wordAssessmentEventGsonFirst = WordAssessmentEventGson()
-        wordAssessmentEventGsonFirst.setWordId(1L)
-        wordAssessmentEventGsonFirst.setTimestamp(calendar17MinutesAgo)
-        wordAssessmentEventGsonFirst.setMasteryScore(1.00f)
+        wordAssessmentEventGsonFirst.wordId = 1L
+        wordAssessmentEventGsonFirst.timestamp = calendar17MinutesAgo
+        wordAssessmentEventGsonFirst.masteryScore = 1.00f
 
         val wordAssessmentEventGsons: MutableList<WordAssessmentEventGson> =
             ArrayList<WordAssessmentEventGson>()
@@ -293,26 +293,26 @@ class SpacedRepetitionHelperTest {
         val calendar180MinutesAgo = Calendar.getInstance()
         calendar180MinutesAgo.add(Calendar.MINUTE, -180)
         val wordLearningEventGson = WordLearningEventGson()
-        wordLearningEventGson.setWordId(1L)
-        wordLearningEventGson.setTimestamp(calendar180MinutesAgo)
+        wordLearningEventGson.wordId = 1L
+        wordLearningEventGson.timestamp = calendar180MinutesAgo
 
         // 1st review (>=4 minutes after learning event)
         // 180 minutes ago - 120 minutes ago = 60 minutes passed
         val calendar120MinutesAgo = Calendar.getInstance()
         calendar120MinutesAgo.add(Calendar.MINUTE, -120)
         val wordAssessmentEventGsonFirst = WordAssessmentEventGson()
-        wordAssessmentEventGsonFirst.setWordId(1L)
-        wordAssessmentEventGsonFirst.setTimestamp(calendar120MinutesAgo)
-        wordAssessmentEventGsonFirst.setMasteryScore(1.00f)
+        wordAssessmentEventGsonFirst.wordId = 1L
+        wordAssessmentEventGsonFirst.timestamp = calendar120MinutesAgo
+        wordAssessmentEventGsonFirst.masteryScore = 1.00f
 
         // 2nd review (>=16 minutes after the 1st mastery)
         // 120 minutes ago - 63 minutes ago = 57
         val calendar63MinutesAgo = Calendar.getInstance()
         calendar63MinutesAgo.add(Calendar.MINUTE, -63)
         val wordAssessmentEventGsonSecond = WordAssessmentEventGson()
-        wordAssessmentEventGsonSecond.setWordId(1L)
-        wordAssessmentEventGsonSecond.setTimestamp(calendar63MinutesAgo)
-        wordAssessmentEventGsonSecond.setMasteryScore(1.00f)
+        wordAssessmentEventGsonSecond.wordId = 1L
+        wordAssessmentEventGsonSecond.timestamp = calendar63MinutesAgo
+        wordAssessmentEventGsonSecond.masteryScore = 1.00f
 
         // Store assessment events in _descending_ order
         val wordAssessmentEventGsons: MutableList<WordAssessmentEventGson> =
@@ -337,22 +337,22 @@ class SpacedRepetitionHelperTest {
         val calendar180MinutesAgo = Calendar.getInstance()
         calendar180MinutesAgo.add(Calendar.MINUTE, -180)
         val wordLearningEventGson = WordLearningEventGson()
-        wordLearningEventGson.setWordId(1L)
-        wordLearningEventGson.setTimestamp(calendar180MinutesAgo)
+        wordLearningEventGson.wordId = 1L
+        wordLearningEventGson.timestamp = calendar180MinutesAgo
 
         val calendar120MinutesAgo = Calendar.getInstance()
         calendar120MinutesAgo.add(Calendar.MINUTE, -120)
         val wordAssessmentEventGsonFirst = WordAssessmentEventGson()
-        wordAssessmentEventGsonFirst.setWordId(1L)
-        wordAssessmentEventGsonFirst.setTimestamp(calendar120MinutesAgo)
-        wordAssessmentEventGsonFirst.setMasteryScore(1.00f)
+        wordAssessmentEventGsonFirst.wordId = 1L
+        wordAssessmentEventGsonFirst.timestamp = calendar120MinutesAgo
+        wordAssessmentEventGsonFirst.masteryScore = 1.00f
 
         val calendar65MinutesAgo = Calendar.getInstance()
         calendar65MinutesAgo.add(Calendar.MINUTE, -65)
         val wordAssessmentEventGsonSecond = WordAssessmentEventGson()
-        wordAssessmentEventGsonSecond.setWordId(1L)
-        wordAssessmentEventGsonSecond.setTimestamp(calendar65MinutesAgo)
-        wordAssessmentEventGsonSecond.setMasteryScore(1.00f)
+        wordAssessmentEventGsonSecond.wordId = 1L
+        wordAssessmentEventGsonSecond.timestamp = calendar65MinutesAgo
+        wordAssessmentEventGsonSecond.masteryScore = 1.00f
 
         // Store assessment events in _descending_ order
         val wordAssessmentEventGsons: MutableList<WordAssessmentEventGson> =
