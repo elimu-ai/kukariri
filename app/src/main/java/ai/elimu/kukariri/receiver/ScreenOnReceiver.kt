@@ -24,7 +24,7 @@ class ScreenOnReceiver : BroadcastReceiver() {
         Log.i(TAG, "onReceive")
 
         Log.i(TAG, "intent: $intent")
-        Log.i(TAG, "intent.getAction(): " + intent.getAction())
+        Log.i(TAG, "intent.getAction(): " + intent.action)
 
         // Do not proceed if the screen is not active
         val displayManager = context.getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
@@ -65,22 +65,22 @@ class ScreenOnReceiver : BroadcastReceiver() {
         )
 
         // Get list of adjectives/nouns/verbs pending review
-        val wordGsonsPendingReview: MutableList<WordGson?> = ArrayList<WordGson?>()
+        val wordGsonsPendingReview: MutableList<WordGson?> = ArrayList()
         val allWordGsons: List<WordGson> =
             getAllWordGsons(context, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID)
         for (wordGson in allWordGsons) {
-            if (idsOfWordsPendingReview.contains(wordGson.getId())) {
+            if (idsOfWordsPendingReview.contains(wordGson.id)) {
                 // Only include adjectives/nouns/verbs
-                if ((wordGson.getWordType() == WordType.ADJECTIVE)
-                    || (wordGson.getWordType() == WordType.NOUN)
-                    || (wordGson.getWordType() == WordType.VERB)
+                if ((wordGson.wordType == WordType.ADJECTIVE)
+                    || (wordGson.wordType == WordType.NOUN)
+                    || (wordGson.wordType == WordType.VERB)
                 ) {
                     wordGsonsPendingReview.add(wordGson)
                 }
             }
         }
         Log.i(TAG, "wordGsonsPendingReview.size(): " + wordGsonsPendingReview.size)
-        if (!wordGsonsPendingReview.isEmpty()) {
+        if (wordGsonsPendingReview.isNotEmpty()) {
             // Launch the application
             val launchIntent = Intent(context, MainActivity::class.java)
             launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
