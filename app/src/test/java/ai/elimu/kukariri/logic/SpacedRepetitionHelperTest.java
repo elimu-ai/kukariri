@@ -26,7 +26,7 @@ public class SpacedRepetitionHelperTest {
 
         List<WordAssessmentEventGson> wordAssessmentEventGsonList = new ArrayList<>();
 
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(false));
+        assertThat(SpacedRepetitionHelper.INSTANCE.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(false));
     }
 
     /**
@@ -42,7 +42,7 @@ public class SpacedRepetitionHelperTest {
 
         List<WordAssessmentEventGson> wordAssessmentEventGsonList = new ArrayList<>();
 
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(true));
+        assertThat(SpacedRepetitionHelper.INSTANCE.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(true));
     }
 
     /**
@@ -65,7 +65,7 @@ public class SpacedRepetitionHelperTest {
         List<WordAssessmentEventGson> wordAssessmentEventGsonList = new ArrayList<>();
         wordAssessmentEventGsonList.add(wordAssessmentEventGson);
 
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(true));
+        assertThat(SpacedRepetitionHelper.INSTANCE.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(true));
     }
 
     /**
@@ -88,7 +88,7 @@ public class SpacedRepetitionHelperTest {
         List<WordAssessmentEventGson> wordAssessmentEventGsonList = new ArrayList<>();
         wordAssessmentEventGsonList.add(wordAssessmentEventGson);
 
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(false));
+        assertThat(SpacedRepetitionHelper.INSTANCE.isReviewPending(wordLearningEventGson, wordAssessmentEventGsonList), is(false));
     }
 
     /**
@@ -111,7 +111,7 @@ public class SpacedRepetitionHelperTest {
         List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
         wordAssessmentEventGsons.add(wordAssessmentEventGson);
 
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
+        assertThat(SpacedRepetitionHelper.INSTANCE.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
     }
 
     /**
@@ -144,7 +144,7 @@ public class SpacedRepetitionHelperTest {
         wordAssessmentEventGsons.add(wordAssessmentEventGsonSecond);
         wordAssessmentEventGsons.add(wordAssessmentEventGsonFirst);
 
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(true));
+        assertThat(SpacedRepetitionHelper.INSTANCE.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(true));
     }
 
     /**
@@ -185,7 +185,7 @@ public class SpacedRepetitionHelperTest {
         wordAssessmentEventGsons.add(wordAssessmentEventGsonSecond);
         wordAssessmentEventGsons.add(wordAssessmentEventGsonFirst);
 
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(true));
+        assertThat(SpacedRepetitionHelper.INSTANCE.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(true));
     }
 
     /**
@@ -209,7 +209,7 @@ public class SpacedRepetitionHelperTest {
         List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
         wordAssessmentEventGsons.add(wordAssessmentEventGsonFirst);
 
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
+        assertThat(SpacedRepetitionHelper.INSTANCE.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
     }
 
     /**
@@ -233,7 +233,7 @@ public class SpacedRepetitionHelperTest {
         List<WordAssessmentEventGson> wordAssessmentEventGsons = new ArrayList<>();
         wordAssessmentEventGsons.add(wordAssessmentEventGsonFirst);
 
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(true));
+        assertThat(SpacedRepetitionHelper.INSTANCE.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(true));
     }
 
     /**
@@ -271,7 +271,7 @@ public class SpacedRepetitionHelperTest {
         wordAssessmentEventGsons.add(wordAssessmentEventGsonFirst);
 
         // 3rd review (>=64 minutes after the 2nd mastery)
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
+        assertThat(SpacedRepetitionHelper.INSTANCE.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(false));
     }
 
     /**
@@ -304,6 +304,6 @@ public class SpacedRepetitionHelperTest {
         wordAssessmentEventGsons.add(wordAssessmentEventGsonSecond);
         wordAssessmentEventGsons.add(wordAssessmentEventGsonFirst);
 
-        assertThat(SpacedRepetitionHelper.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(true));
+        assertThat(SpacedRepetitionHelper.INSTANCE.isReviewPending(wordLearningEventGson, wordAssessmentEventGsons), is(true));
     }
 }
