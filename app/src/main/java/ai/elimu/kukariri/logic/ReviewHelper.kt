@@ -35,10 +35,13 @@ object ReviewHelper {
             }
 
             // Check if the Word has any pending assessment reviews
-            val isReviewPending = SpacedRepetitionHelper.isReviewPending(
-                originalWordLearningEventGson,
-                wordAssessmentEventGsonsAssociatedWithLearningEvent
-            )
+            val isReviewPending = originalWordLearningEventGson?.let {
+                SpacedRepetitionHelper.isReviewPending(
+                    originalWordLearningEventGson,
+                    wordAssessmentEventGsonsAssociatedWithLearningEvent
+                )
+            } == true
+
             if (isReviewPending) {
                 idsOfWordsPendingReview.add(idOfWordInWordLearningEvent)
             }
