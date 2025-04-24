@@ -36,7 +36,7 @@ object SpacedRepetitionHelper {
             // No reviews have been performed
 
             val milliSecondsPassedSinceWordLearningEvent =
-                Calendar.getInstance().getTimeInMillis() - wordLearningEventGson.getTimestamp()
+                Calendar.getInstance().getTimeInMillis() - wordLearningEventGson.timestamp
                     .getTimeInMillis()
             val minutesPassedSinceWordLearningEvent =
                 (milliSecondsPassedSinceWordLearningEvent / 1000 / 60).toDouble()
@@ -48,8 +48,8 @@ object SpacedRepetitionHelper {
 
             var numberOfCorrectReviewsInSequence = 0
             for (i in wordAssessmentEventGsons.indices) {
-                val wordAssessmentEventGson = wordAssessmentEventGsons.get(i)
-                if (wordAssessmentEventGson.getMasteryScore() == 1.00f) {
+                val wordAssessmentEventGson = wordAssessmentEventGsons[i]
+                if (wordAssessmentEventGson.masteryScore == 1.00f) {
                     numberOfCorrectReviewsInSequence++
                 } else {
                     break
@@ -62,9 +62,9 @@ object SpacedRepetitionHelper {
             } else {
                 // The most recent review was mastered
 
-                val mostRecentWordAssessmentEventGson = wordAssessmentEventGsons.get(0)
+                val mostRecentWordAssessmentEventGson = wordAssessmentEventGsons[0]
                 val milliSecondsPassedSinceMostRecentAssessmentEvent = Calendar.getInstance()
-                    .getTimeInMillis() - mostRecentWordAssessmentEventGson.getTimestamp()
+                    .getTimeInMillis() - mostRecentWordAssessmentEventGson.timestamp
                     .getTimeInMillis()
                 val minutesPassedSinceMostRecentAssessmentEvent =
                     (milliSecondsPassedSinceMostRecentAssessmentEvent / 1000 / 60).toDouble()
