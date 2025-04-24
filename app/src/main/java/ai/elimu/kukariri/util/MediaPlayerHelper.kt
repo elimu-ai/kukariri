@@ -13,7 +13,7 @@ import android.util.Log
  * See https://developer.android.com/reference/android/media/MediaPlayer.html#create%28android.content.Context,%20int%29
  */
 object MediaPlayerHelper {
-    fun play(context: Context?, resId: Int) {
+    fun play(context: Context, resId: Int) {
         Log.i(MediaPlayerHelper::class.java.name, "play")
 
         val mediaPlayer = MediaPlayer.create(context, resId)
