@@ -9,6 +9,7 @@ import ai.elimu.content_provider.utils.ContentProviderUtil.getAllEmojiGsons
 import ai.elimu.content_provider.utils.ContentProviderUtil.getAllWordGsons
 import ai.elimu.kukariri.BuildConfig
 import ai.elimu.kukariri.R
+import ai.elimu.kukariri.databinding.ActivityWordAssessmentBinding
 import ai.elimu.kukariri.logic.ReviewHelper
 import ai.elimu.model.v2.enums.content.WordType
 import ai.elimu.model.v2.gson.content.WordGson
@@ -16,11 +17,7 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,15 +29,9 @@ class WordAssessmentActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "WordAssessmentActivity"
     }
+
+    private lateinit var binding: ActivityWordAssessmentBinding
     
-    private var progressBar: ProgressBar? = null
-
-    private var textView: TextView? = null
-
-    private var difficultButton: Button? = null
-
-    private var easyButton: Button? = null
-
     /**
      * The student will iterate through this list of Words until they have all been mastered.
      */
@@ -58,15 +49,8 @@ class WordAssessmentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         ttsViewModel = ViewModelProvider(this)[TextToSpeechViewModelImpl::class.java]
-        setContentView(R.layout.activity_word_assessment)
-
-        progressBar = findViewById(R.id.wordAssessmentProgressBar)
-
-        textView = findViewById(R.id.wordAssessmentTextView)
-
-        difficultButton = findViewById(R.id.wordAssessmentDifficultButton)
-
-        easyButton = findViewById(R.id.wordAssessmentEasyButton)
+        binding = ActivityWordAssessmentBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Get a list of the Words that have been previously learned
         val wordLearningEventGsons = EventProviderUtil.getWordLearningEventGsons(
@@ -128,7 +112,7 @@ class WordAssessmentActivity : AppCompatActivity() {
         // Update the progress bar
         val progressPercentage =
             wordGsonsMastered.size * 100 / (wordGsonsPendingReview.size + wordGsonsMastered.size)
-        progressBar?.let { pb ->
+        binding.wordAssessmentProgressBar.let { pb ->
             val objectAnimator = ObjectAnimator.ofInt(pb, "progress", progressPercentage)
             objectAnimator.setDuration(1000)
             objectAnimator.start()
@@ -136,10 +120,10 @@ class WordAssessmentActivity : AppCompatActivity() {
 
         // Display the next Word in the list
         val wordGson = wordGsonsPendingReview[0]
-        textView!!.text = wordGson.text
+        binding.wordAssessmentTextView.text = wordGson.text
         val appearAnimation =
             AnimationUtils.loadAnimation(applicationContext, R.anim.anim_appear_right)
-        textView!!.startAnimation(appearAnimation)
+        binding.wordAssessmentTextView.startAnimation(appearAnimation)
 
         // Append Emojis (if any) below the Word
         val emojiGsons = getAllEmojiGsons(
@@ -147,23 +131,23 @@ class WordAssessmentActivity : AppCompatActivity() {
             applicationContext, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID
         )
         if (emojiGsons.isNotEmpty()) {
-            textView!!.text = textView!!.text.toString() + "\n\n"
+            binding.wordAssessmentTextView.text = binding.wordAssessmentTextView.text.toString() + "\n\n"
             for (emojiGson in emojiGsons) {
-                textView!!.text = textView!!.text.toString() + emojiGson.glyph
+                binding.wordAssessmentTextView.text = binding.wordAssessmentTextView.text.toString() + emojiGson.glyph
             }
         }
 
         val timeStart = System.currentTimeMillis()
 
-        textView?.setOnClickListener {
+        binding.wordAssessmentTextView.setOnClickListener {
             ttsViewModel.speak(
-                textView?.text.toString(),
+                binding.wordAssessmentTextView.text.toString(),
                 QueueMode.FLUSH,
                 UUID.randomUUID().toString()
             )
         }
 
-        difficultButton!!.setOnClickListener {
+        binding.wordAssessmentDifficultButton.setOnClickListener {
             Log.i(TAG, "difficultButton onClick")
 
             // Move the Word to the end of the list
@@ -179,7 +163,7 @@ class WordAssessmentActivity : AppCompatActivity() {
             loadNextWord()
         }
 
-        easyButton!!.setOnClickListener {
+        binding.wordAssessmentEasyButton.setOnClickListener {
             Log.i(TAG, "easyButton onClick")
 
             // Remove the Word from the list of Words to be repeated, and add it to the list of mastered Words
