@@ -15,16 +15,21 @@ import android.util.Log
 import android.view.Display
 
 class ScreenOnReceiver : BroadcastReceiver() {
+    
+    companion object {
+        private const val TAG = "ScreenOnReceiver"
+    }
+    
     override fun onReceive(context: Context, intent: Intent) {
-        Log.i(javaClass.getName(), "onReceive")
+        Log.i(TAG, "onReceive")
 
-        Log.i(javaClass.getName(), "intent: " + intent)
-        Log.i(javaClass.getName(), "intent.getAction(): " + intent.getAction())
+        Log.i(TAG, "intent: " + intent)
+        Log.i(TAG, "intent.getAction(): " + intent.getAction())
 
         // Do not proceed if the screen is not active
         val displayManager = context.getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
         for (display in displayManager.getDisplays()) {
-            Log.i(javaClass.getName(), "display: " + display)
+            Log.i(TAG, "display: " + display)
             if (display.getState() != Display.STATE_ON) {
                 return
             }
@@ -55,7 +60,7 @@ class ScreenOnReceiver : BroadcastReceiver() {
             wordAssessmentEventGsons
         )
         Log.i(
-            javaClass.getName(),
+            TAG,
             "idsOfWordsPendingReview.size(): " + idsOfWordsPendingReview.size
         )
 
@@ -74,7 +79,7 @@ class ScreenOnReceiver : BroadcastReceiver() {
                 }
             }
         }
-        Log.i(javaClass.getName(), "wordGsonsPendingReview.size(): " + wordGsonsPendingReview.size)
+        Log.i(TAG, "wordGsonsPendingReview.size(): " + wordGsonsPendingReview.size)
         if (!wordGsonsPendingReview.isEmpty()) {
             // Launch the application
             val launchIntent = Intent(context, MainActivity::class.java)
