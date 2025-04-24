@@ -1,52 +1,49 @@
-package ai.elimu.kukariri.logic;
+package ai.elimu.kukariri.logic
 
-import android.util.Log;
+import ai.elimu.model.v2.gson.analytics.WordAssessmentEventGson
+import ai.elimu.model.v2.gson.analytics.WordLearningEventGson
+import android.util.Log
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import ai.elimu.model.v2.gson.analytics.WordAssessmentEventGson;
-import ai.elimu.model.v2.gson.analytics.WordLearningEventGson;
-
-public class ReviewHelper {
-
+object ReviewHelper {
     /**
-     * Determines which of the previously learned Words are pending a review (based on {@link WordAssessmentEventGson}s).
+     * Determines which of the previously learned Words are pending a review (based on [WordAssessmentEventGson]s).
      */
-    public static Set<Long> getIdsOfWordsPendingReview(
-            Set<Long> idsOfWordsInWordLearningEvents,
-            List<WordLearningEventGson> wordLearningEventGsons,
-            List<WordAssessmentEventGson> wordAssessmentEventGsons
-    ) {
-        Log.i(ReviewHelper.class.getName(), "getIdsOfWordsPendingReview");
+    fun getIdsOfWordsPendingReview(
+        idsOfWordsInWordLearningEvents: Set<Long>,
+        wordLearningEventGsons: List<WordLearningEventGson>,
+        wordAssessmentEventGsons: List<WordAssessmentEventGson>
+    ): Set<Long> {
+        Log.i(ReviewHelper::class.java.name, "getIdsOfWordsPendingReview")
 
-        Set<Long> idsOfWordsPendingReview = new HashSet<>();
+        val idsOfWordsPendingReview: MutableSet<Long> = HashSet()
 
-        for (Long idOfWordInWordLearningEvent : idsOfWordsInWordLearningEvents) {
-            WordLearningEventGson originalWordLearningEventGson = null;
-            for (WordLearningEventGson wordLearningEventGson : wordLearningEventGsons) {
-                if (wordLearningEventGson.getWordId().equals(idOfWordInWordLearningEvent)) {
-                    originalWordLearningEventGson = wordLearningEventGson;
-                    break;
+        for (idOfWordInWordLearningEvent in idsOfWordsInWordLearningEvents) {
+            var originalWordLearningEventGson: WordLearningEventGson? = null
+            for (wordLearningEventGson in wordLearningEventGsons) {
+                if (wordLearningEventGson.wordId == idOfWordInWordLearningEvent) {
+                    originalWordLearningEventGson = wordLearningEventGson
+                    break
                 }
             }
 
-            List<WordAssessmentEventGson> wordAssessmentEventGsonsAssociatedWithLearningEvent = new ArrayList<>();
-            for (WordAssessmentEventGson wordAssessmentEventGson : wordAssessmentEventGsons) {
-                if (wordAssessmentEventGson.getWordId().equals(idOfWordInWordLearningEvent)) {
-                    wordAssessmentEventGsonsAssociatedWithLearningEvent.add(wordAssessmentEventGson);
+            val wordAssessmentEventGsonsAssociatedWithLearningEvent: MutableList<WordAssessmentEventGson> =
+                ArrayList()
+            for (wordAssessmentEventGson in wordAssessmentEventGsons) {
+                if (wordAssessmentEventGson.wordId == idOfWordInWordLearningEvent) {
+                    wordAssessmentEventGsonsAssociatedWithLearningEvent.add(wordAssessmentEventGson)
                 }
             }
 
             // Check if the Word has any pending assessment reviews
-            boolean isReviewPending = SpacedRepetitionHelper.isReviewPending(originalWordLearningEventGson, wordAssessmentEventGsonsAssociatedWithLearningEvent);
+            val isReviewPending = SpacedRepetitionHelper.isReviewPending(
+                originalWordLearningEventGson,
+                wordAssessmentEventGsonsAssociatedWithLearningEvent
+            )
             if (isReviewPending) {
-                idsOfWordsPendingReview.add(idOfWordInWordLearningEvent);
+                idsOfWordsPendingReview.add(idOfWordInWordLearningEvent)
             }
         }
 
-        return idsOfWordsPendingReview;
+        return idsOfWordsPendingReview
     }
 }
