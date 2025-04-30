@@ -61,7 +61,6 @@ dependencies {
 
     implementation libs.elimu.content.provider // https://jitpack.io/#ai.elimu/content-provider
 
-    implementation libs.androidx.appcompat
     implementation libs.androidx.constraint.layout
 
     implementation (libs.shine.button) {

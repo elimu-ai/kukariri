@@ -19,7 +19,6 @@ easing-interpolator = { group = "com.github.MasayukiSuda", name = "EasingInterpo
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 jacoco-android = { module = "com.mxalbert.gradle:jacoco-android", version.ref = "jacocoAndroid" }
 shine-button = { group = "com.sackcentury", name = "shinebutton", version.ref = "shineButton" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
 androidx-constraint-layout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
