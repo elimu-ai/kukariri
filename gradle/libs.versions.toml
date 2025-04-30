@@ -1,6 +1,6 @@
 [versions]
 elimuAnalytics = "3.2.0"
-elimuContentProvider = "1.2.42"
+elimuContentProvider = "1.2.55"
 elimuCommonUtils = "1.0.12"
 gradle = "8.8.1"
 jacocoAndroid = "0.2.1"
