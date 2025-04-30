@@ -1,7 +1,5 @@
 [versions]
-elimuAnalytics = "3.2.0"
-elimuContentProvider = "1.2.42"
-elimuCommonUtils = "1.0.12"
+elimuContentProvider = "1.3.0"
 gradle = "8.8.1"
 jacocoAndroid = "0.2.1"
 junit = "4.13.2"
@@ -16,9 +14,7 @@ androidXEspresso = "3.6.1"
 kotlin = "2.1.20"
 
 [libraries]
-elimu-analytics = { group = "ai.elimu", name = "analytics", version.ref = "elimuAnalytics" }
 elimu-content-provider = { group = "ai.elimu", name = "content-provider", version.ref = "elimuContentProvider" }
-elimu-common-utils = { group = "ai.elimu", name = "common-utils", version.ref = "elimuCommonUtils" }
 easing-interpolator = { group = "com.github.MasayukiSuda", name = "EasingInterpolator", version.ref = "easingInterpolator" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 jacoco-android = { module = "com.mxalbert.gradle:jacoco-android", version.ref = "jacocoAndroid" }
