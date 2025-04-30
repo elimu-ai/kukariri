@@ -1,7 +1,7 @@
-# Kukariri 🧠
-
 [![codecov](https://codecov.io/gh/elimu-ai/kukariri/branch/main/graph/badge.svg?token=LFJL11C0TC)](https://codecov.io/gh/elimu-ai/kukariri)
 [![Release](https://jitpack.io/v/ai.elimu/kukariri.svg)](https://jitpack.io/#ai.elimu/kukariri)
+
+# Kukariri 🧠
 
 Android application which handles the Spaced Repetition System (SRS)
 
@@ -11,7 +11,7 @@ Android application which handles the Spaced Repetition System (SRS)
 
 To test the functionality of this app, first go to one of the other apps/games where the student 
 is learning new words (e.g. the [Vitabu](https://github.com/elimu-ai/vitabu) app), and press a word. 
-Then, [4 minutes](https://github.com/elimu-ai/kukariri/blob/main/app/src/main/java/ai/elimu/kukariri/logic/SpacedRepetitionHelper.java) after that initial `LearningEvent`, the word will appear here in the Kukariri app for review.
+Then, [4 minutes](https://github.com/elimu-ai/kukariri/blob/main/app/src/main/java/ai/elimu/kukariri/logic/SpacedRepetitionHelper.kt) after that initial `LearningEvent`, the word will appear here in the Kukariri app for review.
 
 ![WordAssessmentActivity](https://github.com/user-attachments/assets/e6c5cf75-13f6-4b8b-9978-3756e52dd0a7)
 
