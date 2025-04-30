@@ -20,8 +20,8 @@ android {
         applicationId "ai.elimu.kukariri"
         minSdkVersion 26
         targetSdkVersion 35
-        versionCode 1000009
-        versionName "1.0.9-SNAPSHOT"
+        versionCode 1001000
+        versionName "1.1.0-SNAPSHOT"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -59,7 +59,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation libs.elimu.model // https://jitpack.io/#ai.elimu/model
     implementation libs.elimu.content.provider // https://jitpack.io/#ai.elimu/content-provider
     implementation libs.elimu.analytics // https://jitpack.io/#ai.elimu/analytics
     implementation libs.elimu.common.utils // https://jitpack.io/#ai.elimu/common-utils
@@ -72,7 +71,6 @@ dependencies {
     }
     implementation libs.easing.interpolator
     implementation libs.kotlin.stdlib
-    implementation libs.androidx.core.ktx
     implementation libs.hilt.android
     kapt libs.hilt.compiler
 
