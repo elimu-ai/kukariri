@@ -45,7 +45,7 @@
             android:backgroundTint="#ffebee"
             android:text="@string/difficult"
             android:textAllCaps="false"
-            android:textSize="32dp" />
+            android:textSize="32sp" />
 
         <Button
             android:id="@+id/wordAssessmentEasyButton"
@@ -58,6 +58,6 @@
             android:backgroundTint="#e8f5e9"
             android:text="@string/easy"
             android:textAllCaps="false"
-            android:textSize="32dp" />
+            android:textSize="32sp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
