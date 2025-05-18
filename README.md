@@ -1,5 +1,3 @@
-[![codecov](https://codecov.io/gh/elimu-ai/kukariri/branch/main/graph/badge.svg?token=LFJL11C0TC)](https://codecov.io/gh/elimu-ai/kukariri)
-
 # Kukariri 🧠
 
 Android application which handles the Spaced Repetition System (SRS)
