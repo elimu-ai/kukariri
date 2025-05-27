@@ -1,5 +1,5 @@
 [versions]
-elimuContentProvider = "1.4.0"
+elimuContentProvider = "1.4.1"
 gradle = "8.8.2"
 jacocoAndroid = "0.2.1"
 junit = "4.13.2"
