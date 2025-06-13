@@ -29,5 +29,9 @@ class AssessmentCompletedActivity : AppCompatActivity() {
             binding.assessmentCompletedShineButton.callOnClick()
             MediaPlayerHelper.play(applicationContext, R.raw.success)
         }, 500)
+
+        binding.root.postDelayed({
+            finish()
+        }, 2000L)
     }
 }
