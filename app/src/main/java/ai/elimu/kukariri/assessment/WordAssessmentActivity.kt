@@ -156,8 +156,11 @@ class WordAssessmentActivity : AppCompatActivity() {
 
             // Report assessment event to the Analytics application (https://github.com/elimu-ai/analytics)
             AssessmentEventUtil.reportWordAssessmentEvent(
-                wordGson, 0.00f, System.currentTimeMillis() - timeStart,
-                applicationContext, BuildConfig.ANALYTICS_APPLICATION_ID
+                wordGson = wordGson,
+                masteryScore = 0.00f,
+                timeSpentMs = System.currentTimeMillis() - timeStart,
+                context = applicationContext,
+                analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID
             )
 
             loadNextWord()
@@ -172,8 +175,11 @@ class WordAssessmentActivity : AppCompatActivity() {
 
             // Report assessment event to the Analytics application (https://github.com/elimu-ai/analytics)
             AssessmentEventUtil.reportWordAssessmentEvent(
-                wordGson, 1.00f, System.currentTimeMillis() - timeStart,
-                applicationContext, BuildConfig.ANALYTICS_APPLICATION_ID
+                wordGson = wordGson,
+                masteryScore = 1.00f,
+                timeSpentMs = System.currentTimeMillis() - timeStart,
+                context = applicationContext,
+                analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID
             )
 
             loadNextWord()
