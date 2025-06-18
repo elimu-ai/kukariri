@@ -2,6 +2,7 @@ package ai.elimu.kukariri.assessment
 
 import ai.elimu.analytics.utils.AssessmentEventUtil
 import ai.elimu.analytics.utils.EventProviderUtil
+import ai.elimu.analytics.utils.research.ExperimentAssignmentHelper
 import ai.elimu.common.utils.data.model.tts.QueueMode
 import ai.elimu.common.utils.viewmodel.TextToSpeechViewModel
 import ai.elimu.common.utils.viewmodel.TextToSpeechViewModelImpl
@@ -11,6 +12,8 @@ import ai.elimu.kukariri.BuildConfig
 import ai.elimu.kukariri.R
 import ai.elimu.kukariri.databinding.ActivityWordAssessmentBinding
 import ai.elimu.kukariri.logic.ReviewHelper
+import ai.elimu.model.v2.enums.analytics.research.ExperimentGroup
+import ai.elimu.model.v2.enums.analytics.research.ResearchExperiment
 import ai.elimu.model.v2.enums.content.WordType
 import ai.elimu.model.v2.gson.content.WordGson
 import android.animation.ObjectAnimator
@@ -125,15 +128,22 @@ class WordAssessmentActivity : AppCompatActivity() {
             AnimationUtils.loadAnimation(applicationContext, R.anim.anim_appear_right)
         binding.wordAssessmentTextView.startAnimation(appearAnimation)
 
-        // Append Emojis (if any) below the Word
-        val emojiGsons = getAllEmojiGsons(
-            wordGson.id,
-            applicationContext, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID
-        )
-        if (emojiGsons.isNotEmpty()) {
-            binding.wordAssessmentTextView.text = binding.wordAssessmentTextView.text.toString() + "\n\n"
-            for (emojiGson in emojiGsons) {
-                binding.wordAssessmentTextView.text = binding.wordAssessmentTextView.text.toString() + emojiGson.glyph
+        if (
+            (ResearchExperiment.EXP_0_WORD_EMOJIS == ExperimentAssignmentHelper.CURRENT_EXPERIMENT) &&
+            (ExperimentGroup.TREATMENT == ExperimentAssignmentHelper.getExperimentGroup(applicationContext))
+        ) {
+            // Append Emojis (if any) below the Word
+            val emojiGsons = getAllEmojiGsons(
+                wordGson.id,
+                applicationContext, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID
+            )
+            if (emojiGsons.isNotEmpty()) {
+                binding.wordAssessmentTextView.text =
+                    binding.wordAssessmentTextView.text.toString() + "\n\n"
+                for (emojiGson in emojiGsons) {
+                    binding.wordAssessmentTextView.text =
+                        binding.wordAssessmentTextView.text.toString() + emojiGson.glyph
+                }
             }
         }
 
