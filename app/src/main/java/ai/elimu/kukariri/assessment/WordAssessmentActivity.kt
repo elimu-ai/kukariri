@@ -57,17 +57,20 @@ class WordAssessmentActivity : AppCompatActivity() {
 
         // Get a list of the Words that have been previously learned
         val wordLearningEventGsons = EventProviderUtil.getWordLearningEventGsons(
-            applicationContext, BuildConfig.ANALYTICS_APPLICATION_ID
+            context = applicationContext,
+            analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID
         )
 
         // Get a set of the Words that have been previously learned
         val idsOfWordsInWordLearningEvents = EventProviderUtil.getIdsOfWordsInWordLearningEvents(
-            applicationContext, BuildConfig.ANALYTICS_APPLICATION_ID
+            context = applicationContext,
+            analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID
         )
 
         // Get a list of assessment events for the words that have been previously learned
         val wordAssessmentEventGsons = EventProviderUtil.getWordAssessmentEventGsons(
-            applicationContext, BuildConfig.ANALYTICS_APPLICATION_ID
+            context = applicationContext,
+            analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID
         )
 
         // Determine which of the previously learned Words are pending a review (based on WordAssessmentEvents)
@@ -80,7 +83,8 @@ class WordAssessmentActivity : AppCompatActivity() {
 
         // Fetch list of Words from the ContentProvider, and exclude those not in the idsOfWordsPendingReview set
         val allWordGsons = getAllWordGsons(
-            applicationContext, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID
+            context = applicationContext,
+            contentProviderApplicationId = BuildConfig.CONTENT_PROVIDER_APPLICATION_ID
         )
         for (wordGson in allWordGsons) {
             if (idsOfWordsPendingReview.contains(wordGson.id)) {
