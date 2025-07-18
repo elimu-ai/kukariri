@@ -37,20 +37,20 @@ class ScreenOnReceiver : BroadcastReceiver() {
 
         // Get a list of the Words that have been previously learned
         val wordLearningEventGsons = EventProviderUtil.getWordLearningEventGsons(
-            context,
-            BuildConfig.ANALYTICS_APPLICATION_ID
+            context = context,
+            analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID
         )
 
         // Get a set of the Words that have been previously learned
         val idsOfWordsInWordLearningEvents = EventProviderUtil.getIdsOfWordsInWordLearningEvents(
-            context,
-            BuildConfig.ANALYTICS_APPLICATION_ID
+            context = context,
+            analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID
         )
 
         // Get a list of assessment events for the words that have been previously learned
         val wordAssessmentEventGsons = EventProviderUtil.getWordAssessmentEventGsons(
-            context,
-            BuildConfig.ANALYTICS_APPLICATION_ID
+            context = context,
+            analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID
         )
 
         // Determine which of the previously learned Words are pending a review (based on WordAssessmentEvents)
@@ -66,8 +66,10 @@ class ScreenOnReceiver : BroadcastReceiver() {
 
         // Get list of adjectives/nouns/verbs pending review
         val wordGsonsPendingReview: MutableList<WordGson?> = ArrayList()
-        val allWordGsons: List<WordGson> =
-            getAllWordGsons(context, BuildConfig.CONTENT_PROVIDER_APPLICATION_ID)
+        val allWordGsons: List<WordGson> = getAllWordGsons(
+            context = context,
+            contentProviderApplicationId = BuildConfig.CONTENT_PROVIDER_APPLICATION_ID
+        )
         for (wordGson in allWordGsons) {
             if (idsOfWordsPendingReview.contains(wordGson.id)) {
                 // Only include adjectives/nouns/verbs
