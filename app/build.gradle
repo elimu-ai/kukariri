@@ -20,7 +20,7 @@ android {
         minSdkVersion 29
         targetSdkVersion 36
         versionCode 1002059
-        versionName "1.2.59-SNAPSHOT"
+        versionName "1.2.59"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
