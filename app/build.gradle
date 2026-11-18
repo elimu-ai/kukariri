@@ -61,6 +61,8 @@ dependencies {
     implementation libs.elimu.content.provider // https://jitpack.io/#ai.elimu/content-provider
 
     implementation libs.androidx.constraint.layout
+    implementation libs.androidx.lifecycle.viewmodel.compose
+    implementation libs.androidx.lifecycle.runtime.compose
 
     implementation (libs.shine.button) {
         exclude group: 'com.daasuu', module: 'EasingInterpolator'
