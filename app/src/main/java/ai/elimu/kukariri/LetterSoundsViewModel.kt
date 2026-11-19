@@ -1,7 +1,10 @@
 package ai.elimu.kukariri
 
+import ai.elimu.analytics.utils.EventProviderUtil
 import ai.elimu.content_provider.utils.ContentProviderUtil
+import ai.elimu.kukariri.logic.SpacedRepetitionHelper
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -32,7 +35,7 @@ sealed interface LetterSoundsUiState {
     data class Success(val items: List<LetterSoundItem>) : LetterSoundsUiState
 }
 
-const val MAX_STARS = 3
+const val MAX_STARS = 5
 
 class LetterSoundsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -73,7 +76,7 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
                         letters = letterSoundGson.letters.orEmpty()
                             .joinToString("") { it.text.orEmpty() },
                         usageCount = letterSoundGson.usageCount ?: 0,
-                        masteryStars = masteryStarsFor(letterSoundGson.id)
+                        masteryStars = masteryStarsFor(letterSoundGson.id, context)
                     )
                 }
             if (items.isEmpty()) LetterSoundsUiState.Empty else LetterSoundsUiState.Success(items)
@@ -91,7 +94,30 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
      * Replace this once a source for letter-sound mastery exists.
      */
     @Suppress("UNUSED_PARAMETER")
-    private fun masteryStarsFor(letterSoundId: Long): Int = 0
+    private fun masteryStarsFor(letterSoundId: Long, context: Context): Int {
+        Log.d(javaClass.name, "letterSoundId: $letterSoundId")
+
+        val letterSoundAssessmentEventGsons = EventProviderUtil.getLetterSoundAssessmentEventGsons(context, BuildConfig.ANALYTICS_APPLICATION_ID)
+        Log.d(javaClass.name, "letterSoundAssessmentEventGsons.size: ${letterSoundAssessmentEventGsons.size}")
+
+        val recallProbability: Float = SpacedRepetitionHelper.getRecallProbability(letterSoundAssessmentEventGsons)
+        Log.d(javaClass.name, "recallProbability: ${recallProbability}")
+//        if (recallProbability >= 0.80f) {
+//            return 5
+//        } else if (recallProbability >= 0.65f) {
+//            return 4
+//        } else if (recallProbability >= 0.50f) {
+//            return 3
+//        } else if (recallProbability >= 0.35f) {
+//            return 2
+//        } else if (recallProbability >= 0.20f) {
+//            return 1
+//        } else {
+//            return 0
+//        }
+        val masteryStarCount: Int = ((Math.random() * MAX_STARS) + 1).toInt()
+        return masteryStarCount
+    }
 
     private companion object {
         const val TAG = "LetterSoundsViewModel"

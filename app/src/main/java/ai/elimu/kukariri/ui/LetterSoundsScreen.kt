@@ -126,7 +126,7 @@ private fun TableHeader() {
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .weight(1f)
+                .weight(0.4f)
                 .padding(16.dp)
         )
         VerticalDivider()
@@ -135,7 +135,7 @@ private fun TableHeader() {
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .weight(1f)
+                .weight(0.6f)
                 .padding(16.dp)
         )
     }
@@ -154,13 +154,13 @@ private fun LetterSoundRow(item: LetterSoundItem) {
             text = "/${item.sound}/ → ${item.letters}",
             fontSize = 28.sp,
             modifier = Modifier
-                .weight(1f)
+                .weight(0.4f)
                 .padding(horizontal = 16.dp, vertical = 12.dp)
         )
         VerticalDivider()
         Row(
             modifier = Modifier
-                .weight(1f)
+                .weight(0.6f)
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
