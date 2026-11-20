@@ -53,10 +53,7 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
     fun load() {
         loadJob?.cancel()
         loadJob = viewModelScope.launch {
-            // Keep showing the current data while refreshing, to avoid flashing the loading state
-            if (_uiState.value !is LetterSoundsUiState.Success) {
-                _uiState.value = LetterSoundsUiState.Loading
-            }
+            _uiState.value = LetterSoundsUiState.Loading
             _uiState.value = withContext(Dispatchers.IO) { fetchLetterSounds() }
         }
     }
