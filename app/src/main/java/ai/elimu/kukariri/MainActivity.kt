@@ -9,7 +9,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.compose.setContent
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.activity.viewModels
 import java.util.Locale
 
 class MainActivity : ComponentActivity() {
@@ -17,6 +17,8 @@ class MainActivity : ComponentActivity() {
     companion object {
         private const val TAG = "MainActivity"
     }
+
+    private val viewModel: LetterSoundsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i(TAG, "onCreate")
@@ -30,10 +32,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             KukaririTheme {
-                val viewModel: LetterSoundsViewModel = viewModel()
                 LetterSoundsScreen(viewModel)
             }
         }
+    }
+
+    override fun onStart() {
+        Log.i(TAG, "onStart")
+        super.onStart()
+
+        // Reload the letter-sound masteries every time the student returns to the app
+        viewModel.load()
     }
 
 //    override fun onStart() {
