@@ -1,10 +1,53 @@
 package ai.elimu.kukariri.logic
 
+import ai.elimu.model.v2.gson.analytics.AssessmentEventGson
 import ai.elimu.model.v2.gson.analytics.WordAssessmentEventGson
 import ai.elimu.model.v2.gson.analytics.WordLearningEventGson
+import android.util.Log
 import java.util.Calendar
+import kotlin.math.pow
 
 object SpacedRepetitionHelper {
+
+    /**
+     * Calculates the probability that a student will be able to recall the correct answer in the
+     * next assessment.
+     *
+     * If the student fails to demonstrate mastery during an assessment event, the sequence is
+     * restarted from the beginning.
+     *
+     * @param assessmentEventGsons List of assessments in _descending_ order, i.e. most recent
+     * events are first in the list.
+     * @return A value in the range [0.0, 1.0].
+     */
+    fun getRecallProbability(assessmentEventGsons: List<AssessmentEventGson>): Float {
+        var numberOfCorrectInSequence = 0
+        for (assessmentEventGson in assessmentEventGsons) {
+            if (assessmentEventGson.masteryScore == 1.00f) {
+                numberOfCorrectInSequence++
+            } else {
+                break
+            }
+        }
+        Log.d(javaClass.name, "numberOfCorrectInSequence: ${numberOfCorrectInSequence}")
+
+        if (numberOfCorrectInSequence == 0) {
+            // The most recent assessment was not mastered
+            return 0.0f
+        }
+
+        val minutesPassedSinceMostRecentAssessment: Long = (Calendar.getInstance().getTimeInMillis() - assessmentEventGsons[0].timestamp.getTimeInMillis()) / 1_000 / 60
+        Log.d(javaClass.name, "minutesPassedSinceMostRecentAssessment: ${minutesPassedSinceMostRecentAssessment}")
+
+        val forgettingRate = 0.05 / 2.0.pow(numberOfCorrectInSequence - 1)
+        Log.d(javaClass.name, "forgettingRate: ${forgettingRate}")
+
+        val recallProbability: Double = (1 - forgettingRate).pow(minutesPassedSinceMostRecentAssessment.toDouble())
+        Log.d(javaClass.name, "recallProbability: ${recallProbability}")
+
+        return recallProbability.toFloat()
+    }
+
     /**
      * Verifies that a [ai.elimu.model.v2.gson.content.WordGson] has been reviewed (with mastery) 8 times after
      * the original [WordLearningEventGson]:

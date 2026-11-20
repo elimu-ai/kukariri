@@ -7,5 +7,6 @@
     <color name="cyan">#00BCD4</color>
     <color name="teal">#009688</color>
     <color name="green">#4CAF50</color>
+    <color name="green_accent_1">#B9f6CA</color>
     <color name="amber">#FFC107</color>
 </resources>

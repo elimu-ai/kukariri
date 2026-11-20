@@ -5,6 +5,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.mxalbert.gradle.jacoco-android'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'maven-publish'
 
@@ -19,8 +20,8 @@ android {
     defaultConfig {
         minSdkVersion 29
         targetSdkVersion 36
-        versionCode 1002075
-        versionName "1.2.75-SNAPSHOT"
+        versionCode 2000000
+        versionName "2.0.0-SNAPSHOT"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -49,6 +50,7 @@ android {
     buildFeatures {
         buildConfig = true
         viewBinding true
+        compose true
     }
     kotlinOptions {
         jvmTarget = '17'
@@ -58,9 +60,17 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation platform(libs.androidx.compose.bom)
+
     implementation libs.elimu.content.provider // https://jitpack.io/#ai.elimu/content-provider
 
     implementation libs.androidx.constraint.layout
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.compose.material3
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.ui.tooling.preview
+    implementation libs.androidx.lifecycle.viewmodel.compose
+    implementation libs.androidx.lifecycle.runtime.compose
 
     implementation (libs.shine.button) {
         exclude group: 'com.daasuu', module: 'EasingInterpolator'
