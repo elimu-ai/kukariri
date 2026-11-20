@@ -3,6 +3,7 @@ package ai.elimu.kukariri
 import ai.elimu.analytics.utils.EventProviderUtil
 import ai.elimu.content_provider.utils.ContentProviderUtil
 import ai.elimu.kukariri.logic.SpacedRepetitionHelper
+import ai.elimu.model.v2.gson.content.LetterSoundGson
 import android.app.Application
 import android.content.Context
 import android.util.Log
@@ -97,7 +98,10 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
     private fun masteryStarsFor(letterSoundId: Long, context: Context): Int {
         Log.d(javaClass.name, "letterSoundId: $letterSoundId")
 
-        val letterSoundAssessmentEventGsons = EventProviderUtil.getLetterSoundAssessmentEventGsons(context, BuildConfig.ANALYTICS_APPLICATION_ID)
+        val letterSoundGson: LetterSoundGson = LetterSoundGson().apply {
+            id = letterSoundId
+        }
+        val letterSoundAssessmentEventGsons = EventProviderUtil.getLetterSoundAssessmentEventGsonsByLetterSound(letterSoundGson, context, BuildConfig.ANALYTICS_APPLICATION_ID)
         Log.d(javaClass.name, "letterSoundAssessmentEventGsons.size: ${letterSoundAssessmentEventGsons.size}")
 
         val recallProbability: Float = SpacedRepetitionHelper.getRecallProbability(letterSoundAssessmentEventGsons)
