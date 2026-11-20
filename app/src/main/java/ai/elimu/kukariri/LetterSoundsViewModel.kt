@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -43,12 +44,15 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
     private val _uiState = MutableStateFlow<LetterSoundsUiState>(LetterSoundsUiState.Loading)
     val uiState: StateFlow<LetterSoundsUiState> = _uiState.asStateFlow()
 
-    init {
-        load()
-    }
+    private var loadJob: Job? = null
 
+    /**
+     * (Re)loads the letter-sounds and their masteries. Called from `MainActivity.onStart`, so the
+     * masteries are refreshed every time the student returns to the app.
+     */
     fun load() {
-        viewModelScope.launch {
+        loadJob?.cancel()
+        loadJob = viewModelScope.launch {
             _uiState.value = LetterSoundsUiState.Loading
             _uiState.value = withContext(Dispatchers.IO) { fetchLetterSounds() }
         }
