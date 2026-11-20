@@ -2,4 +2,5 @@
     <string name="app_name">การจดจำ</string>
     <string name="easy">😀\nง่าย</string>
     <string name="difficult">🤷\nยาก</string>
+    <string name="recall_probability_toast">โอกาสที่จะจำได้: %1$d%%</string>
 </resources>

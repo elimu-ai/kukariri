@@ -5,6 +5,8 @@ import ai.elimu.kukariri.LetterSoundsUiState
 import ai.elimu.kukariri.LetterSoundsViewModel
 import ai.elimu.kukariri.MAX_STARS
 import ai.elimu.kukariri.R
+import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,12 +36,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -143,6 +147,7 @@ private fun TableHeader() {
 
 @Composable
 private fun LetterSoundRow(item: LetterSoundItem) {
+    val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -161,6 +166,15 @@ private fun LetterSoundRow(item: LetterSoundItem) {
         Row(
             modifier = Modifier
                 .weight(0.6f)
+                // Show the recall probability when the stars container is pressed
+                .clickable {
+                    val percent = (item.recallProbability * 100).roundToInt()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.recall_probability_toast, percent),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -187,9 +201,9 @@ private fun LetterSoundTablePreview() {
         LetterSoundsContent(
             uiState = LetterSoundsUiState.Success(
                 listOf(
-                    LetterSoundItem(1, "e", "e", 120, 1),
-                    LetterSoundItem(2, "t", "t", 100, 0),
-                    LetterSoundItem(3, "a", "a", 90, 1)
+                    LetterSoundItem(1, "e", "e", 120, 0.72f, 4),
+                    LetterSoundItem(2, "t", "t", 100, 0.10f, 0),
+                    LetterSoundItem(3, "a", "a", 90, 0.25f, 1)
                 )
             ),
             onRetry = {}

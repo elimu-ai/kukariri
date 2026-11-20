@@ -2,4 +2,5 @@
     <string name="app_name">याद</string>
     <string name="easy">😀\nआसान</string>
     <string name="difficult">🤷\nकठिन</string>
+    <string name="recall_probability_toast">याद रहने की संभावना: %1$d%%</string>
 </resources>

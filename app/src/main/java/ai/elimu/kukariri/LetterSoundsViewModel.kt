@@ -25,6 +25,8 @@ data class LetterSoundItem(
     /** Letter(s) of the letter-sound correspondence, e.g. "e". */
     val letters: String,
     val usageCount: Int,
+    /** Probability (0.0..1.0) that the student can still recall the letter-sound. */
+    val recallProbability: Float,
     /** 0..[MAX_STARS] */
     val masteryStars: Int
 )
@@ -74,6 +76,7 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
                 .sortedByDescending { it.usageCount ?: 0 } // "Most frequent" first
                 .take(MAX_ROWS)
                 .map { letterSoundGson ->
+                    val recallProbability = recallProbabilityFor(letterSoundGson.id, context)
                     LetterSoundItem(
                         id = letterSoundGson.id,
                         sound = letterSoundGson.sounds.orEmpty()
@@ -81,7 +84,8 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
                         letters = letterSoundGson.letters.orEmpty()
                             .joinToString("") { it.text.orEmpty() },
                         usageCount = letterSoundGson.usageCount ?: 0,
-                        masteryStars = masteryStarsFor(letterSoundGson.id, context)
+                        recallProbability = recallProbability,
+                        masteryStars = starsFor(recallProbability)
                     )
                 }
             if (items.isEmpty()) LetterSoundsUiState.Empty else LetterSoundsUiState.Success(items)
@@ -92,10 +96,11 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
     }
 
     /**
-     * Number of filled stars (0..[MAX_STARS]) for a letter-sound.
+     * Probability (0.0..1.0) that the student can recall a letter-sound, based on the
+     * assessment events stored in the Analytics application.
      */
-    private fun masteryStarsFor(letterSoundId: Long, context: Context): Int {
-        Log.d(javaClass.name, "masteryStarsFor, letterSoundId: $letterSoundId")
+    private fun recallProbabilityFor(letterSoundId: Long, context: Context): Float {
+        Log.d(javaClass.name, "recallProbabilityFor, letterSoundId: $letterSoundId")
 
         val letterSoundGson: LetterSoundGson = LetterSoundGson().apply {
             id = letterSoundId
@@ -105,19 +110,19 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
 
         val recallProbability: Float = SpacedRepetitionHelper.getRecallProbability(letterSoundAssessmentEventGsons)
         Log.d(javaClass.name, "recallProbability: ${recallProbability}")
-        if (recallProbability >= 0.80f) {
-            return 5
-        } else if (recallProbability >= 0.65f) {
-            return 4
-        } else if (recallProbability >= 0.50f) {
-            return 3
-        } else if (recallProbability >= 0.35f) {
-            return 2
-        } else if (recallProbability >= 0.20f) {
-            return 1
-        } else {
-            return 0
-        }
+        return recallProbability
+    }
+
+    /**
+     * Number of filled stars (0..[MAX_STARS]) for a recall probability.
+     */
+    private fun starsFor(recallProbability: Float): Int = when {
+        recallProbability >= 0.80f -> 5
+        recallProbability >= 0.65f -> 4
+        recallProbability >= 0.50f -> 3
+        recallProbability >= 0.35f -> 2
+        recallProbability >= 0.20f -> 1
+        else -> 0
     }
 
     private companion object {
