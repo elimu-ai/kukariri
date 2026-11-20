@@ -89,14 +89,9 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
 
     /**
      * Number of filled stars (0..[MAX_STARS]) for a letter-sound.
-     *
-     * Placeholder: the Content Provider utils expose assessment helpers for words only
-     * (`MasteryHelper.isWordMastered`), so there is no letter-sound mastery data to read yet.
-     * Replace this once a source for letter-sound mastery exists.
      */
-    @Suppress("UNUSED_PARAMETER")
     private fun masteryStarsFor(letterSoundId: Long, context: Context): Int {
-        Log.d(javaClass.name, "letterSoundId: $letterSoundId")
+        Log.d(javaClass.name, "masteryStarsFor, letterSoundId: $letterSoundId")
 
         val letterSoundGson: LetterSoundGson = LetterSoundGson().apply {
             id = letterSoundId
@@ -106,21 +101,19 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
 
         val recallProbability: Float = SpacedRepetitionHelper.getRecallProbability(letterSoundAssessmentEventGsons)
         Log.d(javaClass.name, "recallProbability: ${recallProbability}")
-//        if (recallProbability >= 0.80f) {
-//            return 5
-//        } else if (recallProbability >= 0.65f) {
-//            return 4
-//        } else if (recallProbability >= 0.50f) {
-//            return 3
-//        } else if (recallProbability >= 0.35f) {
-//            return 2
-//        } else if (recallProbability >= 0.20f) {
-//            return 1
-//        } else {
-//            return 0
-//        }
-        val masteryStarCount: Int = ((Math.random() * MAX_STARS) + 1).toInt()
-        return masteryStarCount
+        if (recallProbability >= 0.80f) {
+            return 5
+        } else if (recallProbability >= 0.65f) {
+            return 4
+        } else if (recallProbability >= 0.50f) {
+            return 3
+        } else if (recallProbability >= 0.35f) {
+            return 2
+        } else if (recallProbability >= 0.20f) {
+            return 1
+        } else {
+            return 0
+        }
     }
 
     private companion object {
