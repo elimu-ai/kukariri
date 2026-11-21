@@ -1,21 +1,36 @@
 # Kukariri 🧠
 
-Android application which handles the Spaced Repetition System (SRS)
+Android application which visualizes the Spaced Repetition System (SRS)
 
-![](https://user-images.githubusercontent.com/15718174/81469350-08eeeb00-9217-11ea-87c6-0d2ea093513e.png)
+![](https://github.com/user-attachments/assets/0f6a799c-9c59-49eb-9534-f000818c4aa2)
 
 ## Functionality
 
 To test the functionality of this app, first go to one of the other apps/games where the student 
-is learning new words (e.g. the [Vitabu](https://github.com/elimu-ai/vitabu) app), and press a word. 
-Then, [4 minutes](https://github.com/elimu-ai/kukariri/blob/main/app/src/main/java/ai/elimu/kukariri/logic/SpacedRepetitionHelper.kt) after that initial `LearningEvent`, the word will appear here in the Kukariri app for review.
+is being tested for knowledge of a skill, e.g. the [Herufi](https://github.com/elimu-ai/herufi)
+app for learning sound-to-letter correspondences. In the app answer an assessment correctly, and 
+go back to this app. Now, the student's recall probability of that knowledge item will be 
+updated, and its _recall probability_ will appear in the UI in the form of number of stars.
 
-![WordAssessmentActivity](https://github.com/user-attachments/assets/e6c5cf75-13f6-4b8b-9978-3756e52dd0a7)
+### Recall Probability
+
+The recall probability will drop over time. So after a few minutes, you will see the mastery 
+drop from ★★★★★ to ★★★★☆, which indicates that the recall probability has dropped below 
+80%. If you want to know the exact value of the recall probability, you can press the row 
+of stars and see the percentage appear in a toast:
+
+![](https://github.com/user-attachments/assets/8905c425-f0a8-4899-944d-9b0c805347cb)
+
+## Spaced Repetition System (SRS)
+
+The definition of mastery above is based on a Spaced Repetition System (SRS) which examines the 
+_assessment events_ of the student, and calculates a recall probability. For implementation details, 
+see [`SpacedRepetitionHelper.kt`](src/main/java/ai/elimu/kukariri/logic/SpacedRepetitionHelper.kt).
 
 ## Installation
 
 > [!IMPORTANT]
-> Note: This app depends on the [elimu.ai Content Provider](https://github.com/elimu-ai/content-provider) to be installed.
+> Note: This app depends on the [elimu.ai Analytics](https://github.com/elimu-ai/analytics) app to be installed.
 
 ## Development 👩🏽‍💻
 
