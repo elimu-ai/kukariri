@@ -31,6 +31,8 @@ see [`SpacedRepetitionHelper.kt`](src/main/java/ai/elimu/kukariri/logic/SpacedRe
 
 > [!IMPORTANT]
 > Note: This app depends on the [elimu.ai Analytics](https://github.com/elimu-ai/analytics) app to be installed.
+> If you want to make changes to the elimu.ai Analytics utility library, see its
+> [testing instructions](https://github.com/elimu-ai/analytics/blob/main/README.md#how-to-test--snapshot-versions-of-the-utils-library).
 
 ## Development 👩🏽‍💻
 
@@ -56,10 +58,6 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 ./gradlew jacocoTestReport
 open app/build/jacoco/jacocoHtml/index.html
 ```
-
-### Content Provider Utils 📦
-
-If you want to make changes to the elimu.ai Content Provider's utility library, see testing instructions at https://github.com/elimu-ai/content-provider/blob/main/README.md#utils-snapshot
 
 ### Gradle Upgrade
 
