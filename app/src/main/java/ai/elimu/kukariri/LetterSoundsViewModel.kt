@@ -41,6 +41,24 @@ sealed interface LetterSoundsUiState {
 
 const val MAX_STARS = 5
 
+/**
+ * Number of filled stars (0..[MAX_STARS]) for a recall probability.
+ */
+fun starsFor(recallProbability: Float): Int = when {
+    recallProbability >= 0.80f -> 5
+    recallProbability >= 0.65f -> 4
+    recallProbability >= 0.50f -> 3
+    recallProbability >= 0.35f -> 2
+    recallProbability >= 0.20f -> 1
+    else -> 0
+}
+
+/** Release build first, then the debug build of the Content Provider app. */
+internal val CONTENT_PROVIDER_APPLICATION_IDS = listOf(
+    "ai.elimu.content_provider",
+    "ai.elimu.content_provider.debug"
+)
+
 class LetterSoundsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _uiState = MutableStateFlow<LetterSoundsUiState>(LetterSoundsUiState.Loading)
@@ -113,26 +131,8 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
         return recallProbability
     }
 
-    /**
-     * Number of filled stars (0..[MAX_STARS]) for a recall probability.
-     */
-    private fun starsFor(recallProbability: Float): Int = when {
-        recallProbability >= 0.80f -> 5
-        recallProbability >= 0.65f -> 4
-        recallProbability >= 0.50f -> 3
-        recallProbability >= 0.35f -> 2
-        recallProbability >= 0.20f -> 1
-        else -> 0
-    }
-
     private companion object {
         const val TAG = "LetterSoundsViewModel"
         const val MAX_ROWS = 30
-
-        /** Release build first, then the debug build of the Content Provider app. */
-        val CONTENT_PROVIDER_APPLICATION_IDS = listOf(
-            "ai.elimu.content_provider",
-            "ai.elimu.content_provider.debug"
-        )
     }
 }
