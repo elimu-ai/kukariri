@@ -3,4 +3,8 @@
     <string name="easy">😀\nmadali</string>
     <string name="difficult">🤷\nmahirap</string>
     <string name="recall_probability_toast">Posibilidad na maalala: %1$d%%</string>
+    <string name="skill_letter_identification">Pagkilala ng titik</string>
+    <string name="skill_familiar_word_reading">Pagbasa ng pamilyar na salita</string>
+    <string name="open_navigation_drawer">Buksan ang navigation drawer</string>
+    <string name="column_word">Salita</string>
 </resources>
