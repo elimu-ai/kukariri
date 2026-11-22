@@ -3,4 +3,8 @@
     <string name="easy">😀\nง่าย</string>
     <string name="difficult">🤷\nยาก</string>
     <string name="recall_probability_toast">โอกาสที่จะจำได้: %1$d%%</string>
+    <string name="skill_letter_identification">การระบุตัวอักษร</string>
+    <string name="skill_familiar_word_reading">การอ่านคำที่คุ้นเคย</string>
+    <string name="open_navigation_drawer">เปิดเมนูนำทาง</string>
+    <string name="column_word">คำ</string>
 </resources>

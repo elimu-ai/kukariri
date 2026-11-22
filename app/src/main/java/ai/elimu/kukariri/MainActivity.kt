@@ -1,8 +1,8 @@
 package ai.elimu.kukariri
 
 import ai.elimu.kukariri.assessment.WordAssessmentActivity
+import ai.elimu.kukariri.ui.KukaririApp
 import ai.elimu.kukariri.ui.KukaririTheme
-import ai.elimu.kukariri.ui.LetterSoundsScreen
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +18,8 @@ class MainActivity : ComponentActivity() {
         private const val TAG = "MainActivity"
     }
 
-    private val viewModel: LetterSoundsViewModel by viewModels()
+    private val letterSoundsViewModel: LetterSoundsViewModel by viewModels()
+    private val familiarWordsViewModel: FamiliarWordsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i(TAG, "onCreate")
@@ -32,7 +33,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             KukaririTheme {
-                LetterSoundsScreen(viewModel)
+                KukaririApp(letterSoundsViewModel, familiarWordsViewModel)
             }
         }
     }
@@ -41,8 +42,9 @@ class MainActivity : ComponentActivity() {
         Log.i(TAG, "onStart")
         super.onStart()
 
-        // Reload the letter-sound masteries every time the student returns to the app
-        viewModel.load()
+        // Reload the masteries every time the student returns to the app
+        letterSoundsViewModel.load()
+        familiarWordsViewModel.load()
     }
 
 //    override fun onStart() {

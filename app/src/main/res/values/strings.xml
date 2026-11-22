@@ -3,4 +3,8 @@
     <string name="easy">😀\neasy</string>
     <string name="difficult">🤷\ndifficult</string>
     <string name="recall_probability_toast">Recall probability: %1$d%%</string>
+    <string name="skill_letter_identification">Letter identification</string>
+    <string name="skill_familiar_word_reading">Familiar word reading</string>
+    <string name="open_navigation_drawer">Open navigation drawer</string>
+    <string name="column_word">Word</string>
 </resources>
