@@ -91,7 +91,6 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
         return try {
             val items = ContentProviderUtil
                 .getAllLetterSoundGsons(context, providerApplicationId)
-                .sortedByDescending { it.usageCount ?: 0 } // "Most frequent" first
                 .map { letterSoundGson ->
                     val recallProbability = recallProbabilityFor(letterSoundGson.id, context)
                     LetterSoundItem(
