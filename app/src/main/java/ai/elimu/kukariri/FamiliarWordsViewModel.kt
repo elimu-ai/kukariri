@@ -80,7 +80,6 @@ class FamiliarWordsViewModel(application: Application) : AndroidViewModel(applic
                 )
                 // Only include the word types that can be assessed (see `WordAssessmentActivity`)
                 .sortedByDescending { it.usageCount ?: 0 } // "Most frequent" first
-                .take(MAX_ROWS)
                 .map { wordGson ->
                     // `SpacedRepetitionHelper` expects the most recent events first
                     val wordAssessmentEventGsons = wordAssessmentEventGsonsByWordId[wordGson.id]
@@ -105,6 +104,5 @@ class FamiliarWordsViewModel(application: Application) : AndroidViewModel(applic
 
     private companion object {
         const val TAG = "FamiliarWordsViewModel"
-        const val MAX_ROWS = 30
     }
 }
