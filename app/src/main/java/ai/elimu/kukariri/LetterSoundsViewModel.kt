@@ -91,8 +91,6 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
         return try {
             val items = ContentProviderUtil
                 .getAllLetterSoundGsons(context, providerApplicationId)
-                .sortedByDescending { it.usageCount ?: 0 } // "Most frequent" first
-                .take(MAX_ROWS)
                 .map { letterSoundGson ->
                     val recallProbability = recallProbabilityFor(letterSoundGson.id, context)
                     LetterSoundItem(
@@ -133,6 +131,5 @@ class LetterSoundsViewModel(application: Application) : AndroidViewModel(applica
 
     private companion object {
         const val TAG = "LetterSoundsViewModel"
-        const val MAX_ROWS = 30
     }
 }
