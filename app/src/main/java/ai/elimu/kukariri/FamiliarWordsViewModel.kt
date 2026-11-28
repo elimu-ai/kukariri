@@ -3,7 +3,6 @@ package ai.elimu.kukariri
 import ai.elimu.analytics.utils.EventProviderUtil
 import ai.elimu.content_provider.utils.ContentProviderUtil
 import ai.elimu.kukariri.logic.SpacedRepetitionHelper
-import ai.elimu.model.v2.enums.content.WordType
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
@@ -80,7 +79,6 @@ class FamiliarWordsViewModel(application: Application) : AndroidViewModel(applic
                     contentProviderApplicationId = providerApplicationId
                 )
                 // Only include the word types that can be assessed (see `WordAssessmentActivity`)
-                .filter { it.wordType in ASSESSED_WORD_TYPES }
                 .sortedByDescending { it.usageCount ?: 0 } // "Most frequent" first
                 .take(MAX_ROWS)
                 .map { wordGson ->
@@ -108,7 +106,5 @@ class FamiliarWordsViewModel(application: Application) : AndroidViewModel(applic
     private companion object {
         const val TAG = "FamiliarWordsViewModel"
         const val MAX_ROWS = 30
-
-        val ASSESSED_WORD_TYPES = setOf(WordType.ADJECTIVE, WordType.NOUN, WordType.VERB)
     }
 }
