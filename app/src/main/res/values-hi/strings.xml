@@ -3,8 +3,8 @@
     <string name="easy">😀\nआसान</string>
     <string name="difficult">🤷\nकठिन</string>
     <string name="recall_probability_toast">याद रहने की संभावना: %1$d%%</string>
-    <string name="skill_letter_identification">अक्षर पहचान</string>
-    <string name="skill_familiar_word_reading">परिचित शब्द पढ़ना</string>
+    <string name="skill_letter_identification">🔡 अक्षर पहचान</string>
+    <string name="skill_familiar_word_reading">🔤 परिचित शब्द पढ़ना</string>
     <string name="open_navigation_drawer">नेविगेशन ड्रॉअर खोलें</string>
     <string name="column_word">शब्द</string>
 </resources>
